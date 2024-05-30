@@ -25,34 +25,8 @@ public class AccountController {
 
     @PostMapping("/google-login")
     public ResponseEntity<?> googleLogin(@RequestBody GoogleLoginRequest googleLoginRequest) {
-        Optional<Account> existingAccount = accountRepository.findByEmail(googleLoginRequest.getEmail());
-
-        if (existingAccount.isPresent()) {
-            Account account = existingAccount.get();
-            account.setGoogleAccessToken(googleLoginRequest.getGoogleAccessToken());
-            account.setRefreshToken(googleLoginRequest.getRefreshToken());
-            account.setAccessTokenExpiryTime(googleLoginRequest.getAccessTokenExpiryTime());
-            account.setAccountStatus(googleLoginRequest.getAccountStatus());
-            account.setRole(googleLoginRequest.getRole());
-            accountRepository.save(account);
-
-            return ResponseEntity.ok("User logged in successfully");
-        } else {
-            Account newAccount = Account.builder()
-                    .email(googleLoginRequest.getEmail())
-                    .firstName(googleLoginRequest.getFirstName())
-                    .lastName(googleLoginRequest.getLastName())
-                    .googleAccessToken(googleLoginRequest.getGoogleAccessToken())
-                    .refreshToken(googleLoginRequest.getRefreshToken())
-                    .accessTokenExpiryTime(googleLoginRequest.getAccessTokenExpiryTime())
-                    .accountStatus(googleLoginRequest.getAccountStatus())
-                    .role(googleLoginRequest.getRole())
-                    .build();
-
-            accountRepository.save(newAccount);
-
-            return ResponseEntity.ok("User registered successfully");
-        }
+        Account account = accountService.handleGoogleLogin(googleLoginRequest);
+        return ResponseEntity.ok("User registered/logged in successfully");
     }
 
 

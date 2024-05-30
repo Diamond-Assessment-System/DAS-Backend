@@ -1,6 +1,7 @@
 package com.project.DASBackend.service.impl;
 
 import com.project.DASBackend.dto.AccountDto;
+import com.project.DASBackend.dto.GoogleLoginRequest;
 import com.project.DASBackend.entity.Account;
 import com.project.DASBackend.exception.ResourceNotFoundException;
 import com.project.DASBackend.mapper.AccountMapper;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -19,6 +21,36 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    public Account handleGoogleLogin(GoogleLoginRequest googleLoginRequest) {
+        Optional<Account> existingAccount = accountRepository.findByEmail(googleLoginRequest.getEmail());
+
+        Account account;
+        if (existingAccount.isPresent()) {
+            account = existingAccount.get();
+            account.setGoogleAccessToken(googleLoginRequest.getGoogleAccessToken());
+            account.setRefreshToken(googleLoginRequest.getRefreshToken());
+            account.setAccessTokenExpiryTime(googleLoginRequest.getAccessTokenExpiryTime());
+            account.setAccountStatus(googleLoginRequest.getAccountStatus());
+            account.setRole(googleLoginRequest.getRole());
+        } else {
+            account = Account.builder()
+                    .email(googleLoginRequest.getEmail())
+                    .firstName(googleLoginRequest.getFirstName())
+                    .lastName(googleLoginRequest.getLastName())
+                    .googleAccessToken(googleLoginRequest.getGoogleAccessToken())
+                    .refreshToken(googleLoginRequest.getRefreshToken())
+                    .accessTokenExpiryTime(googleLoginRequest.getAccessTokenExpiryTime())
+                    .accountStatus(googleLoginRequest.getAccountStatus())
+                    .role(googleLoginRequest.getRole())
+                    .build();
+        }
+
+        accountRepository.save(account);
+        return account;
+    }
+
+
 
     @Override
     public AccountDto createAccount(AccountDto accountDto) {

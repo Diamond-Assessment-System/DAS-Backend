@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URL;
 import java.util.Date;
 
-@RestController
 @RequestMapping("/api/s3")
 public class S3Controller {
 
-    @Autowired
     private AmazonS3 amazonS3;
 
     private final String bucketName = "diamondassessmentsystem3images";

@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@RestController
+//@RestController
 @RequestMapping("/api")
 public class AuthController {
 
-    @Autowired
+//    @Autowired
     private AccountRepository accountRepository;
 
     @Autowired

@@ -11,15 +11,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AwsConfig {
 
-    @Bean
-    public AmazonS3 amazonS3() {
-        BasicAWSCredentials awsCreds = new BasicAWSCredentials(
-                "AKIA6ODU6QYDIPJVRQ6W",
-                "VlMNE48aEFFfpnwVged7lsDPOAJaNKlFq14V04Fn"
-        );
-        return AmazonS3ClientBuilder.standard()
-                .withRegion(Regions.AP_SOUTHEAST_2)
-                .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
-                .build();
-    }
+//    @Bean
+//    public AmazonS3 amazonS3() {
+//        BasicAWSCredentials awsCreds = new BasicAWSCredentials(
+//                "AKIA6ODU6QYDIPJVRQ6W",
+//                "VlMNE48aEFFfpnwVged7lsDPOAJaNKlFq14V04Fn"
+//        );
+//        return AmazonS3ClientBuilder.standard()
+//                .withRegion(Regions.AP_SOUTHEAST_2)
+//                .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+//                .build();
+//    }
 }

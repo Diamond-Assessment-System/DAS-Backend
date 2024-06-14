@@ -23,20 +23,19 @@ spring:
       max-request-size: 10MB
 
 
-server:
-  port: 8080
+
 
 # src/main/resources/application.yml
-cloud:
-  aws:
-    credentials:
-      access-key: AKIA6ODU6QYDIPJVRQ6W
-      secret-key: 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
-    region:
-      static: Asia Pacific (Sydney) ap-southeast-2
-    stack:
-      auto: false
+#cloud:
+#  aws:
+#    credentials:
+#      access-key: AKIA6ODU6QYDIPJVRQ6W
+#      secret-key: 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
+#    region:
+#      static: Asia Pacific (Sydney) ap-southeast-2
+#    stack:
+#      auto: false
 
-application:
-  bucket:
-    name: diamondsassessmentsystemimages
+#application:
+#  bucket:
+#    name: diamondsassessmentsystemimages

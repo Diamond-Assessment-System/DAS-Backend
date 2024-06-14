@@ -20,8 +20,8 @@ public class SecurityConfig {
     @Autowired
     private FirebaseTokenFilter firebaseTokenFilter;
 
-    @Autowired
-    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+//    @Autowired
+//    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;

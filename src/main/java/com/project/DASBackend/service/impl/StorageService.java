@@ -28,42 +28,42 @@ public class StorageService {
 //    @Value("${application.bucket.name}")
 //    private String bucketName;
 
-    @Value("${aws.s3.bucket.name}")
+    @Value("${application.bucket.name}")
     private String bucketName;
 
     @Autowired
     private AmazonS3 s3Client;
 
     public String uploadFile(MultipartFile file) throws AmazonServiceException, SdkClientException, IOException {
-//        File fileObj = convertMultiPartFileToFile(file);
-//        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-//        s3Client.putObject(new PutObjectRequest(bucketName, fileName, fileObj));
-//        fileObj.delete();
-//        return "File uploaded : " + fileName;
+        File fileObj = convertMultiPartFileToFile(file);
+        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+        s3Client.putObject(new PutObjectRequest(bucketName, fileName, fileObj));
+        fileObj.delete();
+        return "File uploaded : " + fileName;
 
-        ObjectMetadata metaDak = new ObjectMetadata();
-        s3Client.putObject(bucketName, file.getName(), file.getInputStream(), metaDak);
-        return "File uploaded Successfully: ";
+//        ObjectMetadata metaDak = new ObjectMetadata();
+//        s3Client.putObject(bucketName, file.getName(), file.getInputStream(), metaDak);
+//        return "File uploaded Successfully: ";
     }
 
 
-    //    public byte[] downloadFile(String fileName) {
-//        S3Object s3Object = s3Client.getObject(bucketName, fileName);
-//        S3ObjectInputStream inputStream = s3Object.getObjectContent();
-//        try {
-//            byte[] content = IOUtils.toByteArray(inputStream);
-//            return content;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-    public Resource dowloadFile(String fileName) throws IOException {
+        public byte[] downloadFile(String fileName) {
         S3Object s3Object = s3Client.getObject(bucketName, fileName);
-        var bytes = s3Object.getObjectContent().readAllBytes();
-        Resource resource = new ByteArrayResource(bytes);
-        return resource;
+        S3ObjectInputStream inputStream = s3Object.getObjectContent();
+        try {
+            byte[] content = IOUtils.toByteArray(inputStream);
+            return content;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
+//    public Resource dowloadFile(String fileName) throws IOException {
+//        S3Object s3Object = s3Client.getObject(bucketName, fileName);
+//        var bytes = s3Object.getObjectContent().readAllBytes();
+//        Resource resource = new ByteArrayResource(bytes);
+//        return resource;
+//    }
 
     public String deleteFile(String fileName) {
         s3Client.deleteObject(bucketName, fileName);

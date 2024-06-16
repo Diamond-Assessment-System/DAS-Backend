@@ -58,4 +58,8 @@ public class AssessmentBooking {
     @ManyToOne
     @JoinColumn(name = "Service_Id", nullable = false)
     private Services service;
+
+    @ManyToOne
+    @JoinColumn(name = "ConsultingAccountId")
+    private Account consultingAccount;
 }

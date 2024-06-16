@@ -44,4 +44,5 @@ public class BookingSample {
     @ManyToOne
     @JoinColumn(name = "Account_Id", nullable = false)
     private Account account;
+
 }

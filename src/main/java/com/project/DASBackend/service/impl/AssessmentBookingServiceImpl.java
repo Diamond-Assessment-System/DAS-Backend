@@ -38,6 +38,10 @@ public class AssessmentBookingServiceImpl implements AssessmentBookingService {
                 .orElseThrow(() -> new ResourceNotFoundException("Service not found with id: " + assessmentBookingDto.getServiceId()));
         assessmentBooking.setService(service);
 
+        Account consultingAccount = accountRepository.findById(assessmentBookingDto.getConsultingAccountId())
+                .orElseThrow(() -> new ResourceNotFoundException("Consulting account not found with id: " + assessmentBookingDto.getConsultingAccountId()));
+        assessmentBooking.setConsultingAccount(consultingAccount);
+
         assessmentBooking = assessmentBookingRepository.save(assessmentBooking);
         return AssessmentBookingMapper.toDto(assessmentBooking);
     }
@@ -68,6 +72,19 @@ public class AssessmentBookingServiceImpl implements AssessmentBookingService {
         assessmentBooking.setDateCreated(assessmentBookingDto.getDateCreated());
         assessmentBooking.setFeedback(assessmentBookingDto.getFeedback());
         assessmentBooking.setQuantities(assessmentBookingDto.getQuantities());
+        assessmentBooking.setDateReceived(assessmentBookingDto.getDateReceived());
+        Account account = accountRepository.findById(assessmentBookingDto.getAccountId())
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + assessmentBookingDto.getAccountId()));
+        assessmentBooking.setAccount(account);
+
+        Services service = serviceRepository.findById(assessmentBookingDto.getServiceId())
+                .orElseThrow(() -> new ResourceNotFoundException("Service not found with id: " + assessmentBookingDto.getServiceId()));
+        assessmentBooking.setService(service);
+
+        Account consultingAccount = accountRepository.findById(assessmentBookingDto.getConsultingAccountId())
+                .orElseThrow(() -> new ResourceNotFoundException("Consulting account not found with id: " + assessmentBookingDto.getConsultingAccountId()));
+        assessmentBooking.setConsultingAccount(consultingAccount);
+
         assessmentBooking = assessmentBookingRepository.save(assessmentBooking);
         return AssessmentBookingMapper.toDto(assessmentBooking);
     }

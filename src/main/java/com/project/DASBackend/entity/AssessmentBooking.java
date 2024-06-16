@@ -42,7 +42,7 @@ public class AssessmentBooking {
     @Column(name = "Date_created", nullable = false)
     private LocalDate dateCreated;
 
-    @Column(name = "Date_received", nullable = false)
+    @Column(name = "Date_received")
     private LocalDate dateReceived;
 
     @Column(name = "Feedback")

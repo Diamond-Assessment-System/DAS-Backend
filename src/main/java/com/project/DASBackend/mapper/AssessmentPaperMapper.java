@@ -21,6 +21,7 @@ public class AssessmentPaperMapper {
                 .weight(assessmentPaper.getWeight())
                 .comments(assessmentPaper.getComments())
                 .dateCreated(assessmentPaper.getDateCreated())
+                .paperImage(assessmentPaper.getPaperImage())
                 .accountId(assessmentPaper.getAccount().getAccountId())
                 .sampleId(assessmentPaper.getBookingSample().getSampleId())
                 .build();
@@ -43,6 +44,7 @@ public class AssessmentPaperMapper {
         assessmentPaper.setWeight(assessmentPaperDto.getWeight());
         assessmentPaper.setComments(assessmentPaperDto.getComments());
         assessmentPaper.setDateCreated(assessmentPaperDto.getDateCreated());
+        assessmentPaper.setPaperImage(assessmentPaperDto.getPaperImage());
         // Account and BookingSample need to be set in the service layer
         return assessmentPaper;
     }

@@ -54,6 +54,9 @@ public class AssessmentPaper {
     @Column(name = "Date_Created", nullable = false)
     private LocalDate dateCreated;
 
+    @Column(name = "Paper_Image", nullable = false)
+    private String paperImage;
+
     @ManyToOne
     @JoinColumn(name = "Account_Id", nullable = false)
     private Account account;

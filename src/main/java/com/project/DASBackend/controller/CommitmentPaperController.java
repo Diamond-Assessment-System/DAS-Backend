@@ -47,4 +47,10 @@ public class CommitmentPaperController {
         commitmentPaperService.deleteCommitmentPaper(commitmentId);
         return ResponseEntity.ok("Commitment Paper deleted successfully");
     }
+
+    @PatchMapping("{id}/status")
+    public ResponseEntity<CommitmentPaperDto> changeStatus(@PathVariable("id") Integer commitmentId, @RequestParam("status") Integer status) {
+        CommitmentPaperDto updatedPaper = commitmentPaperService.changeStatus(commitmentId, status);
+        return ResponseEntity.ok(updatedPaper);
+    }
 }

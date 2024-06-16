@@ -47,4 +47,10 @@ public class AssessmentBookingController {
         assessmentBookingService.deleteAssessmentBooking(bookingId);
         return ResponseEntity.ok("Assessment Booking deleted successfully");
     }
+
+    @PatchMapping("{id}/status")
+    public ResponseEntity<AssessmentBookingDto> changeStatus(@PathVariable("id") Integer bookingId, @RequestParam("status") Integer status) {
+        AssessmentBookingDto updatedBooking = assessmentBookingService.changeStatus(bookingId, status);
+        return ResponseEntity.ok(updatedBooking);
+    }
 }

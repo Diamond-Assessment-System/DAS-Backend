@@ -48,4 +48,13 @@ public class BookingSampleServiceImpl implements BookingSampleService {
     public void deleteBookingSample(Integer sampleId) {
         bookingSampleRepository.deleteById(sampleId);
     }
+
+    @Override
+    public BookingSampleDto changeStatus(Integer sampleId, Integer status) {
+        BookingSample bookingSample = bookingSampleRepository.findById(sampleId)
+                .orElseThrow(() -> new RuntimeException("Booking Sample not found"));
+        bookingSample.setStatus(status);
+        bookingSample = bookingSampleRepository.save(bookingSample);
+        return BookingSampleMapper.toDto(bookingSample);
+    }
 }

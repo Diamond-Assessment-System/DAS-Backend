@@ -14,4 +14,6 @@ public interface CommitmentPaperService {
     CommitmentPaperDto updateCommitmentPaper(Integer commitmentId, CommitmentPaperDto commitmentPaperDto);
 
     void deleteCommitmentPaper(Integer commitmentId);
+
+    CommitmentPaperDto changeStatus(Integer commitmentId, Integer status);
 }

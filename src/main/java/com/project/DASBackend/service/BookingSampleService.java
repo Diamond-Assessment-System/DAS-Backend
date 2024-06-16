@@ -14,4 +14,6 @@ public interface BookingSampleService {
     BookingSampleDto updateBookingSample(Integer sampleId, BookingSampleDto bookingSampleDto);
 
     void deleteBookingSample(Integer sampleId);
+
+    BookingSampleDto changeStatus(Integer sampleId, Integer status);
 }

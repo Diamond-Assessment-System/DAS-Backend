@@ -48,4 +48,13 @@ public class CommitmentPaperServiceImpl implements CommitmentPaperService {
     public void deleteCommitmentPaper(Integer commitmentId) {
         commitmentPaperRepository.deleteById(commitmentId);
     }
+
+    @Override
+    public CommitmentPaperDto changeStatus(Integer commitmentId, Integer status) {
+        CommitmentPaper commitmentPaper = commitmentPaperRepository.findById(commitmentId)
+                .orElseThrow(() -> new RuntimeException("Commitment Paper not found"));
+        commitmentPaper.setStatus(status);
+        commitmentPaper = commitmentPaperRepository.save(commitmentPaper);
+        return CommitmentPaperMapper.toDto(commitmentPaper);
+    }
 }

@@ -48,4 +48,13 @@ public class AssessmentBookingServiceImpl implements AssessmentBookingService {
     public void deleteAssessmentBooking(Integer bookingId) {
         assessmentBookingRepository.deleteById(bookingId);
     }
+
+    @Override
+    public AssessmentBookingDto changeStatus(Integer bookingId, Integer status) {
+        AssessmentBooking assessmentBooking = assessmentBookingRepository.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Assessment Booking not found"));
+        assessmentBooking.setStatus(status);
+        assessmentBooking = assessmentBookingRepository.save(assessmentBooking);
+        return AssessmentBookingMapper.toDto(assessmentBooking);
+    }
 }

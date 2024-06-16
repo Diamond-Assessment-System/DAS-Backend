@@ -47,4 +47,10 @@ public class BookingSampleController {
         bookingSampleService.deleteBookingSample(sampleId);
         return ResponseEntity.ok("Booking Sample deleted successfully");
     }
+
+    @PatchMapping("{id}/status")
+    public ResponseEntity<BookingSampleDto> changeStatus(@PathVariable("id") Integer sampleId, @RequestParam("status") Integer status) {
+        BookingSampleDto updatedSample = bookingSampleService.changeStatus(sampleId, status);
+        return ResponseEntity.ok(updatedSample);
+    }
 }

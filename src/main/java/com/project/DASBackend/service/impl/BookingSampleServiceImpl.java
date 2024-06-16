@@ -1,9 +1,13 @@
 package com.project.DASBackend.service.impl;
 
 import com.project.DASBackend.dto.BookingSampleDto;
+import com.project.DASBackend.entity.Account;
+import com.project.DASBackend.entity.AssessmentBooking;
 import com.project.DASBackend.entity.BookingSample;
 import com.project.DASBackend.exception.ResourceNotFoundException;
 import com.project.DASBackend.mapper.BookingSampleMapper;
+import com.project.DASBackend.repository.AccountRepository;
+import com.project.DASBackend.repository.AssessmentBookingRepository;
 import com.project.DASBackend.repository.BookingSampleRepository;
 import com.project.DASBackend.service.BookingSampleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +21,23 @@ public class BookingSampleServiceImpl implements BookingSampleService {
 
     @Autowired
     private BookingSampleRepository bookingSampleRepository;
+    @Autowired
+    private AccountRepository accountRepository;
+    @Autowired
+    private AssessmentBookingRepository assessmentBookingRepository;
 
     @Override
     public BookingSampleDto createBookingSample(BookingSampleDto bookingSampleDto) {
         BookingSample bookingSample = BookingSampleMapper.toEntity(bookingSampleDto);
+
+        Account account = accountRepository.findById(bookingSampleDto.getAccountId())
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + bookingSampleDto.getAccountId()));
+        bookingSample.setAccount(account);
+
+        AssessmentBooking assessmentBooking = assessmentBookingRepository.findById(bookingSampleDto.getBookingId())
+                .orElseThrow(() -> new ResourceNotFoundException("Assessment Booking not found with id: " + bookingSampleDto.getBookingId()));
+        bookingSample.setAssessmentBooking(assessmentBooking);
+
         bookingSample = bookingSampleRepository.save(bookingSample);
         return BookingSampleMapper.toDto(bookingSample);
     }

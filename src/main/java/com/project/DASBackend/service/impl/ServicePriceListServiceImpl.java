@@ -1,9 +1,11 @@
 package com.project.DASBackend.service.impl;
 
 import com.project.DASBackend.dto.ServicePriceListDto;
+import com.project.DASBackend.entity.BookingSample;
 import com.project.DASBackend.entity.ServicePriceList;
 import com.project.DASBackend.exception.ResourceNotFoundException;
 import com.project.DASBackend.mapper.ServicePriceListMapper;
+import com.project.DASBackend.repository.BookingSampleRepository;
 import com.project.DASBackend.repository.ServicePriceListRepository;
 import com.project.DASBackend.service.ServicePriceListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +19,17 @@ public class ServicePriceListServiceImpl implements ServicePriceListService {
 
     @Autowired
     private ServicePriceListRepository servicePriceListRepository;
+    @Autowired
+    private BookingSampleRepository bookingSampleRepository;
 
     @Override
     public ServicePriceListDto createServicePriceList(ServicePriceListDto servicePriceListDto) {
         ServicePriceList servicePriceList = ServicePriceListMapper.toEntity(servicePriceListDto);
+
+        BookingSample bookingSample = bookingSampleRepository.findById(servicePriceListDto.getSampleId())
+                .orElseThrow(() -> new ResourceNotFoundException("Booking Sample not found with id: " + servicePriceListDto.getSampleId()));
+        servicePriceList.setBookingSample(bookingSample);
+
         servicePriceList = servicePriceListRepository.save(servicePriceList);
         return ServicePriceListMapper.toDto(servicePriceList);
     }

@@ -1,9 +1,11 @@
 package com.project.DASBackend.service.impl;
 
 import com.project.DASBackend.dto.SealDto;
+import com.project.DASBackend.entity.BookingSample;
 import com.project.DASBackend.entity.Seal;
 import com.project.DASBackend.exception.ResourceNotFoundException;
 import com.project.DASBackend.mapper.SealMapper;
+import com.project.DASBackend.repository.BookingSampleRepository;
 import com.project.DASBackend.repository.SealRepository;
 import com.project.DASBackend.service.SealService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +19,17 @@ public class SealServiceImpl implements SealService {
 
     @Autowired
     private SealRepository sealRepository;
+    @Autowired
+    private BookingSampleRepository bookingSampleRepository;
 
     @Override
     public SealDto createSeal(SealDto sealDto) {
         Seal seal = SealMapper.toEntity(sealDto);
+
+        BookingSample bookingSample = bookingSampleRepository.findById(sealDto.getSampleId())
+                .orElseThrow(() -> new ResourceNotFoundException("BookingSample not found with id: " + sealDto.getSampleId()));
+        seal.setBookingSample(bookingSample);
+
         seal = sealRepository.save(seal);
         return SealMapper.toDto(seal);
     }

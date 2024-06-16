@@ -1,10 +1,14 @@
 package com.project.DASBackend.service.impl;
 
 import com.project.DASBackend.dto.AssessmentPaperDto;
+import com.project.DASBackend.entity.Account;
 import com.project.DASBackend.entity.AssessmentPaper;
+import com.project.DASBackend.entity.BookingSample;
 import com.project.DASBackend.exception.ResourceNotFoundException;
 import com.project.DASBackend.mapper.AssessmentPaperMapper;
+import com.project.DASBackend.repository.AccountRepository;
 import com.project.DASBackend.repository.AssessmentPaperRepository;
+import com.project.DASBackend.repository.BookingSampleRepository;
 import com.project.DASBackend.service.AssessmentPaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +21,24 @@ public class AssessmentPaperServiceImpl implements AssessmentPaperService {
 
     @Autowired
     private AssessmentPaperRepository assessmentPaperRepository;
+    @Autowired
+    private AccountRepository accountRepository;
+    @Autowired
+    private BookingSampleRepository bookingSampleRepository;
 
     @Override
     public AssessmentPaperDto createAssessmentPaper(AssessmentPaperDto assessmentPaperDto) {
         AssessmentPaper assessmentPaper = AssessmentPaperMapper.toEntity(assessmentPaperDto);
+
+        Account account = accountRepository.findById(assessmentPaperDto.getAccountId())
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + assessmentPaperDto.getAccountId()));
+        assessmentPaper.setAccount(account);
+
+        BookingSample bookingSample = bookingSampleRepository.findById(assessmentPaperDto.getSampleId())
+                .orElseThrow(() -> new ResourceNotFoundException("Booking Sample not found with id: " + assessmentPaperDto.getSampleId()));
+        assessmentPaper.setBookingSample(bookingSample);
+
+
         assessmentPaper = assessmentPaperRepository.save(assessmentPaper);
         return AssessmentPaperMapper.toDto(assessmentPaper);
     }

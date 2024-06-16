@@ -47,4 +47,10 @@ public class ServiceController {
         serviceService.deleteService(serviceId);
         return ResponseEntity.ok("Service deleted successfully");
     }
+
+    @PutMapping("/{serviceId}/update-account")
+    public ResponseEntity<String> updateAccountId(@PathVariable Integer serviceId, @RequestParam Integer accountId) {
+        serviceService.updateAccountId(serviceId, accountId);
+        return ResponseEntity.ok("Success");
+    }
 }

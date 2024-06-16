@@ -67,4 +67,12 @@ public class ServiceServiceImpl implements ServiceService {
         service = serviceRepository.save(service);
         return ServiceMapper.toDto(service);
     }
+
+    @Override
+    public ServiceDto updateAccountId(Integer serviceId, Integer accountId) {
+        Services service = serviceRepository.findById(serviceId).orElseThrow(() -> new RuntimeException("Service not found"));
+        service.setServiceStatus(accountId); // Assuming `Service_status` is the account ID to be updated
+        return ServiceMapper.toDto(serviceRepository.save(service));
+    }
+
 }

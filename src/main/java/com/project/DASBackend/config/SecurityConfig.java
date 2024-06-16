@@ -34,7 +34,7 @@ public class SecurityConfig  {
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for simplicity, enable it in production
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/api/login", "/authenticate", "/register", "/upload").permitAll() // Allow access to login endpoint
-                        .anyRequest().authenticated() // Protect other endpoints
+                        .anyRequest().permitAll() // Protect other endpoints
                 )
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint) // Set the authentication entry point

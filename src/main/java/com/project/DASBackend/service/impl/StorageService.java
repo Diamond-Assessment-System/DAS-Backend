@@ -25,9 +25,6 @@ import java.util.Objects;
 @Slf4j
 public class StorageService {
 
-//    @Value("${application.bucket.name}")
-//    private String bucketName;
-
     @Value("${application.bucket.name}")
     private String bucketName;
 

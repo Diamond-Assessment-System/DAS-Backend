@@ -1,5 +1,6 @@
 package com.project.DASBackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,10 +21,10 @@ public class AssessmentBooking {
     @Column(name = "Booking_Id")
     private Integer bookingId;
 
-    @Column(name = "total_price", nullable = false)
+    @Column(name = "total_price")
     private Float totalPrice;
 
-    @Column(name = "Sample_Return_Date", nullable = false)
+    @Column(name = "Sample_Return_Date")
     private LocalDate sampleReturnDate;
 
     @Column(name = "status", nullable = false)
@@ -40,6 +41,9 @@ public class AssessmentBooking {
 
     @Column(name = "Date_created", nullable = false)
     private LocalDate dateCreated;
+
+    @Column(name = "Date_received", nullable = false)
+    private LocalDate dateReceived;
 
     @Column(name = "Feedback")
     private String feedback;

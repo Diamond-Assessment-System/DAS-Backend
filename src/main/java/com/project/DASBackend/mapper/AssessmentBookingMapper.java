@@ -17,6 +17,7 @@ public class AssessmentBookingMapper {
                 .paymentType(assessmentBooking.getPaymentType())
                 .phone(assessmentBooking.getPhone())
                 .dateCreated(assessmentBooking.getDateCreated())
+                .dateReceived(assessmentBooking.getDateReceived())
                 .feedback(assessmentBooking.getFeedback())
                 .quantities(assessmentBooking.getQuantities())
                 .accountId(assessmentBooking.getAccount().getAccountId())
@@ -39,6 +40,7 @@ public class AssessmentBookingMapper {
         assessmentBooking.setDateCreated(assessmentBookingDto.getDateCreated());
         assessmentBooking.setFeedback(assessmentBookingDto.getFeedback());
         assessmentBooking.setQuantities(assessmentBookingDto.getQuantities());
+        assessmentBooking.setDateReceived(assessmentBookingDto.getDateReceived());
         // Account and Service need to be set in the service layer
         return assessmentBooking;
     }

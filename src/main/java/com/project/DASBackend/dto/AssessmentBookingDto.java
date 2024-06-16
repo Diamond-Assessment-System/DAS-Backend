@@ -1,5 +1,6 @@
 package com.project.DASBackend.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -16,35 +17,37 @@ public class AssessmentBookingDto {
 
     private Integer bookingId;
 
-    @NotNull(message = "Total price cannot be null")
     private Float totalPrice;
 
-    @NotNull(message = "Sample return date cannot be null")
+//    @NotNull(message = "Sample return date cannot be null")
     private LocalDate sampleReturnDate;
 
-    @NotNull(message = "Status cannot be null")
+//    @NotNull(message = "Status cannot be null")
     private Integer status;
 
-    @NotNull(message = "Payment status cannot be null")
+//    @NotNull(message = "Payment status cannot be null")
     private Integer paymentStatus;
 
-    @NotNull(message = "Payment type cannot be null")
+//    @NotNull(message = "Payment type cannot be null")
     private Integer paymentType;
 
-    @NotBlank(message = "Phone cannot be blank")
+//    @NotBlank(message = "Phone cannot be blank")
     private String phone;
 
-    @NotNull(message = "Date created cannot be null")
+//    @NotNull(message = "Date created cannot be null")
     private LocalDate dateCreated;
+
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private LocalDate dateReceived;
 
     private String feedback;
 
-    @NotNull(message = "Quantities cannot be null")
+//    @NotNull(message = "Quantities cannot be null")
     private Integer quantities;
 
-    @NotNull(message = "Account ID cannot be null")
+//    @NotNull(message = "Account ID cannot be null")
     private Integer accountId;
 
-    @NotNull(message = "Service ID cannot be null")
+//    @NotNull(message = "Service ID cannot be null")
     private Integer serviceId;
 }

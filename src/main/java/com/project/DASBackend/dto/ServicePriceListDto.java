@@ -25,6 +25,4 @@ public class ServicePriceListDto {
     @NotNull(message = "Price unit cannot be null")
     private Float priceUnit;
 
-    @NotNull(message = "Sample ID cannot be null")
-    private Integer sampleId;
 }

@@ -38,6 +38,10 @@ public class BookingSample {
     private AssessmentBooking assessmentBooking;
 
     @ManyToOne
+    @JoinColumn(name = "Service_Price_Id", nullable = false)
+    private ServicePriceList ServicePriceList;
+
+    @ManyToOne
     @JoinColumn(name = "Account_Id", nullable = false)
     private Account account;
 }

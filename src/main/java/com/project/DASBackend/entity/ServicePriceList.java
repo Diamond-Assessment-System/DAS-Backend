@@ -30,7 +30,5 @@ public class ServicePriceList {
     @Column(name = "Price_unit", nullable = false)
     private Float priceUnit;
 
-    @ManyToOne
-    @JoinColumn(name = "Sample_Id", nullable = false)
-    private BookingSample bookingSample;
+
 }

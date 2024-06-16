@@ -2,6 +2,7 @@ package com.project.DASBackend.service.impl;
 
 import com.project.DASBackend.dto.CommitmentPaperDto;
 import com.project.DASBackend.entity.CommitmentPaper;
+import com.project.DASBackend.exception.ResourceNotFoundException;
 import com.project.DASBackend.mapper.CommitmentPaperMapper;
 import com.project.DASBackend.repository.CommitmentPaperRepository;
 import com.project.DASBackend.service.CommitmentPaperService;
@@ -26,7 +27,8 @@ public class CommitmentPaperServiceImpl implements CommitmentPaperService {
 
     @Override
     public CommitmentPaperDto getCommitmentPaperById(Integer commitmentId) {
-        CommitmentPaper commitmentPaper = commitmentPaperRepository.findById(commitmentId).orElse(null);
+        CommitmentPaper commitmentPaper = commitmentPaperRepository.findById(commitmentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Commitment Paper not found with id: " + commitmentId));
         return CommitmentPaperMapper.toDto(commitmentPaper);
     }
 
@@ -38,8 +40,8 @@ public class CommitmentPaperServiceImpl implements CommitmentPaperService {
 
     @Override
     public CommitmentPaperDto updateCommitmentPaper(Integer commitmentId, CommitmentPaperDto commitmentPaperDto) {
-        CommitmentPaper commitmentPaper = CommitmentPaperMapper.toEntity(commitmentPaperDto);
-        commitmentPaper.setCommitmentId(commitmentId);
+        CommitmentPaper commitmentPaper = commitmentPaperRepository.findById(commitmentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Commitment Paper not found with id: " + commitmentId));
         commitmentPaper.setDescription(commitmentPaperDto.getDescription());
         commitmentPaper.setDateCreated(commitmentPaperDto.getDateCreated());
         commitmentPaper.setApprovalDate(commitmentPaperDto.getApprovalDate());
@@ -52,16 +54,18 @@ public class CommitmentPaperServiceImpl implements CommitmentPaperService {
 
     @Override
     public void deleteCommitmentPaper(Integer commitmentId) {
+        if (!commitmentPaperRepository.existsById(commitmentId)) {
+            throw new ResourceNotFoundException("Commitment Paper not found with id: " + commitmentId);
+        }
         commitmentPaperRepository.deleteById(commitmentId);
     }
 
     @Override
     public CommitmentPaperDto changeStatus(Integer commitmentId, Integer status) {
-        CommitmentPaper commitmentPaper = commitmentPaperRepository.findById(commitmentId).orElse(null);
-        if (commitmentPaper != null) {
-            commitmentPaper.setStatus(status);
-            commitmentPaper = commitmentPaperRepository.save(commitmentPaper);
-        }
+        CommitmentPaper commitmentPaper = commitmentPaperRepository.findById(commitmentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Commitment Paper not found with id: " + commitmentId));
+        commitmentPaper.setStatus(status);
+        commitmentPaper = commitmentPaperRepository.save(commitmentPaper);
         return CommitmentPaperMapper.toDto(commitmentPaper);
     }
 }

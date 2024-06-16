@@ -2,6 +2,7 @@ package com.project.DASBackend.service.impl;
 
 import com.project.DASBackend.dto.BookingSampleDto;
 import com.project.DASBackend.entity.BookingSample;
+import com.project.DASBackend.exception.ResourceNotFoundException;
 import com.project.DASBackend.mapper.BookingSampleMapper;
 import com.project.DASBackend.repository.BookingSampleRepository;
 import com.project.DASBackend.service.BookingSampleService;
@@ -26,7 +27,8 @@ public class BookingSampleServiceImpl implements BookingSampleService {
 
     @Override
     public BookingSampleDto getBookingSampleById(Integer sampleId) {
-        BookingSample bookingSample = bookingSampleRepository.findById(sampleId).orElse(null);
+        BookingSample bookingSample = bookingSampleRepository.findById(sampleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Booking Sample not found with id: " + sampleId));
         return BookingSampleMapper.toDto(bookingSample);
     }
 
@@ -38,8 +40,8 @@ public class BookingSampleServiceImpl implements BookingSampleService {
 
     @Override
     public BookingSampleDto updateBookingSample(Integer sampleId, BookingSampleDto bookingSampleDto) {
-        BookingSample bookingSample = BookingSampleMapper.toEntity(bookingSampleDto);
-        bookingSample.setSampleId(sampleId);
+        BookingSample bookingSample = bookingSampleRepository.findById(sampleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Booking Sample not found with id: " + sampleId));
         bookingSample.setStatus(bookingSampleDto.getStatus());
         bookingSample.setIsDiamond(bookingSampleDto.getIsDiamond());
         bookingSample.setName(bookingSampleDto.getName());
@@ -51,16 +53,18 @@ public class BookingSampleServiceImpl implements BookingSampleService {
 
     @Override
     public void deleteBookingSample(Integer sampleId) {
+        if (!bookingSampleRepository.existsById(sampleId)) {
+            throw new ResourceNotFoundException("Booking Sample not found with id: " + sampleId);
+        }
         bookingSampleRepository.deleteById(sampleId);
     }
 
     @Override
     public BookingSampleDto changeStatus(Integer sampleId, Integer status) {
-        BookingSample bookingSample = bookingSampleRepository.findById(sampleId).orElse(null);
-        if (bookingSample != null) {
-            bookingSample.setStatus(status);
-            bookingSample = bookingSampleRepository.save(bookingSample);
-        }
+        BookingSample bookingSample = bookingSampleRepository.findById(sampleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Booking Sample not found with id: " + sampleId));
+        bookingSample.setStatus(status);
+        bookingSample = bookingSampleRepository.save(bookingSample);
         return BookingSampleMapper.toDto(bookingSample);
     }
 }

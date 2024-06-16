@@ -2,6 +2,7 @@ package com.project.DASBackend.service.impl;
 
 import com.project.DASBackend.dto.ServiceDto;
 import com.project.DASBackend.entity.Services;
+import com.project.DASBackend.exception.ResourceNotFoundException;
 import com.project.DASBackend.mapper.ServiceMapper;
 import com.project.DASBackend.repository.ServiceRepository;
 import com.project.DASBackend.service.ServiceService;
@@ -26,7 +27,8 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public ServiceDto getServiceById(Integer serviceId) {
-        Services service = serviceRepository.findById(serviceId).orElse(null);
+        Services service = serviceRepository.findById(serviceId)
+                .orElseThrow(() -> new ResourceNotFoundException("Service not found with id: " + serviceId));
         return ServiceMapper.toDto(service);
     }
 
@@ -38,8 +40,8 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public ServiceDto updateService(Integer serviceId, ServiceDto serviceDto) {
-        Services service = ServiceMapper.toEntity(serviceDto);
-        service.setServiceId(serviceId);
+        Services service = serviceRepository.findById(serviceId)
+                .orElseThrow(() -> new ResourceNotFoundException("Service not found with id: " + serviceId));
         service.setServiceName(serviceDto.getServiceName());
         service.setServiceDescription(serviceDto.getServiceDescription());
         service.setServiceStatus(serviceDto.getServiceStatus());
@@ -51,16 +53,18 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public void deleteService(Integer serviceId) {
+        if (!serviceRepository.existsById(serviceId)) {
+            throw new ResourceNotFoundException("Service not found with id: " + serviceId);
+        }
         serviceRepository.deleteById(serviceId);
     }
 
     @Override
     public ServiceDto changeStatus(Integer serviceId, Integer status) {
-        Services service = serviceRepository.findById(serviceId).orElse(null);
-        if (service != null) {
-            service.setServiceStatus(status);
-            service = serviceRepository.save(service);
-        }
+        Services service = serviceRepository.findById(serviceId)
+                .orElseThrow(() -> new ResourceNotFoundException("Service not found with id: " + serviceId));
+        service.setServiceStatus(status);  // Assuming Service entity has a serviceStatus field
+        service = serviceRepository.save(service);
         return ServiceMapper.toDto(service);
     }
 }

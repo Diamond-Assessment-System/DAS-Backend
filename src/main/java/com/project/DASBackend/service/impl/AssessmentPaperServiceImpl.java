@@ -2,6 +2,7 @@ package com.project.DASBackend.service.impl;
 
 import com.project.DASBackend.dto.AssessmentPaperDto;
 import com.project.DASBackend.entity.AssessmentPaper;
+import com.project.DASBackend.exception.ResourceNotFoundException;
 import com.project.DASBackend.mapper.AssessmentPaperMapper;
 import com.project.DASBackend.repository.AssessmentPaperRepository;
 import com.project.DASBackend.service.AssessmentPaperService;
@@ -26,7 +27,8 @@ public class AssessmentPaperServiceImpl implements AssessmentPaperService {
 
     @Override
     public AssessmentPaperDto getAssessmentPaperById(Integer diamondId) {
-        AssessmentPaper assessmentPaper = assessmentPaperRepository.findById(diamondId).orElse(null);
+        AssessmentPaper assessmentPaper = assessmentPaperRepository.findById(diamondId)
+                .orElseThrow(() -> new ResourceNotFoundException("Assessment Paper not found with id: " + diamondId));
         return AssessmentPaperMapper.toDto(assessmentPaper);
     }
 
@@ -38,8 +40,8 @@ public class AssessmentPaperServiceImpl implements AssessmentPaperService {
 
     @Override
     public AssessmentPaperDto updateAssessmentPaper(Integer diamondId, AssessmentPaperDto assessmentPaperDto) {
-        AssessmentPaper assessmentPaper = AssessmentPaperMapper.toEntity(assessmentPaperDto);
-        assessmentPaper.setDiamondId(diamondId);
+        AssessmentPaper assessmentPaper = assessmentPaperRepository.findById(diamondId)
+                .orElseThrow(() -> new ResourceNotFoundException("Assessment Paper not found with id: " + diamondId));
         assessmentPaper.setType(assessmentPaperDto.getType());
         assessmentPaper.setSize(assessmentPaperDto.getSize());
         assessmentPaper.setShape(assessmentPaperDto.getShape());
@@ -57,6 +59,9 @@ public class AssessmentPaperServiceImpl implements AssessmentPaperService {
 
     @Override
     public void deleteAssessmentPaper(Integer diamondId) {
+        if (!assessmentPaperRepository.existsById(diamondId)) {
+            throw new ResourceNotFoundException("Assessment Paper not found with id: " + diamondId);
+        }
         assessmentPaperRepository.deleteById(diamondId);
     }
 

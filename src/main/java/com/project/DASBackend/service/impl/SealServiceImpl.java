@@ -2,6 +2,7 @@ package com.project.DASBackend.service.impl;
 
 import com.project.DASBackend.dto.SealDto;
 import com.project.DASBackend.entity.Seal;
+import com.project.DASBackend.exception.ResourceNotFoundException;
 import com.project.DASBackend.mapper.SealMapper;
 import com.project.DASBackend.repository.SealRepository;
 import com.project.DASBackend.service.SealService;
@@ -26,7 +27,8 @@ public class SealServiceImpl implements SealService {
 
     @Override
     public SealDto getSealById(Integer sealId) {
-        Seal seal = sealRepository.findById(sealId).orElse(null);
+        Seal seal = sealRepository.findById(sealId)
+                .orElseThrow(() -> new ResourceNotFoundException("Seal not found with id: " + sealId));
         return SealMapper.toDto(seal);
     }
 
@@ -38,8 +40,8 @@ public class SealServiceImpl implements SealService {
 
     @Override
     public SealDto updateSeal(Integer sealId, SealDto sealDto) {
-        Seal seal = SealMapper.toEntity(sealDto);
-        seal.setSealId(sealId);
+        Seal seal = sealRepository.findById(sealId)
+                .orElseThrow(() -> new ResourceNotFoundException("Seal not found with id: " + sealId));
         seal.setShape(sealDto.getShape());
         seal.setWeight(sealDto.getWeight());
         seal.setSize(sealDto.getSize());
@@ -52,7 +54,11 @@ public class SealServiceImpl implements SealService {
 
     @Override
     public void deleteSeal(Integer sealId) {
+        if (!sealRepository.existsById(sealId)) {
+            throw new ResourceNotFoundException("Seal not found with id: " + sealId);
+        }
         sealRepository.deleteById(sealId);
     }
+
 
 }

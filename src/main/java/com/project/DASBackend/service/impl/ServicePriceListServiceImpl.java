@@ -2,6 +2,7 @@ package com.project.DASBackend.service.impl;
 
 import com.project.DASBackend.dto.ServicePriceListDto;
 import com.project.DASBackend.entity.ServicePriceList;
+import com.project.DASBackend.exception.ResourceNotFoundException;
 import com.project.DASBackend.mapper.ServicePriceListMapper;
 import com.project.DASBackend.repository.ServicePriceListRepository;
 import com.project.DASBackend.service.ServicePriceListService;
@@ -26,7 +27,8 @@ public class ServicePriceListServiceImpl implements ServicePriceListService {
 
     @Override
     public ServicePriceListDto getServicePriceListById(Integer servicePriceId) {
-        ServicePriceList servicePriceList = servicePriceListRepository.findById(servicePriceId).orElse(null);
+        ServicePriceList servicePriceList = servicePriceListRepository.findById(servicePriceId)
+                .orElseThrow(() -> new ResourceNotFoundException("Service Price List not found with id: " + servicePriceId));
         return ServicePriceListMapper.toDto(servicePriceList);
     }
 
@@ -38,8 +40,8 @@ public class ServicePriceListServiceImpl implements ServicePriceListService {
 
     @Override
     public ServicePriceListDto updateServicePriceList(Integer servicePriceId, ServicePriceListDto servicePriceListDto) {
-        ServicePriceList servicePriceList = ServicePriceListMapper.toEntity(servicePriceListDto);
-        servicePriceList.setServicePriceId(servicePriceId);
+        ServicePriceList servicePriceList = servicePriceListRepository.findById(servicePriceId)
+                .orElseThrow(() -> new ResourceNotFoundException("Service Price List not found with id: " + servicePriceId));
         servicePriceList.setSizeFrom(servicePriceListDto.getSizeFrom());
         servicePriceList.setSizeTo(servicePriceListDto.getSizeTo());
         servicePriceList.setInitPrice(servicePriceListDto.getInitPrice());
@@ -50,6 +52,9 @@ public class ServicePriceListServiceImpl implements ServicePriceListService {
 
     @Override
     public void deleteServicePriceList(Integer servicePriceId) {
+        if (!servicePriceListRepository.existsById(servicePriceId)) {
+            throw new ResourceNotFoundException("Service Price List not found with id: " + servicePriceId);
+        }
         servicePriceListRepository.deleteById(servicePriceId);
     }
 

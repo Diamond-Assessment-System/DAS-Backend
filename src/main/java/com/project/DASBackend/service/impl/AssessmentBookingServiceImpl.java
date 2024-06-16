@@ -38,9 +38,9 @@ public class AssessmentBookingServiceImpl implements AssessmentBookingService {
                 .orElseThrow(() -> new ResourceNotFoundException("Service not found with id: " + assessmentBookingDto.getServiceId()));
         assessmentBooking.setService(service);
 
-        Account consultingAccount = accountRepository.findById(assessmentBookingDto.getConsultingAccountId())
-                .orElseThrow(() -> new ResourceNotFoundException("Consulting account not found with id: " + assessmentBookingDto.getConsultingAccountId()));
-        assessmentBooking.setConsultingAccount(consultingAccount);
+//        Account consultingAccount = accountRepository.findById(assessmentBookingDto.getConsultingAccountId())
+//                .orElseThrow(() -> new ResourceNotFoundException("Consulting account not found with id: " + assessmentBookingDto.getConsultingAccountId()));
+//        assessmentBooking.setConsultingAccount(consultingAccount);
 
         assessmentBooking = assessmentBookingRepository.save(assessmentBooking);
         return AssessmentBookingMapper.toDto(assessmentBooking);
@@ -85,6 +85,22 @@ public class AssessmentBookingServiceImpl implements AssessmentBookingService {
                 .orElseThrow(() -> new ResourceNotFoundException("Consulting account not found with id: " + assessmentBookingDto.getConsultingAccountId()));
         assessmentBooking.setConsultingAccount(consultingAccount);
 
+        assessmentBooking = assessmentBookingRepository.save(assessmentBooking);
+        return AssessmentBookingMapper.toDto(assessmentBooking);
+    }
+
+    @Override
+    public AssessmentBookingDto proceedAssessmentBooking(Integer bookingId, AssessmentBookingDto assessmentBookingDto) {
+        AssessmentBooking assessmentBooking = assessmentBookingRepository.findById(bookingId)
+                .orElseThrow(() -> new ResourceNotFoundException("Assessment Booking not found with id: " + bookingId));
+        assessmentBooking.setTotalPrice(assessmentBookingDto.getTotalPrice());
+        assessmentBooking.setSampleReturnDate(assessmentBookingDto.getSampleReturnDate());
+        assessmentBooking.setStatus(assessmentBookingDto.getStatus());
+        assessmentBooking.setPaymentStatus(assessmentBookingDto.getPaymentStatus());
+        assessmentBooking.setDateReceived(assessmentBookingDto.getDateReceived());
+        Account consultingAccount = accountRepository.findById(assessmentBookingDto.getConsultingAccountId())
+                .orElseThrow(() -> new ResourceNotFoundException("Consulting account not found with id: " + assessmentBookingDto.getConsultingAccountId()));
+        assessmentBooking.setConsultingAccount(consultingAccount);
         assessmentBooking = assessmentBookingRepository.save(assessmentBooking);
         return AssessmentBookingMapper.toDto(assessmentBooking);
     }

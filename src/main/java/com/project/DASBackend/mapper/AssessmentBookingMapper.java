@@ -22,7 +22,8 @@ public class AssessmentBookingMapper {
                 .quantities(assessmentBooking.getQuantities())
                 .accountId(assessmentBooking.getAccount().getAccountId())
                 .serviceId(assessmentBooking.getService().getServiceId())
-                .consultingAccountId(assessmentBooking.getConsultingAccount().getAccountId()) // New field
+                .serviceId(assessmentBooking.getService().getServiceId())
+                .consultingAccountId(assessmentBooking.getConsultingAccount() != null ? assessmentBooking.getConsultingAccount().getAccountId() : null)
                 .build();
     }
 

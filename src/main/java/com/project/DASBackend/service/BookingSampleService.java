@@ -7,6 +7,8 @@ import java.util.List;
 public interface BookingSampleService {
     BookingSampleDto createBookingSample(BookingSampleDto bookingSampleDto);
 
+    List<BookingSampleDto> createBookingSamples(List<BookingSampleDto> bookingSampleDtos);
+
     BookingSampleDto getBookingSampleById(Integer sampleId);
 
     List<BookingSampleDto> getAllBookingSamples();

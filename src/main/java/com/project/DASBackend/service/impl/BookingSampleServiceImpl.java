@@ -4,11 +4,13 @@ import com.project.DASBackend.dto.BookingSampleDto;
 import com.project.DASBackend.entity.Account;
 import com.project.DASBackend.entity.AssessmentBooking;
 import com.project.DASBackend.entity.BookingSample;
+import com.project.DASBackend.entity.ServicePriceList;
 import com.project.DASBackend.exception.ResourceNotFoundException;
 import com.project.DASBackend.mapper.BookingSampleMapper;
 import com.project.DASBackend.repository.AccountRepository;
 import com.project.DASBackend.repository.AssessmentBookingRepository;
 import com.project.DASBackend.repository.BookingSampleRepository;
+import com.project.DASBackend.repository.ServicePriceListRepository;
 import com.project.DASBackend.service.BookingSampleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,8 @@ public class BookingSampleServiceImpl implements BookingSampleService {
     private AccountRepository accountRepository;
     @Autowired
     private AssessmentBookingRepository assessmentBookingRepository;
+    @Autowired
+    private ServicePriceListRepository servicePriceListRepository;
 
     @Override
     public BookingSampleDto createBookingSample(BookingSampleDto bookingSampleDto) {
@@ -37,6 +41,10 @@ public class BookingSampleServiceImpl implements BookingSampleService {
         AssessmentBooking assessmentBooking = assessmentBookingRepository.findById(bookingSampleDto.getBookingId())
                 .orElseThrow(() -> new ResourceNotFoundException("Assessment Booking not found with id: " + bookingSampleDto.getBookingId()));
         bookingSample.setAssessmentBooking(assessmentBooking);
+
+        ServicePriceList servicePriceList = servicePriceListRepository.findById(bookingSampleDto.getServicePriceId())
+                .orElseThrow(() -> new ResourceNotFoundException("Service Price List not found with id: " + bookingSampleDto.getServicePriceId()));
+        bookingSample.setServicePriceList(servicePriceList);
 
         bookingSample = bookingSampleRepository.save(bookingSample);
         return BookingSampleMapper.toDto(bookingSample);

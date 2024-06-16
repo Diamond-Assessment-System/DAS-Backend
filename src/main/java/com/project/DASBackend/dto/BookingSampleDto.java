@@ -34,4 +34,7 @@ public class BookingSampleDto {
 
     @NotNull(message = "Account ID cannot be null")
     private Integer accountId;
+
+    @NotNull(message = "Service price ID cannot be null")
+    private Integer servicePriceId;
 }

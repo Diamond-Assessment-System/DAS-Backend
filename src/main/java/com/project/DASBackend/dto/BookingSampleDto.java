@@ -1,9 +1,8 @@
 package com.project.DASBackend.dto;
 
-import lombok.*;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 @Getter
 @Setter
@@ -18,7 +17,7 @@ public class BookingSampleDto {
     @NotNull(message = "Status cannot be null")
     private Integer status;
 
-    @NotNull(message = "Is diamond cannot be null")
+    @NotNull(message = "IsDiamond cannot be null")
     private Integer isDiamond;
 
     @NotBlank(message = "Name cannot be blank")
@@ -30,15 +29,9 @@ public class BookingSampleDto {
     @NotNull(message = "Price cannot be null")
     private Float price;
 
-    @NotNull(message = "Diamond id cannot be null")
-    private Integer diamondId;
-
-    @NotNull(message = "Booking id cannot be null")
+    @NotNull(message = "Booking ID cannot be null")
     private Integer bookingId;
 
-    @NotNull(message = "Account id cannot be null")
+    @NotNull(message = "Account ID cannot be null")
     private Integer accountId;
-
-    @NotNull(message = "Seal id cannot be null")
-    private Integer sealId;
 }

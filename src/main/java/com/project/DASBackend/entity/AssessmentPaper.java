@@ -56,4 +56,8 @@ public class AssessmentPaper {
     @ManyToOne
     @JoinColumn(name = "Account_Id", nullable = false)
     private Account account;
+
+    @ManyToOne
+    @JoinColumn(name = "Sample_Id", nullable = false)
+    private BookingSample bookingSample;
 }

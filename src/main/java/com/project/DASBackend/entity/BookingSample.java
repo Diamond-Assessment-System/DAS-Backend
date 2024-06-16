@@ -34,18 +34,10 @@ public class BookingSample {
     private Float price;
 
     @ManyToOne
-    @JoinColumn(name = "Diamond_Id", nullable = false)
-    private AssessmentPaper assessmentPaper;
-
-    @ManyToOne
     @JoinColumn(name = "Booking_Id", nullable = false)
     private AssessmentBooking assessmentBooking;
 
     @ManyToOne
     @JoinColumn(name = "Account_Id", nullable = false)
     private Account account;
-
-    @ManyToOne
-    @JoinColumn(name = "SealId", nullable = false)
-    private Seal seal;
 }

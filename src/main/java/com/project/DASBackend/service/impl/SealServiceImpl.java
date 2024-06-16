@@ -40,6 +40,12 @@ public class SealServiceImpl implements SealService {
     public SealDto updateSeal(Integer sealId, SealDto sealDto) {
         Seal seal = SealMapper.toEntity(sealDto);
         seal.setSealId(sealId);
+        seal.setShape(sealDto.getShape());
+        seal.setWeight(sealDto.getWeight());
+        seal.setSize(sealDto.getSize());
+        seal.setDateCreated(sealDto.getDateCreated());
+        seal.setColor(sealDto.getColor());
+        seal.setClarity(sealDto.getClarity());
         seal = sealRepository.save(seal);
         return SealMapper.toDto(seal);
     }
@@ -48,4 +54,5 @@ public class SealServiceImpl implements SealService {
     public void deleteSeal(Integer sealId) {
         sealRepository.deleteById(sealId);
     }
+
 }

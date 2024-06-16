@@ -28,7 +28,7 @@ public class ServicePriceListMapper {
         servicePriceList.setSizeTo(servicePriceListDto.getSizeTo());
         servicePriceList.setInitPrice(servicePriceListDto.getInitPrice());
         servicePriceList.setPriceUnit(servicePriceListDto.getPriceUnit());
-        // Note: sampleId mapping should be handled separately based on your application logic
+        // BookingSample needs to be set in the service layer
         return servicePriceList;
     }
 }

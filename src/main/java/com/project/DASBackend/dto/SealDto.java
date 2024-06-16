@@ -1,9 +1,9 @@
 package com.project.DASBackend.dto;
 
-import lombok.*;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
 import java.time.LocalDate;
 
 @Getter
@@ -33,4 +33,7 @@ public class SealDto {
 
     @NotBlank(message = "Clarity cannot be blank")
     private String clarity;
+
+    @NotNull(message = "Sample ID cannot be null")
+    private Integer sampleId;
 }

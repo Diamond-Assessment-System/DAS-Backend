@@ -37,4 +37,8 @@ public class Seal {
 
     @Column(name = "Clarity", nullable = false)
     private String clarity;
+
+    @ManyToOne
+    @JoinColumn(name = "Sample_Id", nullable = false)
+    private BookingSample bookingSample;
 }

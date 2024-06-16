@@ -16,6 +16,7 @@ public class SealMapper {
                 .dateCreated(seal.getDateCreated())
                 .color(seal.getColor())
                 .clarity(seal.getClarity())
+                .sampleId(seal.getBookingSample().getSampleId())
                 .build();
     }
 
@@ -31,6 +32,7 @@ public class SealMapper {
         seal.setDateCreated(sealDto.getDateCreated());
         seal.setColor(sealDto.getColor());
         seal.setClarity(sealDto.getClarity());
+        // BookingSample needs to be set in the service layer
         return seal;
     }
 }

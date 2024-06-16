@@ -40,6 +40,12 @@ public class CommitmentPaperServiceImpl implements CommitmentPaperService {
     public CommitmentPaperDto updateCommitmentPaper(Integer commitmentId, CommitmentPaperDto commitmentPaperDto) {
         CommitmentPaper commitmentPaper = CommitmentPaperMapper.toEntity(commitmentPaperDto);
         commitmentPaper.setCommitmentId(commitmentId);
+        commitmentPaper.setDescription(commitmentPaperDto.getDescription());
+        commitmentPaper.setDateCreated(commitmentPaperDto.getDateCreated());
+        commitmentPaper.setApprovalDate(commitmentPaperDto.getApprovalDate());
+        commitmentPaper.setCommitmentType(commitmentPaperDto.getCommitmentType());
+        commitmentPaper.setTitle(commitmentPaperDto.getTitle());
+        commitmentPaper.setStatus(commitmentPaperDto.getStatus());
         commitmentPaper = commitmentPaperRepository.save(commitmentPaper);
         return CommitmentPaperMapper.toDto(commitmentPaper);
     }
@@ -51,10 +57,11 @@ public class CommitmentPaperServiceImpl implements CommitmentPaperService {
 
     @Override
     public CommitmentPaperDto changeStatus(Integer commitmentId, Integer status) {
-        CommitmentPaper commitmentPaper = commitmentPaperRepository.findById(commitmentId)
-                .orElseThrow(() -> new RuntimeException("Commitment Paper not found"));
-        commitmentPaper.setStatus(status);
-        commitmentPaper = commitmentPaperRepository.save(commitmentPaper);
+        CommitmentPaper commitmentPaper = commitmentPaperRepository.findById(commitmentId).orElse(null);
+        if (commitmentPaper != null) {
+            commitmentPaper.setStatus(status);
+            commitmentPaper = commitmentPaperRepository.save(commitmentPaper);
+        }
         return CommitmentPaperMapper.toDto(commitmentPaper);
     }
 }

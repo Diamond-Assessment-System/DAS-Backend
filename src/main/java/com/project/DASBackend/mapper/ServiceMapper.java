@@ -4,17 +4,17 @@ import com.project.DASBackend.dto.ServiceDto;
 import com.project.DASBackend.entity.Services;
 
 public class ServiceMapper {
-    public static ServiceDto toDto(Services services) {
-        if (services == null) {
+    public static ServiceDto toDto(Services service) {
+        if (service == null) {
             return null;
         }
         return ServiceDto.builder()
-                .serviceId(services.getServiceId())
-                .serviceName(services.getServiceName())
-                .serviceDescription(services.getServiceDescription())
-                .serviceStatus(services.getServiceStatus())
-                .servicePrice(services.getServicePrice())
-                .serviceTime(services.getServiceTime())
+                .serviceId(service.getServiceId())
+                .serviceName(service.getServiceName())
+                .serviceDescription(service.getServiceDescription())
+                .serviceStatus(service.getServiceStatus())
+                .servicePrice(service.getServicePrice())
+                .serviceTime(service.getServiceTime())
                 .build();
     }
 
@@ -22,13 +22,13 @@ public class ServiceMapper {
         if (serviceDto == null) {
             return null;
         }
-        Services services = new Services();
-        services.setServiceId(serviceDto.getServiceId());
-        services.setServiceName(serviceDto.getServiceName());
-        services.setServiceDescription(serviceDto.getServiceDescription());
-        services.setServiceStatus(serviceDto.getServiceStatus());
-        services.setServicePrice(serviceDto.getServicePrice());
-        services.setServiceTime(serviceDto.getServiceTime());
-        return services;
+        Services service = new Services();
+        service.setServiceId(serviceDto.getServiceId());
+        service.setServiceName(serviceDto.getServiceName());
+        service.setServiceDescription(serviceDto.getServiceDescription());
+        service.setServiceStatus(serviceDto.getServiceStatus());
+        service.setServicePrice(serviceDto.getServicePrice());
+        service.setServiceTime(serviceDto.getServiceTime());
+        return service;
     }
 }

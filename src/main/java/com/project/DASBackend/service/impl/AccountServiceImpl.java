@@ -40,6 +40,13 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto updateAccount(Integer accountId, AccountDto accountDto) {
         Account account = AccountMapper.toEntity(accountDto);
         account.setAccountId(accountId);
+        account.setUid(accountDto.getUid());
+        account.setEmail(accountDto.getEmail());
+        account.setDisplayName(accountDto.getDisplayName());
+        account.setAccountStatus(accountDto.getAccountStatus());
+        account.setRole(accountDto.getRole());
+        account.setPassword(accountDto.getPassword());
+        account.setPhone(accountDto.getPhone());
         account = accountRepository.save(account);
         return AccountMapper.toDto(account);
     }
@@ -47,5 +54,15 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void deleteAccount(Integer accountId) {
         accountRepository.deleteById(accountId);
+    }
+
+    @Override
+    public AccountDto changeStatus(Integer accountId, Integer status) {
+        Account account = accountRepository.findById(accountId).orElse(null);
+        if (account != null) {
+            account.setAccountStatus(status);
+            account = accountRepository.save(account);
+        }
+        return AccountMapper.toDto(account);
     }
 }

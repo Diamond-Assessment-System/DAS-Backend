@@ -14,4 +14,6 @@ public interface AccountService {
     AccountDto updateAccount(Integer accountId, AccountDto accountDto);
 
     void deleteAccount(Integer accountId);
+
+    AccountDto changeStatus(Integer accountId, Integer status);
 }

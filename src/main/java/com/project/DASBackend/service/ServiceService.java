@@ -14,4 +14,6 @@ public interface ServiceService {
     ServiceDto updateService(Integer serviceId, ServiceDto serviceDto);
 
     void deleteService(Integer serviceId);
+
+    ServiceDto changeStatus(Integer serviceId, Integer status);
 }

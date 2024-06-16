@@ -20,7 +20,7 @@ public class AssessmentBookingMapper {
                 .feedback(assessmentBooking.getFeedback())
                 .quantities(assessmentBooking.getQuantities())
                 .accountId(assessmentBooking.getAccount().getAccountId())
-                .serviceId(assessmentBooking.getServices().getServiceId())
+                .serviceId(assessmentBooking.getService().getServiceId())
                 .build();
     }
 
@@ -39,7 +39,7 @@ public class AssessmentBookingMapper {
         assessmentBooking.setDateCreated(assessmentBookingDto.getDateCreated());
         assessmentBooking.setFeedback(assessmentBookingDto.getFeedback());
         assessmentBooking.setQuantities(assessmentBookingDto.getQuantities());
-        // Note: accountId and serviceId mapping should be handled separately based on your application logic
+        // Account and Service need to be set in the service layer
         return assessmentBooking;
     }
 }

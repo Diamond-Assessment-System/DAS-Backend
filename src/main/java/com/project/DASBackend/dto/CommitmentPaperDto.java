@@ -1,9 +1,9 @@
 package com.project.DASBackend.dto;
 
-import lombok.*;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
 import java.time.LocalDate;
 
 @Getter
@@ -34,9 +34,9 @@ public class CommitmentPaperDto {
     @NotNull(message = "Status cannot be null")
     private Integer status;
 
-    @NotNull(message = "Booking id cannot be null")
+    @NotNull(message = "Booking ID cannot be null")
     private Integer bookingId;
 
-    @NotNull(message = "Account id cannot be null")
+    @NotNull(message = "Account ID cannot be null")
     private Integer accountId;
 }

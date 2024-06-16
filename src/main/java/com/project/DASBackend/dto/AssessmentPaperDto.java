@@ -1,9 +1,9 @@
 package com.project.DASBackend.dto;
 
-import lombok.*;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
 import java.time.LocalDate;
 
 @Getter
@@ -48,5 +48,9 @@ public class AssessmentPaperDto {
     @NotNull(message = "Date created cannot be null")
     private LocalDate dateCreated;
 
+    @NotNull(message = "Account ID cannot be null")
     private Integer accountId;
+
+    @NotNull(message = "Sample ID cannot be null")
+    private Integer sampleId;
 }

@@ -40,6 +40,15 @@ public class AssessmentBookingServiceImpl implements AssessmentBookingService {
     public AssessmentBookingDto updateAssessmentBooking(Integer bookingId, AssessmentBookingDto assessmentBookingDto) {
         AssessmentBooking assessmentBooking = AssessmentBookingMapper.toEntity(assessmentBookingDto);
         assessmentBooking.setBookingId(bookingId);
+        assessmentBooking.setTotalPrice(assessmentBookingDto.getTotalPrice());
+        assessmentBooking.setSampleReturnDate(assessmentBookingDto.getSampleReturnDate());
+        assessmentBooking.setStatus(assessmentBookingDto.getStatus());
+        assessmentBooking.setPaymentStatus(assessmentBookingDto.getPaymentStatus());
+        assessmentBooking.setPaymentType(assessmentBookingDto.getPaymentType());
+        assessmentBooking.setPhone(assessmentBookingDto.getPhone());
+        assessmentBooking.setDateCreated(assessmentBookingDto.getDateCreated());
+        assessmentBooking.setFeedback(assessmentBookingDto.getFeedback());
+        assessmentBooking.setQuantities(assessmentBookingDto.getQuantities());
         assessmentBooking = assessmentBookingRepository.save(assessmentBooking);
         return AssessmentBookingMapper.toDto(assessmentBooking);
     }
@@ -51,10 +60,11 @@ public class AssessmentBookingServiceImpl implements AssessmentBookingService {
 
     @Override
     public AssessmentBookingDto changeStatus(Integer bookingId, Integer status) {
-        AssessmentBooking assessmentBooking = assessmentBookingRepository.findById(bookingId)
-                .orElseThrow(() -> new RuntimeException("Assessment Booking not found"));
-        assessmentBooking.setStatus(status);
-        assessmentBooking = assessmentBookingRepository.save(assessmentBooking);
+        AssessmentBooking assessmentBooking = assessmentBookingRepository.findById(bookingId).orElse(null);
+        if (assessmentBooking != null) {
+            assessmentBooking.setStatus(status);
+            assessmentBooking = assessmentBookingRepository.save(assessmentBooking);
+        }
         return AssessmentBookingMapper.toDto(assessmentBooking);
     }
 }

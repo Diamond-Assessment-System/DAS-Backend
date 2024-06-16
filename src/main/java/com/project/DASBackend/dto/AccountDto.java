@@ -1,10 +1,9 @@
 package com.project.DASBackend.dto;
 
-import lombok.*;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 @Getter
 @Setter
@@ -16,19 +15,23 @@ public class AccountDto {
 
     private Integer accountId;
 
-    @NotBlank(message = "UID cannot be blank")
-    private String uid;
-
-    @NotBlank(message = "Email cannot be blank")
     @Email(message = "Invalid email address")
     private String email;
 
     @NotBlank(message = "Display name cannot be blank")
     private String displayName;
 
+    private String uid;
+
     @NotNull(message = "Account status cannot be null")
     private Integer accountStatus;
 
     @NotNull(message = "Role cannot be null")
     private Integer role;
+
+    @NotBlank(message = "Password cannot be blank")
+    private String password;
+
+    @NotBlank(message = "Phone cannot be blank")
+    private String phone;
 }

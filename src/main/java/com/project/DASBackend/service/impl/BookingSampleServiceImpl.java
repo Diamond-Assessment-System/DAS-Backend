@@ -40,6 +40,11 @@ public class BookingSampleServiceImpl implements BookingSampleService {
     public BookingSampleDto updateBookingSample(Integer sampleId, BookingSampleDto bookingSampleDto) {
         BookingSample bookingSample = BookingSampleMapper.toEntity(bookingSampleDto);
         bookingSample.setSampleId(sampleId);
+        bookingSample.setStatus(bookingSampleDto.getStatus());
+        bookingSample.setIsDiamond(bookingSampleDto.getIsDiamond());
+        bookingSample.setName(bookingSampleDto.getName());
+        bookingSample.setSize(bookingSampleDto.getSize());
+        bookingSample.setPrice(bookingSampleDto.getPrice());
         bookingSample = bookingSampleRepository.save(bookingSample);
         return BookingSampleMapper.toDto(bookingSample);
     }
@@ -51,10 +56,11 @@ public class BookingSampleServiceImpl implements BookingSampleService {
 
     @Override
     public BookingSampleDto changeStatus(Integer sampleId, Integer status) {
-        BookingSample bookingSample = bookingSampleRepository.findById(sampleId)
-                .orElseThrow(() -> new RuntimeException("Booking Sample not found"));
-        bookingSample.setStatus(status);
-        bookingSample = bookingSampleRepository.save(bookingSample);
+        BookingSample bookingSample = bookingSampleRepository.findById(sampleId).orElse(null);
+        if (bookingSample != null) {
+            bookingSample.setStatus(status);
+            bookingSample = bookingSampleRepository.save(bookingSample);
+        }
         return BookingSampleMapper.toDto(bookingSample);
     }
 }

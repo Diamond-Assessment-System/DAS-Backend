@@ -18,7 +18,7 @@ public class Account {
     @Column(name = "Account_Id")
     private Integer accountId;
 
-    @Column(name = "Email", nullable = false, unique = true)
+    @Column(name = "Email")
     private String email;
 
     @Column(name = "DisplayName", nullable = false)

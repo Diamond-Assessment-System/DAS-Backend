@@ -40,6 +40,10 @@ public class ServicePriceListServiceImpl implements ServicePriceListService {
     public ServicePriceListDto updateServicePriceList(Integer servicePriceId, ServicePriceListDto servicePriceListDto) {
         ServicePriceList servicePriceList = ServicePriceListMapper.toEntity(servicePriceListDto);
         servicePriceList.setServicePriceId(servicePriceId);
+        servicePriceList.setSizeFrom(servicePriceListDto.getSizeFrom());
+        servicePriceList.setSizeTo(servicePriceListDto.getSizeTo());
+        servicePriceList.setInitPrice(servicePriceListDto.getInitPrice());
+        servicePriceList.setPriceUnit(servicePriceListDto.getPriceUnit());
         servicePriceList = servicePriceListRepository.save(servicePriceList);
         return ServicePriceListMapper.toDto(servicePriceList);
     }
@@ -48,4 +52,5 @@ public class ServicePriceListServiceImpl implements ServicePriceListService {
     public void deleteServicePriceList(Integer servicePriceId) {
         servicePriceListRepository.deleteById(servicePriceId);
     }
+
 }

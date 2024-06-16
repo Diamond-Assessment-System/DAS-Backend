@@ -22,6 +22,7 @@ public class AssessmentPaperMapper {
                 .comments(assessmentPaper.getComments())
                 .dateCreated(assessmentPaper.getDateCreated())
                 .accountId(assessmentPaper.getAccount().getAccountId())
+                .sampleId(assessmentPaper.getBookingSample().getSampleId())
                 .build();
     }
 
@@ -42,7 +43,7 @@ public class AssessmentPaperMapper {
         assessmentPaper.setWeight(assessmentPaperDto.getWeight());
         assessmentPaper.setComments(assessmentPaperDto.getComments());
         assessmentPaper.setDateCreated(assessmentPaperDto.getDateCreated());
-        // Note: accountId mapping should be handled separately based on your application logic
+        // Account and BookingSample need to be set in the service layer
         return assessmentPaper;
     }
 }

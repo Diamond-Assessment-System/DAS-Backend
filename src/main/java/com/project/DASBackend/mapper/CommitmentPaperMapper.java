@@ -33,7 +33,7 @@ public class CommitmentPaperMapper {
         commitmentPaper.setCommitmentType(commitmentPaperDto.getCommitmentType());
         commitmentPaper.setTitle(commitmentPaperDto.getTitle());
         commitmentPaper.setStatus(commitmentPaperDto.getStatus());
-        // Note: bookingId and accountId mapping should be handled separately based on your application logic
+        // AssessmentBooking and Account need to be set in the service layer
         return commitmentPaper;
     }
 }

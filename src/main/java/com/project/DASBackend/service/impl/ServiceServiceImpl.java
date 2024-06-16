@@ -19,15 +19,15 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public ServiceDto createService(ServiceDto serviceDto) {
-        Services services = ServiceMapper.toEntity(serviceDto);
-        services = serviceRepository.save(services);
-        return ServiceMapper.toDto(services);
+        Services service = ServiceMapper.toEntity(serviceDto);
+        service = serviceRepository.save(service);
+        return ServiceMapper.toDto(service);
     }
 
     @Override
     public ServiceDto getServiceById(Integer serviceId) {
-        Services services = serviceRepository.findById(serviceId).orElse(null);
-        return ServiceMapper.toDto(services);
+        Services service = serviceRepository.findById(serviceId).orElse(null);
+        return ServiceMapper.toDto(service);
     }
 
     @Override
@@ -38,14 +38,29 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public ServiceDto updateService(Integer serviceId, ServiceDto serviceDto) {
-        Services services = ServiceMapper.toEntity(serviceDto);
-        services.setServiceId(serviceId);
-        services = serviceRepository.save(services);
-        return ServiceMapper.toDto(services);
+        Services service = ServiceMapper.toEntity(serviceDto);
+        service.setServiceId(serviceId);
+        service.setServiceName(serviceDto.getServiceName());
+        service.setServiceDescription(serviceDto.getServiceDescription());
+        service.setServiceStatus(serviceDto.getServiceStatus());
+        service.setServicePrice(serviceDto.getServicePrice());
+        service.setServiceTime(serviceDto.getServiceTime());
+        service = serviceRepository.save(service);
+        return ServiceMapper.toDto(service);
     }
 
     @Override
     public void deleteService(Integer serviceId) {
         serviceRepository.deleteById(serviceId);
+    }
+
+    @Override
+    public ServiceDto changeStatus(Integer serviceId, Integer status) {
+        Services service = serviceRepository.findById(serviceId).orElse(null);
+        if (service != null) {
+            service.setServiceStatus(status);
+            service = serviceRepository.save(service);
+        }
+        return ServiceMapper.toDto(service);
     }
 }

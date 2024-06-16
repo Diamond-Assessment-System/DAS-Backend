@@ -10,11 +10,13 @@ public class AccountMapper {
         }
         return AccountDto.builder()
                 .accountId(account.getAccountId())
-                .uid(account.getUid())
                 .email(account.getEmail())
                 .displayName(account.getDisplayName())
+                .uid(account.getUid())
                 .accountStatus(account.getAccountStatus())
                 .role(account.getRole())
+                .password(account.getPassword())
+                .phone(account.getPhone())
                 .build();
     }
 
@@ -24,11 +26,13 @@ public class AccountMapper {
         }
         Account account = new Account();
         account.setAccountId(accountDto.getAccountId());
-        account.setUid(accountDto.getUid());
         account.setEmail(accountDto.getEmail());
         account.setDisplayName(accountDto.getDisplayName());
+        account.setUid(accountDto.getUid());
         account.setAccountStatus(accountDto.getAccountStatus());
         account.setRole(accountDto.getRole());
+        account.setPassword(accountDto.getPassword());
+        account.setPhone(accountDto.getPhone());
         return account;
     }
 }

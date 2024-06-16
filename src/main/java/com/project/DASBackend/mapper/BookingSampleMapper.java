@@ -15,10 +15,8 @@ public class BookingSampleMapper {
                 .name(bookingSample.getName())
                 .size(bookingSample.getSize())
                 .price(bookingSample.getPrice())
-                .diamondId(bookingSample.getAssessmentPaper().getDiamondId())
                 .bookingId(bookingSample.getAssessmentBooking().getBookingId())
                 .accountId(bookingSample.getAccount().getAccountId())
-                .sealId(bookingSample.getSeal().getSealId())
                 .build();
     }
 
@@ -33,7 +31,7 @@ public class BookingSampleMapper {
         bookingSample.setName(bookingSampleDto.getName());
         bookingSample.setSize(bookingSampleDto.getSize());
         bookingSample.setPrice(bookingSampleDto.getPrice());
-        // Note: diamondId, bookingId, accountId, and sealId mapping should be handled separately based on your application logic
+        // AssessmentBooking and Account need to be set in the service layer
         return bookingSample;
     }
 }

@@ -40,6 +40,17 @@ public class AssessmentPaperServiceImpl implements AssessmentPaperService {
     public AssessmentPaperDto updateAssessmentPaper(Integer diamondId, AssessmentPaperDto assessmentPaperDto) {
         AssessmentPaper assessmentPaper = AssessmentPaperMapper.toEntity(assessmentPaperDto);
         assessmentPaper.setDiamondId(diamondId);
+        assessmentPaper.setType(assessmentPaperDto.getType());
+        assessmentPaper.setSize(assessmentPaperDto.getSize());
+        assessmentPaper.setShape(assessmentPaperDto.getShape());
+        assessmentPaper.setColor(assessmentPaperDto.getColor());
+        assessmentPaper.setClarity(assessmentPaperDto.getClarity());
+        assessmentPaper.setPolish(assessmentPaperDto.getPolish());
+        assessmentPaper.setSymmetry(assessmentPaperDto.getSymmetry());
+        assessmentPaper.setFluorescence(assessmentPaperDto.getFluorescence());
+        assessmentPaper.setWeight(assessmentPaperDto.getWeight());
+        assessmentPaper.setComments(assessmentPaperDto.getComments());
+        assessmentPaper.setDateCreated(assessmentPaperDto.getDateCreated());
         assessmentPaper = assessmentPaperRepository.save(assessmentPaper);
         return AssessmentPaperMapper.toDto(assessmentPaper);
     }
@@ -48,4 +59,5 @@ public class AssessmentPaperServiceImpl implements AssessmentPaperService {
     public void deleteAssessmentPaper(Integer diamondId) {
         assessmentPaperRepository.deleteById(diamondId);
     }
+
 }

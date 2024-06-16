@@ -1,8 +1,7 @@
 package com.project.DASBackend.dto;
 
-import lombok.*;
-
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 @Getter
 @Setter
@@ -20,12 +19,12 @@ public class ServicePriceListDto {
     @NotNull(message = "Size to cannot be null")
     private Float sizeTo;
 
-    @NotNull(message = "Initial price cannot be null")
+    @NotNull(message = "Init price cannot be null")
     private Float initPrice;
 
     @NotNull(message = "Price unit cannot be null")
     private Float priceUnit;
 
-    @NotNull(message = "Service id cannot be null")
+    @NotNull(message = "Sample ID cannot be null")
     private Integer sampleId;
 }

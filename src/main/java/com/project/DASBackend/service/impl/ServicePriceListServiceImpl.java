@@ -19,16 +19,11 @@ public class ServicePriceListServiceImpl implements ServicePriceListService {
 
     @Autowired
     private ServicePriceListRepository servicePriceListRepository;
-    @Autowired
-    private BookingSampleRepository bookingSampleRepository;
 
     @Override
     public ServicePriceListDto createServicePriceList(ServicePriceListDto servicePriceListDto) {
         ServicePriceList servicePriceList = ServicePriceListMapper.toEntity(servicePriceListDto);
 
-        BookingSample bookingSample = bookingSampleRepository.findById(servicePriceListDto.getSampleId())
-                .orElseThrow(() -> new ResourceNotFoundException("Booking Sample not found with id: " + servicePriceListDto.getSampleId()));
-        servicePriceList.setBookingSample(bookingSample);
 
         servicePriceList = servicePriceListRepository.save(servicePriceList);
         return ServicePriceListMapper.toDto(servicePriceList);

@@ -16,6 +16,7 @@ public class BookingSampleMapper {
                 .size(bookingSample.getSize())
                 .price(bookingSample.getPrice())
                 .bookingId(bookingSample.getAssessmentBooking().getBookingId())
+                .servicePriceId(bookingSample.getServicePriceList().getServicePriceId())
                 .accountId(bookingSample.getAccount().getAccountId())
                 .build();
     }

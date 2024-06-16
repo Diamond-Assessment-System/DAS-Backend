@@ -48,6 +48,9 @@ public class AssessmentPaperDto {
     @NotNull(message = "Date created cannot be null")
     private LocalDate dateCreated;
 
+    @NotNull(message = "There muse be a paper image url/base64")
+    private String paperImage;
+
     @NotNull(message = "Account ID cannot be null")
     private Integer accountId;
 

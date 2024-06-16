@@ -1,42 +1,39 @@
 package com.project.DASBackend.mapper;
 
 import com.project.DASBackend.dto.CommitmentPaperDto;
-import com.project.DASBackend.entity.Account;
-import com.project.DASBackend.entity.AssessmentBooking;
 import com.project.DASBackend.entity.CommitmentPaper;
 
 public class CommitmentPaperMapper {
-    public static CommitmentPaperDto toDto(CommitmentPaper paper) {
-        if (paper == null) {
+    public static CommitmentPaperDto toDto(CommitmentPaper commitmentPaper) {
+        if (commitmentPaper == null) {
             return null;
         }
-        return new CommitmentPaperDto(
-                paper.getCommitmentId(),
-                paper.getDateCreated(),
-                paper.getApprovalDate(),
-                paper.getCommitmentType(),
-                paper.getTitle(),
-                paper.getDescription(),
-                paper.getStatus(),
-                paper.getBooking().getBookingId(),
-                paper.getAccount().getAccountId()
-        );
+        return CommitmentPaperDto.builder()
+                .commitmentId(commitmentPaper.getCommitmentId())
+                .description(commitmentPaper.getDescription())
+                .dateCreated(commitmentPaper.getDateCreated())
+                .approvalDate(commitmentPaper.getApprovalDate())
+                .commitmentType(commitmentPaper.getCommitmentType())
+                .title(commitmentPaper.getTitle())
+                .status(commitmentPaper.getStatus())
+                .bookingId(commitmentPaper.getAssessmentBooking().getBookingId())
+                .accountId(commitmentPaper.getAccount().getAccountId())
+                .build();
     }
 
-    public static CommitmentPaper toEntity(CommitmentPaperDto paperDto, AssessmentBooking booking, Account account) {
-        if (paperDto == null) {
+    public static CommitmentPaper toEntity(CommitmentPaperDto commitmentPaperDto) {
+        if (commitmentPaperDto == null) {
             return null;
         }
-        CommitmentPaper paper = new CommitmentPaper();
-        paper.setCommitmentId(paperDto.getCommitmentId());
-        paper.setDateCreated(paperDto.getDateCreated());
-        paper.setApprovalDate(paperDto.getApprovalDate());
-        paper.setCommitmentType(paperDto.getCommitmentType());
-        paper.setTitle(paperDto.getTitle());
-        paper.setDescription(paperDto.getDescription());
-        paper.setStatus(paperDto.getStatus());
-        paper.setBooking(booking);
-        paper.setAccount(account);
-        return paper;
+        CommitmentPaper commitmentPaper = new CommitmentPaper();
+        commitmentPaper.setCommitmentId(commitmentPaperDto.getCommitmentId());
+        commitmentPaper.setDescription(commitmentPaperDto.getDescription());
+        commitmentPaper.setDateCreated(commitmentPaperDto.getDateCreated());
+        commitmentPaper.setApprovalDate(commitmentPaperDto.getApprovalDate());
+        commitmentPaper.setCommitmentType(commitmentPaperDto.getCommitmentType());
+        commitmentPaper.setTitle(commitmentPaperDto.getTitle());
+        commitmentPaper.setStatus(commitmentPaperDto.getStatus());
+        // Note: bookingId and accountId mapping should be handled separately based on your application logic
+        return commitmentPaper;
     }
 }

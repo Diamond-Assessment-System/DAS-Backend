@@ -4,7 +4,7 @@ import com.project.DASBackend.dto.AccountDto;
 
 import java.util.List;
 
-public interface AccountService{
+public interface AccountService {
     AccountDto createAccount(AccountDto accountDto);
 
     AccountDto getAccountById(Integer accountId);
@@ -14,5 +14,4 @@ public interface AccountService{
     AccountDto updateAccount(Integer accountId, AccountDto accountDto);
 
     void deleteAccount(Integer accountId);
-
 }

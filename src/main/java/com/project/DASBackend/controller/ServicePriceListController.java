@@ -3,15 +3,17 @@ package com.project.DASBackend.controller;
 import com.project.DASBackend.dto.ServicePriceListDto;
 import com.project.DASBackend.service.ServicePriceListService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-//@CrossOrigin("*")
+
+@AllArgsConstructor
 @RestController
-@RequestMapping("/api/servicepricelists")
+@RequestMapping("/api/service-price-lists")
 public class ServicePriceListController {
 
     @Autowired
@@ -19,34 +21,30 @@ public class ServicePriceListController {
 
     @PostMapping
     public ResponseEntity<ServicePriceListDto> createServicePriceList(@Valid @RequestBody ServicePriceListDto servicePriceListDto) {
-        servicePriceListDto = servicePriceListService.createServicePriceList(servicePriceListDto);
-        return new ResponseEntity<>(servicePriceListDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(servicePriceListService.createServicePriceList(servicePriceListDto), HttpStatus.CREATED);
     }
 
-
     @GetMapping("{id}")
-    public ResponseEntity<ServicePriceListDto> getServicePriceListById(@PathVariable("id") Integer servicePriceListId) {
-        ServicePriceListDto servicePriceListDto = servicePriceListService.getServicePriceListById(servicePriceListId);
+    public ResponseEntity<ServicePriceListDto> getServicePriceListById(@PathVariable("id") Integer servicePriceId) {
+        ServicePriceListDto servicePriceListDto = servicePriceListService.getServicePriceListById(servicePriceId);
         return ResponseEntity.ok(servicePriceListDto);
     }
 
     @GetMapping
-    public ResponseEntity<List<ServicePriceListDto>> getAllServicePriceList() {
-        List<ServicePriceListDto> servicePriceListDtoList = servicePriceListService.getAllServicePriceList();
-        return ResponseEntity.ok(servicePriceListDtoList);
+    public ResponseEntity<List<ServicePriceListDto>> getAllServicePriceLists() {
+        List<ServicePriceListDto> servicePriceListDtos = servicePriceListService.getAllServicePriceLists();
+        return ResponseEntity.ok(servicePriceListDtos);
     }
 
     @PutMapping("{id}")
     public ResponseEntity<ServicePriceListDto> updateServicePriceList(@Valid @RequestBody ServicePriceListDto servicePriceListDto,
-                                                                      @PathVariable("id") Integer servicePriceListId) {
-        return ResponseEntity.ok(servicePriceListService.updateServicePriceList(servicePriceListId, servicePriceListDto));
+                                                                      @PathVariable("id") Integer servicePriceId) {
+        return ResponseEntity.ok(servicePriceListService.updateServicePriceList(servicePriceId, servicePriceListDto));
     }
-
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteServicePriceListById(@PathVariable("id") Integer servicePriceListId) {
-        servicePriceListService.deleteServicePriceList(servicePriceListId);
-        return ResponseEntity.ok("ServicePriceList deleted successfully");
+    public ResponseEntity<String> deleteServicePriceList(@PathVariable("id") Integer servicePriceId) {
+        servicePriceListService.deleteServicePriceList(servicePriceId);
+        return ResponseEntity.ok("Service Price List deleted successfully");
     }
-
 }

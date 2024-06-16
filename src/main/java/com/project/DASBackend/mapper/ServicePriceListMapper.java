@@ -2,24 +2,23 @@ package com.project.DASBackend.mapper;
 
 import com.project.DASBackend.dto.ServicePriceListDto;
 import com.project.DASBackend.entity.ServicePriceList;
-import com.project.DASBackend.entity.Services;
 
 public class ServicePriceListMapper {
     public static ServicePriceListDto toDto(ServicePriceList servicePriceList) {
         if (servicePriceList == null) {
             return null;
         }
-        return new ServicePriceListDto(
-                servicePriceList.getServicePriceId(),
-                servicePriceList.getSizeFrom(),
-                servicePriceList.getSizeTo(),
-                servicePriceList.getInitPrice(),
-                servicePriceList.getPriceUnit()//,
-//                servicePriceList.getService().getServiceId()
-        );
+        return ServicePriceListDto.builder()
+                .servicePriceId(servicePriceList.getServicePriceId())
+                .sizeFrom(servicePriceList.getSizeFrom())
+                .sizeTo(servicePriceList.getSizeTo())
+                .initPrice(servicePriceList.getInitPrice())
+                .priceUnit(servicePriceList.getPriceUnit())
+                .sampleId(servicePriceList.getBookingSample().getSampleId())
+                .build();
     }
 
-    public static ServicePriceList toEntity(ServicePriceListDto servicePriceListDto/*, Services services*/) {
+    public static ServicePriceList toEntity(ServicePriceListDto servicePriceListDto) {
         if (servicePriceListDto == null) {
             return null;
         }
@@ -29,7 +28,7 @@ public class ServicePriceListMapper {
         servicePriceList.setSizeTo(servicePriceListDto.getSizeTo());
         servicePriceList.setInitPrice(servicePriceListDto.getInitPrice());
         servicePriceList.setPriceUnit(servicePriceListDto.getPriceUnit());
-//        servicePriceList.setService(services);
+        // Note: sampleId mapping should be handled separately based on your application logic
         return servicePriceList;
     }
 }

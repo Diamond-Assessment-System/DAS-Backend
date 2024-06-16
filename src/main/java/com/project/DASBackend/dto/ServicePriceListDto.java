@@ -1,32 +1,31 @@
 package com.project.DASBackend.dto;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-@Data
-@Builder
+import jakarta.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
+@Builder
 public class ServicePriceListDto {
 
     private Integer servicePriceId;
 
-    @NotNull(message = "Service ID cannot be null")
-    @Min(value = 0, message = "Service ID must be greater than or equal to 0")
+    @NotNull(message = "Size from cannot be null")
     private Float sizeFrom;
 
-    @NotNull(message = "Service ID cannot be null")
-    @Min(value = 0, message = "Service ID must be greater than or equal to 0")
+    @NotNull(message = "Size to cannot be null")
     private Float sizeTo;
 
-    @NotNull(message = "Service ID cannot be null")
-    @Min(value = 0, message = "Service ID must be greater than or equal to 0")
-    private Integer initPrice;
+    @NotNull(message = "Initial price cannot be null")
+    private Float initPrice;
 
-    @NotNull(message = "Service ID cannot be null")
-    @Min(value = 0, message = "Service ID must be greater than or equal to 0")
-    private Integer priceUnit;
+    @NotNull(message = "Price unit cannot be null")
+    private Float priceUnit;
+
+    @NotNull(message = "Service id cannot be null")
+    private Integer sampleId;
 }

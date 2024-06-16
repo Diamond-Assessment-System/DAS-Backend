@@ -1,18 +1,18 @@
 package com.project.DASBackend.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Service_Price_List")
+@Table(name = "Service_price_list")
+@Data
+@Builder
 public class ServicePriceList {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Service_price_Id")
@@ -25,12 +25,12 @@ public class ServicePriceList {
     private Float sizeTo;
 
     @Column(name = "Init_price", nullable = false)
-    private Integer initPrice;
+    private Float initPrice;
 
     @Column(name = "Price_unit", nullable = false)
-    private Integer priceUnit;
+    private Float priceUnit;
 
-//    @ManyToOne
-//    @JoinColumn(name = "Service_Id", nullable = false)
-//    private Services service;
+    @ManyToOne
+    @JoinColumn(name = "Sample_Id", nullable = false)
+    private BookingSample bookingSample;
 }

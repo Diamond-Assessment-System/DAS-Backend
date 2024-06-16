@@ -1,37 +1,44 @@
 package com.project.DASBackend.dto;
 
-import jakarta.validation.constraints.Min;
+import lombok.*;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Data
+@Builder
 public class BookingSampleDto {
 
     private Integer sampleId;
 
-    @NotNull(message = "isDiamond cannot be null")
-    private Integer isDiamond;
-
-    @NotBlank(message = "Name cannot be null")
-    private String name;
-
-    @NotNull(message = "Size cannot be null")
-    @Min(value = 0, message = "Size must be greater than or equal to 0")
-    private Float size;
-
-    @NotNull(message = "Price cannot be null")
-    @Min(value = 0, message = "Price must be greater than or equal to 0")
-    private Integer price;
-
     @NotNull(message = "Status cannot be null")
     private Integer status;
 
-    @NotNull(message = "Booking ID cannot be null")
+    @NotNull(message = "Is diamond cannot be null")
+    private Integer isDiamond;
+
+    @NotBlank(message = "Name cannot be blank")
+    private String name;
+
+    @NotNull(message = "Size cannot be null")
+    private Float size;
+
+    @NotNull(message = "Price cannot be null")
+    private Float price;
+
+    @NotNull(message = "Diamond id cannot be null")
+    private Integer diamondId;
+
+    @NotNull(message = "Booking id cannot be null")
     private Integer bookingId;
+
+    @NotNull(message = "Account id cannot be null")
+    private Integer accountId;
+
+    @NotNull(message = "Seal id cannot be null")
+    private Integer sealId;
 }

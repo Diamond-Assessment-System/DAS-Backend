@@ -3,31 +3,25 @@ package com.project.DASBackend.controller;
 import com.project.DASBackend.dto.AssessmentBookingDto;
 import com.project.DASBackend.service.AssessmentBookingService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-//@CrossOrigin("*")
+
+@AllArgsConstructor
 @RestController
-@RequestMapping("/api/assessmentbookings")
+@RequestMapping("/api/assessment-bookings")
 public class AssessmentBookingController {
 
     @Autowired
     private AssessmentBookingService assessmentBookingService;
 
-//    @PostMapping
-//    public ResponseEntity<String> createAssessmentBooking(AssessmentBookingDto assessmentBookingDto) {
-//        assessmentBookingService.createAssessmentBooking(assessmentBookingDto);
-//        return ResponseEntity.ok("Assessment booking created successfully");
-//    }
-
-
     @PostMapping
-    public ResponseEntity<AssessmentBookingDto> createAssessmentBooking(@RequestBody AssessmentBookingDto assessmentBookingDto) {
-        AssessmentBookingDto createdAssessmentBooking = assessmentBookingService.createAssessmentBooking(assessmentBookingDto);
-        return new ResponseEntity<>(createdAssessmentBooking, HttpStatus.CREATED);
+    public ResponseEntity<AssessmentBookingDto> createAssessmentBooking(@Valid @RequestBody AssessmentBookingDto assessmentBookingDto) {
+        return new ResponseEntity<>(assessmentBookingService.createAssessmentBooking(assessmentBookingDto), HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")
@@ -43,22 +37,14 @@ public class AssessmentBookingController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<String> updateAssessmentBooking(@Valid @RequestBody AssessmentBookingDto updatedAssessmentBookingDto,
-                                                          @PathVariable("id") Integer bookingId) {
-        assessmentBookingService.updateAssessmentBooking(updatedAssessmentBookingDto, bookingId);
-        return ResponseEntity.ok("Assessment booking updated successfully");
+    public ResponseEntity<AssessmentBookingDto> updateAssessmentBooking(@Valid @RequestBody AssessmentBookingDto assessmentBookingDto,
+                                                                        @PathVariable("id") Integer bookingId) {
+        return ResponseEntity.ok(assessmentBookingService.updateAssessmentBooking(bookingId, assessmentBookingDto));
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteAssessmentBooking(@PathVariable("id") Integer bookingId) {
         assessmentBookingService.deleteAssessmentBooking(bookingId);
-        return ResponseEntity.ok("Assessment booking deleted successfully");
+        return ResponseEntity.ok("Assessment Booking deleted successfully");
     }
-
-    @PutMapping("{id}/changeStatus")
-    public ResponseEntity<String> changeStatus(@Valid @PathVariable("id") Integer bookingId, @RequestParam("status") Integer status) {
-        assessmentBookingService.changeStatus(bookingId, status);
-        return ResponseEntity.ok("Assessment booking status updated successfully");
-    }
-
 }

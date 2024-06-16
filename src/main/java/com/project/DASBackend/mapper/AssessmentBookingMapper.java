@@ -1,61 +1,45 @@
 package com.project.DASBackend.mapper;
 
 import com.project.DASBackend.dto.AssessmentBookingDto;
-import com.project.DASBackend.dto.BookingSampleDto;
-import com.project.DASBackend.entity.Account;
 import com.project.DASBackend.entity.AssessmentBooking;
-import com.project.DASBackend.entity.AssessmentRequest;
-import com.project.DASBackend.entity.BookingSample;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class AssessmentBookingMapper {
-    public static AssessmentBookingDto toDto(AssessmentBooking booking) {
-        if (booking == null) {
+    public static AssessmentBookingDto toDto(AssessmentBooking assessmentBooking) {
+        if (assessmentBooking == null) {
             return null;
         }
-        List<BookingSampleDto> bookingSamples = booking.getBookingSamples().stream()
-                .map(BookingSampleMapper::toDto)
-                .collect(Collectors.toList());
-        return new AssessmentBookingDto(
-                booking.getBookingId(),
-                booking.getQuantity(),
-                booking.getTotalPrice(),
-                booking.getDateCreated(),
-                booking.getSampleReturnDate(),
-                booking.getFeedback(),
-                booking.getPaymentType(),
-                booking.getPaymentStatus(),
-                booking.getStatus(),
-                booking.getAccount().getAccountId(),
-                booking.getRequest().getRequestId(),
-                bookingSamples
-        );
+        return AssessmentBookingDto.builder()
+                .bookingId(assessmentBooking.getBookingId())
+                .totalPrice(assessmentBooking.getTotalPrice())
+                .sampleReturnDate(assessmentBooking.getSampleReturnDate())
+                .status(assessmentBooking.getStatus())
+                .paymentStatus(assessmentBooking.getPaymentStatus())
+                .paymentType(assessmentBooking.getPaymentType())
+                .phone(assessmentBooking.getPhone())
+                .dateCreated(assessmentBooking.getDateCreated())
+                .feedback(assessmentBooking.getFeedback())
+                .quantities(assessmentBooking.getQuantities())
+                .accountId(assessmentBooking.getAccount().getAccountId())
+                .serviceId(assessmentBooking.getServices().getServiceId())
+                .build();
     }
 
-    public static AssessmentBooking toEntity(AssessmentBookingDto bookingDto, Account account, AssessmentRequest request) {
-        if (bookingDto == null) {
+    public static AssessmentBooking toEntity(AssessmentBookingDto assessmentBookingDto) {
+        if (assessmentBookingDto == null) {
             return null;
         }
-        AssessmentBooking booking = new AssessmentBooking();
-        booking.setBookingId(bookingDto.getBookingId());
-        booking.setQuantity(bookingDto.getQuantity());
-        booking.setTotalPrice(bookingDto.getTotalPrice());
-        booking.setDateCreated(bookingDto.getDateCreated());
-        booking.setSampleReturnDate(bookingDto.getSampleReturnDate());
-        booking.setFeedback(bookingDto.getFeedback());
-        booking.setStatus(bookingDto.getStatus());
-        booking.setPaymentType(bookingDto.getPaymentType());
-        booking.setPaymentStatus(bookingDto.getPaymentStatus());
-        booking.setAccount(account);
-        booking.setRequest(request);
-
-        List<BookingSample> bookingSamples = bookingDto.getBookingSamples().stream()
-                .map(sampleDto -> BookingSampleMapper.toEntity(sampleDto, booking))
-                .collect(Collectors.toList());
-        booking.setBookingSamples(bookingSamples); // Thêm dòng này
-
-        return booking;
+        AssessmentBooking assessmentBooking = new AssessmentBooking();
+        assessmentBooking.setBookingId(assessmentBookingDto.getBookingId());
+        assessmentBooking.setTotalPrice(assessmentBookingDto.getTotalPrice());
+        assessmentBooking.setSampleReturnDate(assessmentBookingDto.getSampleReturnDate());
+        assessmentBooking.setStatus(assessmentBookingDto.getStatus());
+        assessmentBooking.setPaymentStatus(assessmentBookingDto.getPaymentStatus());
+        assessmentBooking.setPaymentType(assessmentBookingDto.getPaymentType());
+        assessmentBooking.setPhone(assessmentBookingDto.getPhone());
+        assessmentBooking.setDateCreated(assessmentBookingDto.getDateCreated());
+        assessmentBooking.setFeedback(assessmentBookingDto.getFeedback());
+        assessmentBooking.setQuantities(assessmentBookingDto.getQuantities());
+        // Note: accountId and serviceId mapping should be handled separately based on your application logic
+        return assessmentBooking;
     }
 }

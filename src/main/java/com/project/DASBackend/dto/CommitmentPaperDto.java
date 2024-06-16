@@ -1,29 +1,29 @@
 package com.project.DASBackend.dto;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Data
+@Builder
 public class CommitmentPaperDto {
 
     private Integer commitmentId;
 
+    @NotBlank(message = "Description cannot be blank")
+    private String description;
+
     @NotNull(message = "Date created cannot be null")
-    @PastOrPresent(message = "Date created must be in the past or present")
-    private LocalDateTime dateCreated;
+    private LocalDate dateCreated;
 
     @NotNull(message = "Approval date cannot be null")
-    @PastOrPresent(message = "Approval date must be in the past or present")
-    private LocalDateTime approvalDate;
+    private LocalDate approvalDate;
 
     @NotBlank(message = "Commitment type cannot be blank")
     private String commitmentType;
@@ -31,16 +31,12 @@ public class CommitmentPaperDto {
     @NotBlank(message = "Title cannot be blank")
     private String title;
 
-    @NotBlank(message = "Description cannot be blank")
-    private String description;
-
     @NotNull(message = "Status cannot be null")
-    @Min(value = 0, message = "Status must be greater than or equal to 0")
     private Integer status;
 
-    @NotNull(message = "Booking ID cannot be null")
+    @NotNull(message = "Booking id cannot be null")
     private Integer bookingId;
 
-    @NotNull(message = "Account ID cannot be null")
+    @NotNull(message = "Account id cannot be null")
     private Integer accountId;
 }

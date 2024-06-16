@@ -3,8 +3,6 @@ package com.project.DASBackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,15 +18,14 @@ public class Account {
     @Column(name = "Account_Id")
     private Integer accountId;
 
-    @Column(name = "Uid", nullable = false, unique = true)
-    private String uid;
-
     @Column(name = "Email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "Display_name", nullable = false)
+    @Column(name = "DisplayName", nullable = false)
     private String displayName;
 
+    @Column(name = "UID")
+    private String uid;
 
     @Column(name = "Account_status", nullable = false)
     private Integer accountStatus;
@@ -36,4 +33,9 @@ public class Account {
     @Column(name = "Role", nullable = false)
     private Integer role;
 
+    @Column(name = "Password")
+    private String password;
+
+    @Column(name = "Phone")
+    private String phone;
 }

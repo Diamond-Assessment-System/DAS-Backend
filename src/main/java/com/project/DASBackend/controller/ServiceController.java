@@ -1,8 +1,6 @@
 package com.project.DASBackend.controller;
 
-import com.project.DASBackend.dto.AccountDto;
 import com.project.DASBackend.dto.ServiceDto;
-import com.project.DASBackend.service.AccountService;
 import com.project.DASBackend.service.ServiceService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -12,7 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-//@CrossOrigin("*")
+
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api/services")
 public class ServiceController {
@@ -21,38 +20,31 @@ public class ServiceController {
     private ServiceService serviceService;
 
     @PostMapping
-    public ResponseEntity<ServiceDto> createService(@Valid @RequestBody ServiceDto serviceDto){
-        ServiceDto saveServiceDto=serviceService.createService(serviceDto);
-        return new ResponseEntity<>(saveServiceDto, HttpStatus.CREATED);
+    public ResponseEntity<ServiceDto> createService(@Valid @RequestBody ServiceDto serviceDto) {
+        return new ResponseEntity<>(serviceService.createService(serviceDto), HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ServiceDto> getServiceById(@PathVariable("id") Integer serviceId){
-        ServiceDto getServiceID = serviceService.GetServiceById(serviceId);
-        return ResponseEntity.ok(getServiceID);
+    public ResponseEntity<ServiceDto> getServiceById(@PathVariable("id") Integer serviceId) {
+        ServiceDto serviceDto = serviceService.getServiceById(serviceId);
+        return ResponseEntity.ok(serviceDto);
     }
 
     @GetMapping
-    public ResponseEntity<List<ServiceDto>> getServiceList(){
-        List<ServiceDto> serviceDtoList = serviceService.GetAllServices();
-        return ResponseEntity.ok(serviceDtoList);
+    public ResponseEntity<List<ServiceDto>> getAllServices() {
+        List<ServiceDto> serviceDtos = serviceService.getAllServices();
+        return ResponseEntity.ok(serviceDtos);
     }
 
     @PutMapping("{id}")
     public ResponseEntity<ServiceDto> updateService(@Valid @RequestBody ServiceDto serviceDto,
-                                                    @PathVariable("id") Integer serviceID){
-        return ResponseEntity.ok(serviceService.UpdateService(serviceID,serviceDto));
+                                                    @PathVariable("id") Integer serviceId) {
+        return ResponseEntity.ok(serviceService.updateService(serviceId, serviceDto));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteServiceById(@PathVariable("id") Integer serviceID){
-        serviceService.DeleteService(serviceID);
-        return ResponseEntity.ok("Employee deleted successfully");
-    }
-
-    @PutMapping("/{id}/status")
-    public ResponseEntity<Void> changeServiceStatus(@PathVariable("id") Integer serviceId, @RequestParam("status") Integer status) {
-        serviceService.changeStatus(serviceId, status);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteService(@PathVariable("id") Integer serviceId) {
+        serviceService.deleteService(serviceId);
+        return ResponseEntity.ok("Service deleted successfully");
     }
 }

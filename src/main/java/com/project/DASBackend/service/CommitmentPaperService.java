@@ -6,8 +6,12 @@ import java.util.List;
 
 public interface CommitmentPaperService {
     CommitmentPaperDto createCommitmentPaper(CommitmentPaperDto commitmentPaperDto);
-    CommitmentPaperDto getCommitmentPaperById(Integer commitmentPaperId);
+
+    CommitmentPaperDto getCommitmentPaperById(Integer commitmentId);
+
     List<CommitmentPaperDto> getAllCommitmentPapers();
-    CommitmentPaperDto updateCommitmentPaper(Integer commitmentPaperId, CommitmentPaperDto updatedCommitmentPaper);
-    void deleteCommitmentPaper(Integer commitmentPaperId);
+
+    CommitmentPaperDto updateCommitmentPaper(Integer commitmentId, CommitmentPaperDto commitmentPaperDto);
+
+    void deleteCommitmentPaper(Integer commitmentId);
 }

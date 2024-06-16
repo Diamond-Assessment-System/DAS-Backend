@@ -8,14 +8,14 @@ public class AccountMapper {
         if (account == null) {
             return null;
         }
-        return new AccountDto(
-                account.getAccountId(),
-                account.getUid(),
-                account.getEmail(),
-                account.getDisplayName(),
-                account.getAccountStatus(),
-                account.getRole()
-        );
+        return AccountDto.builder()
+                .accountId(account.getAccountId())
+                .uid(account.getUid())
+                .email(account.getEmail())
+                .displayName(account.getDisplayName())
+                .accountStatus(account.getAccountStatus())
+                .role(account.getRole())
+                .build();
     }
 
     public static Account toEntity(AccountDto accountDto) {

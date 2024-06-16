@@ -5,11 +5,13 @@ import com.project.DASBackend.dto.BookingSampleDto;
 import java.util.List;
 
 public interface BookingSampleService {
-//    BookingSampleDto createBookingDetail(BookingSampleDto bookingSampleDto);
-    BookingSampleDto getBookingDetailById(Integer bookingDetailId);
-    List<BookingSampleDto> getAllBookingDetails();
-    BookingSampleDto updateBookingDetail(Integer bookingDetailId, BookingSampleDto bookingSampleDto);
-    void deleteBookingDetail(Integer bookingDetailId);
-    void changeStatus(Integer bookingDetailId, Integer status);
-    List<BookingSampleDto> getBookingSamplesByBookingId(Integer bookingId);
+    BookingSampleDto createBookingSample(BookingSampleDto bookingSampleDto);
+
+    BookingSampleDto getBookingSampleById(Integer sampleId);
+
+    List<BookingSampleDto> getAllBookingSamples();
+
+    BookingSampleDto updateBookingSample(Integer sampleId, BookingSampleDto bookingSampleDto);
+
+    void deleteBookingSample(Integer sampleId);
 }

@@ -1,12 +1,9 @@
 package com.project.DASBackend.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -14,6 +11,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "Commitment_Paper")
+@Data
+@Builder
 public class CommitmentPaper {
 
     @Id
@@ -21,11 +20,14 @@ public class CommitmentPaper {
     @Column(name = "Commitment_Id")
     private Integer commitmentId;
 
-    @Column(name = "Date_Created", nullable = false)
-    private LocalDateTime dateCreated;
+    @Column(name = "Description", nullable = false)
+    private String description;
 
-    @Column(name = "ApprovalDate", nullable = false)
-    private LocalDateTime approvalDate;
+    @Column(name = "Date_Created", nullable = false)
+    private LocalDate dateCreated;
+
+    @Column(name = "Approval_Date", nullable = false)
+    private LocalDate approvalDate;
 
     @Column(name = "CommitmentType", nullable = false)
     private String commitmentType;
@@ -33,15 +35,12 @@ public class CommitmentPaper {
     @Column(name = "Title", nullable = false)
     private String title;
 
-    @Column(name = "Description", nullable = false)
-    private String description;
-
     @Column(name = "Status", nullable = false)
     private Integer status;
 
     @ManyToOne
     @JoinColumn(name = "Booking_Id", nullable = false)
-    private AssessmentBooking booking;
+    private AssessmentBooking assessmentBooking;
 
     @ManyToOne
     @JoinColumn(name = "Account_Id", nullable = false)

@@ -37,11 +37,12 @@ public class BookingSample {
     @JoinColumn(name = "Booking_Id", nullable = false)
     private AssessmentBooking assessmentBooking;
 
-    @ManyToOne
-    @JoinColumn(name = "Service_Price_Id", nullable = false)
-    private ServicePriceList ServicePriceList;
+//    @ManyToOne
+//    @JoinColumn(name = "Service_Price_Id", nullable = false)
+//    private ServicePriceList ServicePriceList;
 
     @ManyToOne
-    @JoinColumn(name = "Account_Id", nullable = false)
+    @JoinColumn(name = "Account_Id")
     private Account account;
+
 }

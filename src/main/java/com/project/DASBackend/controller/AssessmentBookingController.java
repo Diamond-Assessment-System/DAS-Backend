@@ -20,7 +20,7 @@ public class AssessmentBookingController {
     private AssessmentBookingService assessmentBookingService;
 
     @PostMapping
-    public ResponseEntity<AssessmentBookingDto> createAssessmentBooking(@Valid @RequestBody AssessmentBookingDto assessmentBookingDto) {
+    public ResponseEntity<AssessmentBookingDto> createAssessmentBooking(@RequestBody AssessmentBookingDto assessmentBookingDto) {
         return new ResponseEntity<>(assessmentBookingService.createAssessmentBooking(assessmentBookingDto), HttpStatus.CREATED);
     }
 
@@ -34,6 +34,12 @@ public class AssessmentBookingController {
     public ResponseEntity<List<AssessmentBookingDto>> getAllAssessmentBookings() {
         List<AssessmentBookingDto> assessmentBookingDtos = assessmentBookingService.getAllAssessmentBookings();
         return ResponseEntity.ok(assessmentBookingDtos);
+    }
+
+    @PutMapping("proceed/{id}")
+    public ResponseEntity<AssessmentBookingDto> proceedAssessmentBooking(@RequestBody AssessmentBookingDto assessmentBookingDto,
+                                                                        @PathVariable("id") Integer bookingId) {
+        return ResponseEntity.ok(assessmentBookingService.proceedAssessmentBooking(bookingId, assessmentBookingDto));
     }
 
     @PutMapping("{id}")

@@ -19,10 +19,18 @@ public class BookingSampleController {
     @Autowired
     private BookingSampleService bookingSampleService;
 
-    @PostMapping
-    public ResponseEntity<BookingSampleDto> createBookingSample(@Valid @RequestBody BookingSampleDto bookingSampleDto) {
+    @PostMapping("/sample")
+    public ResponseEntity<BookingSampleDto> createBookingSample(@RequestBody BookingSampleDto bookingSampleDto) {
         return new ResponseEntity<>(bookingSampleService.createBookingSample(bookingSampleDto), HttpStatus.CREATED);
     }
+
+    @PostMapping("/samples")
+    public ResponseEntity<List<BookingSampleDto>> createBookingSamples(@RequestBody List<BookingSampleDto> bookingSampleDtos) {
+        List<BookingSampleDto> createdSamples = bookingSampleService.createBookingSamples(bookingSampleDtos);
+        return new ResponseEntity<>(createdSamples, HttpStatus.CREATED);
+    }
+
+
 
     @GetMapping("{id}")
     public ResponseEntity<BookingSampleDto> getBookingSampleById(@PathVariable("id") Integer sampleId) {
@@ -37,7 +45,7 @@ public class BookingSampleController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<BookingSampleDto> updateBookingSample(@Valid @RequestBody BookingSampleDto bookingSampleDto,
+    public ResponseEntity<BookingSampleDto> updateBookingSample(@RequestBody BookingSampleDto bookingSampleDto,
                                                                 @PathVariable("id") Integer sampleId) {
         return ResponseEntity.ok(bookingSampleService.updateBookingSample(sampleId, bookingSampleDto));
     }

@@ -22,6 +22,8 @@ public class AssessmentBookingMapper {
                 .quantities(assessmentBooking.getQuantities())
                 .accountId(assessmentBooking.getAccount().getAccountId())
                 .serviceId(assessmentBooking.getService().getServiceId())
+                .serviceId(assessmentBooking.getService().getServiceId())
+                .consultingAccountId(assessmentBooking.getConsultingAccount() != null ? assessmentBooking.getConsultingAccount().getAccountId() : null)
                 .build();
     }
 
@@ -41,7 +43,7 @@ public class AssessmentBookingMapper {
         assessmentBooking.setFeedback(assessmentBookingDto.getFeedback());
         assessmentBooking.setQuantities(assessmentBookingDto.getQuantities());
         assessmentBooking.setDateReceived(assessmentBookingDto.getDateReceived());
-        // Account and Service need to be set in the service layer
+        // Account, Service, and ConsultingAccount need to be set in the service layer
         return assessmentBooking;
     }
 }

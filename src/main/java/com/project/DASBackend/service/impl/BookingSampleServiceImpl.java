@@ -42,12 +42,36 @@ public class BookingSampleServiceImpl implements BookingSampleService {
                 .orElseThrow(() -> new ResourceNotFoundException("Assessment Booking not found with id: " + bookingSampleDto.getBookingId()));
         bookingSample.setAssessmentBooking(assessmentBooking);
 
-        ServicePriceList servicePriceList = servicePriceListRepository.findById(bookingSampleDto.getServicePriceId())
-                .orElseThrow(() -> new ResourceNotFoundException("Service Price List not found with id: " + bookingSampleDto.getServicePriceId()));
-        bookingSample.setServicePriceList(servicePriceList);
+//        ServicePriceList servicePriceList = servicePriceListRepository.findById(bookingSampleDto.getServicePriceId())
+//                .orElseThrow(() -> new ResourceNotFoundException("Service Price List not found with id: " + bookingSampleDto.getServicePriceId()));
+//        bookingSample.setServicePriceList(servicePriceList);
 
         bookingSample = bookingSampleRepository.save(bookingSample);
         return BookingSampleMapper.toDto(bookingSample);
+    }
+
+    @Override
+    public List<BookingSampleDto> createBookingSamples(List<BookingSampleDto> bookingSampleDtos) {
+        List<BookingSample> bookingSamples = bookingSampleDtos.stream()
+                .map(dto -> {
+                    BookingSample entity = BookingSampleMapper.toEntity(dto);
+
+                    // Assuming dto.getBookingId() returns the ID of the AssessmentBooking
+                    AssessmentBooking booking = assessmentBookingRepository.findById(dto.getBookingId())
+                            .orElseThrow(() -> new IllegalArgumentException("AssessmentBooking not found"));
+
+                    entity.setAssessmentBooking(booking);
+                    return entity;
+                })
+                .collect(Collectors.toList());
+
+        // Assuming bookingSampleRepository.saveAll returns a List<BookingSample>
+        bookingSamples = bookingSampleRepository.saveAll(bookingSamples);
+
+        // Map the saved entities back to DTOs
+        return bookingSamples.stream()
+                .map(BookingSampleMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override

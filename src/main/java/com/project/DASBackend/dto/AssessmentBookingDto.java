@@ -50,4 +50,6 @@ public class AssessmentBookingDto {
 
 //    @NotNull(message = "Service ID cannot be null")
     private Integer serviceId;
+
+    private Integer consultingAccountId;
 }

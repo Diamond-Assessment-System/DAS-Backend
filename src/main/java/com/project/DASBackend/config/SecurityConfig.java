@@ -33,8 +33,8 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/login","/authenticate", "/register").permitAll() // Allow access to login endpoint
-                        .anyRequest().authenticated() // Protect other endpoints
+                        .requestMatchers("/api/login","/authenticate", "/register","/upload").permitAll() // Allow access to login endpoint
+                        .anyRequest().permitAll() // Protect other endpoints
                 )
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint) // Set the authentication entry point

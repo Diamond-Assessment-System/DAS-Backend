@@ -15,3 +15,10 @@ spring:
             user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
             jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
             user-name-attribute: sub
+
+open:
+  api:
+    title: DAS API
+    version: 1.0.0
+    description: API for DAS
+    serverUrl: http://localhost:8080

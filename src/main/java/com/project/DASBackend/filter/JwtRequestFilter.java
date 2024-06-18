@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -19,8 +20,9 @@ import java.io.IOException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
+
     @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
+    private UserDetailsService jwtUserDetailsService;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -33,7 +35,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         logger.info("Authorization Header: " + requestTokenHeader);
 
-        String username = null;
+        String uid = null;
         String jwtToken = null;
 
 
@@ -41,25 +43,28 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
             jwtToken = requestTokenHeader.substring(7);
             try {
-                username = jwtTokenUtil.getUidFromToken(jwtToken);
-                logger.info("Extracted Username: " + username);
+                logger.info("JWT Token: " + jwtToken);
+                uid = jwtTokenUtil.getUidFromToken(jwtToken);
+                logger.info("Extracted Username: " + uid);
             } catch (IllegalArgumentException e) {
                 logger.error("Unable to get JWT Token");
             } catch (ExpiredJwtException e) {
                 logger.error("JWT Token has expired");
+            } catch (Exception e) {
+                logger.error("Unexpected error while extracting UID from JWT Token");
             }
         } else {
             logger.warn("JWT Token does not begin with Bearer String ");
             if (jwtToken != null) {
                 logger.info("JWT: " + jwtToken.substring(7));
-                logger.warn("Username: " + username);
+                logger.warn("Username: " + uid);
             }
         }
 
         // Once we get the token validate it.
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (uid != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
+            UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(uid);
 
             // if token is valid configure Spring Security to manually set
             // authentication

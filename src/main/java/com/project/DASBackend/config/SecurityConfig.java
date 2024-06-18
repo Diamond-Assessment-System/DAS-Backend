@@ -42,9 +42,9 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                         //.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // Create session if required
-                )
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(firebaseTokenFilter, UsernamePasswordAuthenticationFilter.class);
+                );
+                http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                http.addFilterBefore(firebaseTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

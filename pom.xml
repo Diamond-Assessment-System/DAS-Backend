@@ -10,9 +10,9 @@
 	</parent>
 	<groupId>com.project</groupId>
 	<artifactId>DAS-Backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>DAS-Backend</name>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<description>The backend of the Diamond Assessment System</description>
 	<properties>
 		<java.version>17</java.version>

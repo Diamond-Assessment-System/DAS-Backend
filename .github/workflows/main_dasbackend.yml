@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - DASBackend
+name: Build and deploy WAR app to Azure Web App - DASBackend
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: '${{ github.workspace }}/target/*.war'
 
   deploy:
     runs-on: windows-latest
@@ -48,9 +48,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_F4087442D7BC469DB344BC02B26A2ACB }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_96D14BE7FD124399919EDCCBF85C0743 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0727EFABC508459CA3D8C27B0F7D3293 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_7FE1B409C435440D92A0BA13595DCB4B }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_1CD6FA791F1F477C84FCF03DA1A195ED }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B3D24A4AC3FF41398531769A0847AF0B }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -58,5 +58,5 @@ jobs:
         with:
           app-name: 'DASBackend'
           slot-name: 'Production'
-          package: '*.jar'
+          package: '*.war'
           

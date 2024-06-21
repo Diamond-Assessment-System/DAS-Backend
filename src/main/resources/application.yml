@@ -39,3 +39,10 @@ cloud:
 application:
   bucket:
     name: diamondsassessmentsystemimages
+
+open:
+  api:
+    title: DAS API
+    version: 1.0.0
+    description: API for DAS
+    serverUrl: http://localhost:8080

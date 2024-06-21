@@ -1,19 +1,21 @@
 package com.project.DASBackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "Assessment_paper")
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class AssessmentPaper {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Diamond_Id")
@@ -50,49 +52,10 @@ public class AssessmentPaper {
     private String comments;
 
     @Column(name = "Date_Created", nullable = false)
-    private LocalDateTime dateCreated;
+    private LocalDate dateCreated;
 
-    @Column(name = "Table_Percentage", nullable = false)
-    private Float tablePercentage;
-
-    @Column(name = "Depth_Percentage", nullable = false)
-    private Float depthPercentage;
-
-    @Column(name = "Crown_Angle", nullable = false)
-    private Float crownAngle;
-
-    @Column(name = "Pavilion_Angle", nullable = false)
-    private Float pavilionAngle;
-
-    @Column(name = "Girdle_Thickness", nullable = false)
-    private String girdleThickness;
-
-    @Column(name = "Culet_Size", nullable = false)
-    private Float culetSize;
-
-    @Column(name = "Total_Depth", nullable = false)
-    private Float totalDepth;
-
-    @Column(name = "Crown_Height", nullable = false)
-    private Float crownHeight;
-
-    @Column(name = "Pavilion_Depth", nullable = false)
-    private Float pavilionDepth;
-
-    @Column(name = "Symmetry_Grade", nullable = false)
-    private Float symmetryGrade;
-
-    @Column(name = "Cross_Section", columnDefinition = "MEDIUMTEXT", nullable = false)
-    private String crossSection;
-
-    @Column(name = "Longitudinal_Section", columnDefinition = "MEDIUMTEXT", nullable = false)
-    private String longitudinalSection;
-
-    @Column(name = "Transverse_Section", columnDefinition = "MEDIUMTEXT", nullable = false)
-    private String transverseSection;
-
-    @Column(name = "Seal_Id", unique = true)
-    private Integer sealId;
+    @Column(name = "Paper_Image", nullable = false)
+    private String paperImage;
 
     @ManyToOne
     @JoinColumn(name = "Account_Id", nullable = false)
@@ -100,5 +63,5 @@ public class AssessmentPaper {
 
     @ManyToOne
     @JoinColumn(name = "Sample_Id", nullable = false)
-    private BookingSample sample;
+    private BookingSample bookingSample;
 }

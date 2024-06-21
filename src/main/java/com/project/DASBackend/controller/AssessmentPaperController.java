@@ -4,6 +4,7 @@
     import com.project.DASBackend.entity.AssessmentPaper;
     import com.project.DASBackend.service.AssessmentPaperService;
     import jakarta.validation.Valid;
+    import lombok.AllArgsConstructor;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.HttpStatus;
     import org.springframework.http.ResponseEntity;
@@ -11,39 +12,40 @@
 
     import java.util.List;
     //@CrossOrigin("*")
+    @AllArgsConstructor
     @RestController
-    @RequestMapping("/api/assessmentpapers")
+    @RequestMapping("/api/assessment-papers")
     public class AssessmentPaperController {
 
         @Autowired
         private AssessmentPaperService assessmentPaperService;
 
         @PostMapping
-        public ResponseEntity<AssessmentPaperDto> createAssessmentPaper(@RequestBody AssessmentPaperDto assessmentPaperDto){
+        public ResponseEntity<AssessmentPaperDto> createAssessmentPaper(@Valid @RequestBody AssessmentPaperDto assessmentPaperDto) {
             return new ResponseEntity<>(assessmentPaperService.createAssessmentPaper(assessmentPaperDto), HttpStatus.CREATED);
         }
 
         @GetMapping("{id}")
-        public ResponseEntity<AssessmentPaperDto> getAssessmentPaperById(@PathVariable("id") Integer paperId){
-            AssessmentPaperDto assessmentPaperDto = assessmentPaperService.getAssessmentPaperById(paperId);
+        public ResponseEntity<AssessmentPaperDto> getAssessmentPaperById(@PathVariable("id") Integer diamondId) {
+            AssessmentPaperDto assessmentPaperDto = assessmentPaperService.getAssessmentPaperById(diamondId);
             return ResponseEntity.ok(assessmentPaperDto);
         }
 
         @GetMapping
-        public ResponseEntity<List<AssessmentPaperDto>> getAllAssessmentPapers(){
+        public ResponseEntity<List<AssessmentPaperDto>> getAllAssessmentPapers() {
             List<AssessmentPaperDto> assessmentPaperDtos = assessmentPaperService.getAllAssessmentPapers();
             return ResponseEntity.ok(assessmentPaperDtos);
         }
 
         @PutMapping("{id}")
         public ResponseEntity<AssessmentPaperDto> updateAssessmentPaper(@Valid @RequestBody AssessmentPaperDto assessmentPaperDto,
-                                                                          @PathVariable("id") Integer paperId){
-            return ResponseEntity.ok(assessmentPaperService.updateAssessmentPaper(assessmentPaperDto, paperId));
+                                                                        @PathVariable("id") Integer diamondId) {
+            return ResponseEntity.ok(assessmentPaperService.updateAssessmentPaper(diamondId, assessmentPaperDto));
         }
 
         @DeleteMapping("{id}")
-        public ResponseEntity<String> deleteAssessmentPaper(@PathVariable("id") Integer paperId){
-            assessmentPaperService.deleteAssessmentPaper(paperId);
-            return ResponseEntity.ok("Assessment paper deleted successfully");
+        public ResponseEntity<String> deleteAssessmentPaper(@PathVariable("id") Integer diamondId) {
+            assessmentPaperService.deleteAssessmentPaper(diamondId);
+            return ResponseEntity.ok("Assessment Paper deleted successfully");
         }
     }

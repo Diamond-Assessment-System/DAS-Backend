@@ -7,11 +7,11 @@ import java.util.List;
 public interface AssessmentPaperService {
     AssessmentPaperDto createAssessmentPaper(AssessmentPaperDto assessmentPaperDto);
 
-    AssessmentPaperDto getAssessmentPaperById(Integer paperId);
+    AssessmentPaperDto getAssessmentPaperById(Integer diamondId);
 
     List<AssessmentPaperDto> getAllAssessmentPapers();
 
-    AssessmentPaperDto updateAssessmentPaper(AssessmentPaperDto updatedAssessmentPaperDto, Integer paperId);
+    AssessmentPaperDto updateAssessmentPaper(Integer diamondId, AssessmentPaperDto assessmentPaperDto);
 
-    void deleteAssessmentPaper(Integer paperId);
+    void deleteAssessmentPaper(Integer diamondId);
 }

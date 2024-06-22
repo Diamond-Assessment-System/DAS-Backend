@@ -54,7 +54,7 @@ public class AssessmentPaper {
     @Column(name = "Date_Created", nullable = false)
     private LocalDate dateCreated;
 
-    @Column(name = "Paper_Image", nullable = false)
+    @Column(name = "Paper_Image", nullable = false, columnDefinition = "LONGBLOB")
     private String paperImage;
 
     @ManyToOne

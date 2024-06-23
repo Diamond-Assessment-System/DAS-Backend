@@ -11,6 +11,8 @@ public interface AccountService {
 
     List<AccountDto> getAllAccounts();
 
+    List<AccountDto> getAccountsByRole(Integer role);
+
     AccountDto updateAccount(Integer accountId, AccountDto accountDto);
 
     void deleteAccount(Integer accountId);

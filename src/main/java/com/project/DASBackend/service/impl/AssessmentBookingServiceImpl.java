@@ -121,4 +121,15 @@ public class AssessmentBookingServiceImpl implements AssessmentBookingService {
         assessmentBooking = assessmentBookingRepository.save(assessmentBooking);
         return AssessmentBookingMapper.toDto(assessmentBooking);
     }
+
+    @Override
+    public AssessmentBookingDto assignStaff(Integer bookingId, Integer consultingAccountId) {
+        AssessmentBooking assessmentBooking = assessmentBookingRepository.findById(bookingId)
+                .orElseThrow(() -> new ResourceNotFoundException("Assessment Booking not found with id: " + bookingId));
+        Account consultingAccount = accountRepository.findById(consultingAccountId)
+                .orElseThrow(() -> new ResourceNotFoundException("Consulting account not found with id: " + consultingAccountId));
+        assessmentBooking.setConsultingAccount(consultingAccount);
+        assessmentBooking = assessmentBookingRepository.save(assessmentBooking);
+        return AssessmentBookingMapper.toDto(assessmentBooking);
+    }
 }

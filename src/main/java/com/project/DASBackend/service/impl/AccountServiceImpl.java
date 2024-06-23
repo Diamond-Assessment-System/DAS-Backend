@@ -39,6 +39,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public List<AccountDto> getAccountsByRole(Integer role) {
+        List<Account> accounts = accountRepository.findByRole(role);
+        return accounts.stream().map(AccountMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
     public AccountDto updateAccount(Integer accountId, AccountDto accountDto) {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + accountId));

@@ -61,4 +61,10 @@ public class BookingSampleController {
         BookingSampleDto updatedSample = bookingSampleService.changeStatus(sampleId, status);
         return ResponseEntity.ok(updatedSample);
     }
+
+    @PatchMapping("{sampleId}/assign/{staffId}")
+    public ResponseEntity<BookingSampleDto> assignBookingSample(@PathVariable("id") Integer sampleId, @PathVariable("staffId") Integer staffId) {
+        BookingSampleDto updatedSample = bookingSampleService.assignStaff(sampleId, staffId);
+        return ResponseEntity.ok(updatedSample);
+    }
 }

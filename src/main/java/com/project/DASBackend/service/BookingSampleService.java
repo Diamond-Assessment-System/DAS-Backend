@@ -18,4 +18,6 @@ public interface BookingSampleService {
     void deleteBookingSample(Integer sampleId);
 
     BookingSampleDto changeStatus(Integer sampleId, Integer status);
+
+    BookingSampleDto assignStaff(Integer sampleId, Integer assessmentAccountId);
 }

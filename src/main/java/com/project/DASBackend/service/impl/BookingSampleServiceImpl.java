@@ -116,4 +116,15 @@ public class BookingSampleServiceImpl implements BookingSampleService {
         bookingSample = bookingSampleRepository.save(bookingSample);
         return BookingSampleMapper.toDto(bookingSample);
     }
+
+    @Override
+    public BookingSampleDto assignStaff(Integer sampleId, Integer assessmentAccountId) {
+        BookingSample bookingSample = bookingSampleRepository.findById(sampleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Booking Sample not found with id: " + sampleId));
+        Account account = accountRepository.findById(assessmentAccountId)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + assessmentAccountId));
+        bookingSample.setAccount(account);
+        bookingSample = bookingSampleRepository.save(bookingSample);
+        return BookingSampleMapper.toDto(bookingSample);
+    }
 }

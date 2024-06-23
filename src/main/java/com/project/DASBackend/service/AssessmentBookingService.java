@@ -18,4 +18,6 @@ public interface AssessmentBookingService {
     void deleteAssessmentBooking(Integer bookingId);
 
     AssessmentBookingDto changeStatus(Integer bookingId, Integer status);
+
+    AssessmentBookingDto assignStaff(Integer bookingId, Integer consultingAccountId);
 }

@@ -42,6 +42,12 @@ public class AccountController {
         return ResponseEntity.ok(accountService.updateAccount(accountId, accountDto));
     }
 
+    @GetMapping("role/{id}")
+    public ResponseEntity<List<AccountDto>> getAccountsByRole(@PathVariable("id") Integer role){
+        List<AccountDto> accountDtos = accountService.getAccountsByRole(role);
+        return ResponseEntity.ok(accountDtos);
+    }
+
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteAccount(@PathVariable("id") Integer accountId){
         accountService.deleteAccount(accountId);

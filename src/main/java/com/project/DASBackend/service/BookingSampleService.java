@@ -13,6 +13,8 @@ public interface BookingSampleService {
 
     List<BookingSampleDto> getAllBookingSamples();
 
+    List<BookingSampleDto> getBookingSamplesByBookingId(Integer bookingId);
+
     BookingSampleDto updateBookingSample(Integer sampleId, BookingSampleDto bookingSampleDto);
 
     void deleteBookingSample(Integer sampleId);
@@ -20,4 +22,5 @@ public interface BookingSampleService {
     BookingSampleDto changeStatus(Integer sampleId, Integer status);
 
     BookingSampleDto assignStaff(Integer sampleId, Integer assessmentAccountId);
+
 }

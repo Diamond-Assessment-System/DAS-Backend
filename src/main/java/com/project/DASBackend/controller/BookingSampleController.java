@@ -56,15 +56,21 @@ public class BookingSampleController {
         return ResponseEntity.ok("Booking Sample deleted successfully");
     }
 
-    @PatchMapping("{id}/status")
-    public ResponseEntity<BookingSampleDto> changeStatus(@PathVariable("id") Integer sampleId, @RequestParam("status") Integer status) {
+    @PutMapping("{id}/status/{status}")
+    public ResponseEntity<BookingSampleDto> changeStatus(@PathVariable("id") Integer sampleId, @PathVariable("status") Integer status) {
         BookingSampleDto updatedSample = bookingSampleService.changeStatus(sampleId, status);
         return ResponseEntity.ok(updatedSample);
     }
 
-    @PatchMapping("{sampleId}/assign/{staffId}")
-    public ResponseEntity<BookingSampleDto> assignBookingSample(@PathVariable("id") Integer sampleId, @PathVariable("staffId") Integer staffId) {
+    @PutMapping("{sampleId}/assign/{staffId}")
+    public ResponseEntity<BookingSampleDto> assignBookingSample(@PathVariable("sampleId") Integer sampleId, @PathVariable("staffId") Integer staffId) {
         BookingSampleDto updatedSample = bookingSampleService.assignStaff(sampleId, staffId);
         return ResponseEntity.ok(updatedSample);
+    }
+
+    @GetMapping("booking/{bookingId}")
+    public ResponseEntity<List<BookingSampleDto>> getBookingSamplesByBookingId(@PathVariable("bookingId") Integer bookingId) {
+        List<BookingSampleDto> bookingSampleDtos = bookingSampleService.getBookingSamplesByBookingId(bookingId);
+        return ResponseEntity.ok(bookingSampleDtos);
     }
 }

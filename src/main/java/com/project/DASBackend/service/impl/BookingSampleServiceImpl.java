@@ -88,6 +88,12 @@ public class BookingSampleServiceImpl implements BookingSampleService {
     }
 
     @Override
+    public List<BookingSampleDto> getBookingSamplesByBookingId(Integer bookingId) {
+        List<BookingSample> bookingSamples = bookingSampleRepository.findAllByAssessmentBooking_BookingId(bookingId);
+        return bookingSamples.stream().map(BookingSampleMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
     public BookingSampleDto updateBookingSample(Integer sampleId, BookingSampleDto bookingSampleDto) {
         BookingSample bookingSample = bookingSampleRepository.findById(sampleId)
                 .orElseThrow(() -> new ResourceNotFoundException("Booking Sample not found with id: " + sampleId));
@@ -124,6 +130,7 @@ public class BookingSampleServiceImpl implements BookingSampleService {
         Account account = accountRepository.findById(assessmentAccountId)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + assessmentAccountId));
         bookingSample.setAccount(account);
+        bookingSample.setStatus(2);
         bookingSample = bookingSampleRepository.save(bookingSample);
         return BookingSampleMapper.toDto(bookingSample);
     }

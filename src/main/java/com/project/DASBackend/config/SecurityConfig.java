@@ -1,7 +1,6 @@
 package com.project.DASBackend.config;
 
 import com.project.DASBackend.filter.FirebaseTokenFilter;
-import com.project.DASBackend.filter.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,12 +19,6 @@ public class SecurityConfig {
     @Autowired
     private FirebaseTokenFilter firebaseTokenFilter;
 
-    @Autowired
-    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-
-    @Autowired
-    private JwtRequestFilter jwtRequestFilter;
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,14 +29,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/login","/authenticate", "/register","/upload").permitAll() // Allow access to login endpoint
                         .anyRequest().permitAll() // Protect other endpoints
                 )
-                .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(jwtAuthenticationEntryPoint) // Set the authentication entry point
-                )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                         //.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // Create session if required
                 );
-                http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
                 http.addFilterBefore(firebaseTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

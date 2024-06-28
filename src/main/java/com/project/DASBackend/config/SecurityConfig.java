@@ -37,7 +37,7 @@ public class SecurityConfig {
                         .anyRequest().permitAll() // Protect other endpoints
                 )
                 .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(jwtAuthenticationEntryPoint) // Set the authentication entry point
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

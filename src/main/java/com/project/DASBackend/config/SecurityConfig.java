@@ -47,6 +47,7 @@ public class SecurityConfig {
                         //.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // Create session if required
                 );
                 //http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                //http.addFilterBefore(firebaseTokenFilter, UsernamePasswordAuthenticationFilter.class);
                 http.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

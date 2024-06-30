@@ -36,7 +36,8 @@ public class TokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String authorizationHeader = request.getHeader("Authorization");
         String typeToken = null;
-        String idToken = authorizationHeader.substring(7);
+        String idToken = null;
+        idToken = authorizationHeader.substring(7);
 
         try{
             FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);

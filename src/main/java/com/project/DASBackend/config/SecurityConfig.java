@@ -1,8 +1,7 @@
 package com.project.DASBackend.config;
 
-//import com.project.DASBackend.filter.FirebaseTokenFilter;
-//import com.project.DASBackend.filter.JwtRequestFilter;
-import com.project.DASBackend.filter.TokenFilter;
+import com.project.DASBackend.filter.FirebaseTokenFilter;
+import com.project.DASBackend.filter.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,17 +17,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-//    @Autowired
-//    private FirebaseTokenFilter firebaseTokenFilter;
+    @Autowired
+    private FirebaseTokenFilter firebaseTokenFilter;
 
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-//    @Autowired
-//    private JwtRequestFilter jwtRequestFilter;
-
     @Autowired
-    private TokenFilter tokenFilter;
+    private JwtRequestFilter jwtRequestFilter;
 
 
     @Bean
@@ -47,9 +43,8 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                         //.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // Create session if required
                 );
-//                http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-//                http.addFilterBefore(firebaseTokenFilter, UsernamePasswordAuthenticationFilter.class);
-                http.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
+                http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                http.addFilterBefore(firebaseTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

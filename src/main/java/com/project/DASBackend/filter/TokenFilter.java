@@ -25,14 +25,10 @@ import java.util.Collections;
 @Component
 public class TokenFilter extends OncePerRequestFilter {
 
-    private final UserDetailsService jwtUserDetailsService;
-    private final JwtTokenUtil jwtTokenUtil;
+    private UserDetailsService jwtUserDetailsService;
 
     @Autowired
-    public TokenFilter(UserDetailsService jwtUserDetailsService, JwtTokenUtil jwtTokenUtil) {
-        this.jwtUserDetailsService = jwtUserDetailsService;
-        this.jwtTokenUtil = jwtTokenUtil;
-    }
+    private JwtTokenUtil jwtTokenUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
@@ -42,53 +38,90 @@ public class TokenFilter extends OncePerRequestFilter {
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             String idToken = authorizationHeader.substring(7);
             String typeToken = null;
-            FirebaseToken decodedToken = null;
-
-            try {
-                decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+            try{
+                FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
                 typeToken = "firebase";
             } catch (FirebaseAuthException e) {
                 typeToken = "jwt";
             }
 
-            if ("firebase".equals(typeToken)) {
-                String uid = decodedToken.getUid();
+            if(typeToken.equals("firebase")){
+                // thực hiện filter theo firebase
+                authorizationHeader = request.getHeader("Authorization");
 
-                User principal = new User(uid, "", Collections.emptyList());
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, idToken, Collections.emptyList());
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                    idToken = authorizationHeader.substring(7);
 
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-                chain.doFilter(request, response);
-            } else {
-                String jwtToken = null;
-                String uid = null;
+                    try {
+                        FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+                        String uid = decodedToken.getUid();
 
-                try {
-                    uid = jwtTokenUtil.getUidFromToken(idToken);
-                    jwtToken = idToken;
+                        User principal = new User(uid, "", Collections.emptyList());
+                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, idToken, Collections.emptyList());
+                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                    if (uid != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                        UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(uid);
-
-                        if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
-                            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                                    userDetails, null, userDetails.getAuthorities());
-                            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                            SecurityContextHolder.getContext().setAuthentication(authentication);
-                        }
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    } catch (FirebaseAuthException e) {
+                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                        return;
                     }
-                } catch (IllegalArgumentException e) {
-                    logger.error("Unable to get JWT Token");
-                } catch (ExpiredJwtException e) {
-                    logger.error("JWT Token has expired");
-                } catch (Exception e) {
-                    logger.error("Unexpected error while extracting UID from JWT Token");
+                }
+
+                chain.doFilter(request, response);
+            }else{
+                // thực hiện theo jwt
+                String requestTokenHeader = request.getHeader("Authorization");
+
+                logger.info("Authorization Header: " + requestTokenHeader);
+
+                String uid = null;
+                String jwtToken = null;
+
+
+                // JWT Token is in the form "Bearer token". Remove Bearer word and get only the Token
+                if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
+                    jwtToken = requestTokenHeader.substring(7);
+                    try {
+                        logger.info("JWT Token: " + jwtToken);
+                        uid = jwtTokenUtil.getUidFromToken(jwtToken);
+                        logger.info("Extracted Username: " + uid);
+                    } catch (IllegalArgumentException e) {
+                        logger.error("Unable to get JWT Token");
+                    } catch (ExpiredJwtException e) {
+                        logger.error("JWT Token has expired");
+                    } catch (Exception e) {
+                        logger.error("Unexpected error while extracting UID from JWT Token");
+                    }
+                } else {
+                    logger.warn("JWT Token does not begin with Bearer String ");
+                    if (jwtToken != null) {
+                        logger.info("JWT: " + jwtToken.substring(7));
+                        logger.warn("Username: " + uid);
+                    }
+                }
+
+                // Once we get the token validate it.
+                if (uid != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+
+                    UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(uid);
+
+                    // if token is valid configure Spring Security to manually set
+                    // authentication
+                    if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+
+                        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                                userDetails, null, userDetails.getAuthorities());
+                        usernamePasswordAuthenticationToken
+                                .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        // After setting the Authentication in the context, we specify
+                        // that the current user is authenticated. So it passes the
+                        // Spring Security Configurations successfully.
+                        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                    }
                 }
                 chain.doFilter(request, response);
             }
-        } else {
-            chain.doFilter(request, response);
         }
+
     }
 }

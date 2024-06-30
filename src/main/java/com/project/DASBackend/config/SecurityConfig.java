@@ -30,7 +30,6 @@ public class SecurityConfig {
     @Autowired
     private TokenFilter tokenFilter;
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -47,8 +46,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                         //.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // Create session if required
                 );
-//                http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-//                http.addFilterBefore(firebaseTokenFilter, UsernamePasswordAuthenticationFilter.class);
+                //http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
                 http.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

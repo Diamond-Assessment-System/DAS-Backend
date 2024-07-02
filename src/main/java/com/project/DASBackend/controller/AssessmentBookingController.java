@@ -79,6 +79,4 @@ public class AssessmentBookingController {
         return ResponseEntity.ok(assessmentBookingDtos);
     }
 
-    
-
 }

@@ -78,5 +78,5 @@ public class AssessmentBookingController {
         List<AssessmentBookingDto> assessmentBookingDtos = assessmentBookingService.findAllOrdered();
         return ResponseEntity.ok(assessmentBookingDtos);
     }
-    
+
 }

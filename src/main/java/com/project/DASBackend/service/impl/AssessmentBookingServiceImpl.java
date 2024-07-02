@@ -132,4 +132,22 @@ public class AssessmentBookingServiceImpl implements AssessmentBookingService {
         assessmentBooking = assessmentBookingRepository.save(assessmentBooking);
         return AssessmentBookingMapper.toDto(assessmentBooking);
     }
+
+    @Override
+    public List<AssessmentBookingDto> findByConsultingAccountId(Integer consultingAccountId) {
+        List<AssessmentBooking> assessmentBookings = assessmentBookingRepository.findByConsultingAccountIdOrdered(consultingAccountId);
+        return assessmentBookings.stream().map(AssessmentBookingMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AssessmentBookingDto> findByAccountIdOrdered(Integer accountId) {
+        List<AssessmentBooking> assessmentBookings = assessmentBookingRepository.findByAccountIdOrdered(accountId);
+        return assessmentBookings.stream().map(AssessmentBookingMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AssessmentBookingDto> findAllOrdered() {
+        List<AssessmentBooking> assessmentBookings = assessmentBookingRepository.findAllOrdered();
+        return assessmentBookings.stream().map(AssessmentBookingMapper::toDto).collect(Collectors.toList());
+    }
 }

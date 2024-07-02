@@ -20,4 +20,10 @@ public interface AssessmentBookingService {
     AssessmentBookingDto changeStatus(Integer bookingId, Integer status);
 
     AssessmentBookingDto assignStaff(Integer bookingId, Integer consultingAccountId);
+
+    List<AssessmentBookingDto> findByConsultingAccountId(Integer consultingAccountId);
+
+    List<AssessmentBookingDto> findByAccountIdOrdered(Integer accountId);
+
+    List<AssessmentBookingDto> findAllOrdered();
 }

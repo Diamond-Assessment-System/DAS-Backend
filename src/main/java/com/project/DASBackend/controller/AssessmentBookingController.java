@@ -65,4 +65,22 @@ public class AssessmentBookingController {
         AssessmentBookingDto updatedBooking = assessmentBookingService.assignStaff(bookingId, staffId);
         return ResponseEntity.ok(updatedBooking);
     }
+
+    @GetMapping("/account/{accountId}")
+    public ResponseEntity<List<AssessmentBookingDto>> findByAccountId(@PathVariable("accountId") Integer accountId) {
+        List<AssessmentBookingDto> assessmentBookingDtos = assessmentBookingService.findByAccountIdOrdered(accountId);
+        return ResponseEntity.ok(assessmentBookingDtos);
+    }
+
+    @GetMapping("/consulting-account/{consultingAccountId}")
+    public ResponseEntity<List<AssessmentBookingDto>> findByConsultingAccountId(@PathVariable("consultingAccountId") Integer consultingAccountId) {
+        List<AssessmentBookingDto> assessmentBookingDtos = assessmentBookingService.findByConsultingAccountId(consultingAccountId);
+        return ResponseEntity.ok(assessmentBookingDtos);
+    }
+
+    @GetMapping("/ordered")
+    public ResponseEntity<List<AssessmentBookingDto>> findAllOrdered() {
+        List<AssessmentBookingDto> assessmentBookingDtos = assessmentBookingService.findAllOrdered();
+        return ResponseEntity.ok(assessmentBookingDtos);
+    }
 }

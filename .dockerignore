@@ -17,7 +17,7 @@
 **/docker-compose*
 **/compose.y*ml
 **/target/*
-!**/target/DAS-Backend-0.0.1.jar
+!target/DAS-Backend-0.0.1.jar
 **/Dockerfile*
 **/node_modules
 **/npm-debug.log

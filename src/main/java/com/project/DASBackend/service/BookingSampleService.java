@@ -23,4 +23,6 @@ public interface BookingSampleService {
 
     BookingSampleDto assignStaff(Integer sampleId, Integer assessmentAccountId);
 
+    List<BookingSampleDto> getBookingSamplesByAssessmentAccountId(Integer assessmentAccountId);
+
 }

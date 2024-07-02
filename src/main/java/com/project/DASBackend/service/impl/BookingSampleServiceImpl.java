@@ -134,4 +134,10 @@ public class BookingSampleServiceImpl implements BookingSampleService {
         bookingSample = bookingSampleRepository.save(bookingSample);
         return BookingSampleMapper.toDto(bookingSample);
     }
+
+    @Override
+    public List<BookingSampleDto> getBookingSamplesByAssessmentAccountId(Integer assessmentAccountId) {
+        List<BookingSample> bookingSamples = bookingSampleRepository.findAllByAccount_AccountIdOrderByStatusAsc(assessmentAccountId);
+        return bookingSamples.stream().map(BookingSampleMapper::toDto).collect(Collectors.toList());
+    }
 }

@@ -72,11 +72,6 @@ public class AssessmentBookingController {
         return ResponseEntity.ok(assessmentBookingDtos);
     }
 
-    @GetMapping("/consulting-account/{consultingAccountId}")
-    public ResponseEntity<List<AssessmentBookingDto>> findByConsultingAccountId(@PathVariable("consultingAccountId") Integer consultingAccountId) {
-        List<AssessmentBookingDto> assessmentBookingDtos = assessmentBookingService.findByConsultingAccountId(consultingAccountId);
-        return ResponseEntity.ok(assessmentBookingDtos);
-    }
 
     @GetMapping("/ordered")
     public ResponseEntity<List<AssessmentBookingDto>> findAllOrdered() {

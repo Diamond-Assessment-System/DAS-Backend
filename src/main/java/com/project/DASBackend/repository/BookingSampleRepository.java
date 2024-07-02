@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface BookingSampleRepository extends JpaRepository<BookingSample, Integer> {
     List<BookingSample> findAllByAssessmentBooking_BookingId(Integer bookingId);
+
+    List<BookingSample> findAllByAccount_AccountIdOrderByStatusAsc(Integer accountId);
 }

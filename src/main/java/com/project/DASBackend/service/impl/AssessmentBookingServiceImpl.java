@@ -133,15 +133,12 @@ public class AssessmentBookingServiceImpl implements AssessmentBookingService {
         return AssessmentBookingMapper.toDto(assessmentBooking);
     }
 
-    @Override
-    public List<AssessmentBookingDto> findByConsultingAccountId(Integer consultingAccountId) {
-        List<AssessmentBooking> assessmentBookings = assessmentBookingRepository.findByConsultingAccountIdOrdered(consultingAccountId);
-        return assessmentBookings.stream().map(AssessmentBookingMapper::toDto).collect(Collectors.toList());
-    }
 
     @Override
     public List<AssessmentBookingDto> findByAccountIdOrdered(Integer accountId) {
-        List<AssessmentBooking> assessmentBookings = assessmentBookingRepository.findByAccountIdOrdered(accountId);
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + accountId));
+        List<AssessmentBooking> assessmentBookings = assessmentBookingRepository.findByAccountIdOrdered(account.getAccountId());
         return assessmentBookings.stream().map(AssessmentBookingMapper::toDto).collect(Collectors.toList());
     }
 

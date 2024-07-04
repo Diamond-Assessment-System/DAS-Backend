@@ -23,7 +23,7 @@ public class AuthController {
     private AccountRepository accountRepository;
 
     @Autowired
-    private AccountService accountService;
+    private AccountService accountService; 
 
     @PostMapping("/login")
     public ResponseEntity<?> loginWithFirebaseToken(@RequestHeader("Authorization") String authorizationHeader) {

@@ -14,21 +14,34 @@ import java.io.InputStream;
 @Configuration
 public class FirebaseConfig {
 
+//    @Bean
+//    public FirebaseApp initializeFirebase() throws IOException {
+//        // Load the service account key JSON file from the classpath
+//        try (InputStream serviceAccount = getClass().getClassLoader().getResourceAsStream("serviceAccountKey.json")) {
+//            if (serviceAccount == null) {
+//                throw new FileNotFoundException("serviceAccountKey.json not found in classpath");
+//            }
+//
+//            // Initialize Firebase options with the service account credentials
+//            FirebaseOptions options = new FirebaseOptions.Builder()
+//                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+//                    .build();
+//
+//            // Initialize and return the FirebaseApp instance
+//            return FirebaseApp.initializeApp(options);
+//        }
+//    }
+
     @Bean
-    public FirebaseApp initializeFirebase() throws IOException {
-        // Load the service account key JSON file from the classpath
-        try (InputStream serviceAccount = getClass().getClassLoader().getResourceAsStream("serviceAccountKey.json")) {
-            if (serviceAccount == null) {
-                throw new FileNotFoundException("serviceAccountKey.json not found in classpath");
-            }
+    public FirebaseApp firebaseApp() throws IOException {
+        FileInputStream serviceAccount =
+                new FileInputStream("path/to/serviceAccountKey.json");
 
-            // Initialize Firebase options with the service account credentials
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .build();
+        FirebaseOptions options = new FirebaseOptions.Builder()
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .build();
 
-            // Initialize and return the FirebaseApp instance
-            return FirebaseApp.initializeApp(options);
-        }
+        return FirebaseApp.initializeApp(options);
     }
+
 }

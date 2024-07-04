@@ -53,4 +53,18 @@ public class AccountController {
         accountService.deleteAccount(accountId);
         return ResponseEntity.ok("Employee deleted successfully");
     }
+
+    @PatchMapping("{id}/status")
+    public ResponseEntity<AccountDto> changeStatus(@PathVariable("id") Integer accountId,
+                                                   @RequestParam Integer status) {
+        AccountDto accountDto = accountService.changeStatus(accountId, status);
+        return ResponseEntity.ok(accountDto);
+    }
+
+    @PatchMapping("{id}/role")
+    public ResponseEntity<AccountDto> changeRole(@PathVariable("id") Integer accountId,
+                                                 @RequestParam Integer role) {
+        AccountDto accountDto = accountService.changeRole(accountId, role);
+        return ResponseEntity.ok(accountDto);
+    }
 }

@@ -18,4 +18,5 @@ public interface AccountService {
     void deleteAccount(Integer accountId);
 
     AccountDto changeStatus(Integer accountId, Integer status);
+    AccountDto changeRole(Integer accountId, Integer role);
 }

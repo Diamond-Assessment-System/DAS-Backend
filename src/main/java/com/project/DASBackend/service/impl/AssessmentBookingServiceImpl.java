@@ -11,6 +11,7 @@ import com.project.DASBackend.repository.AssessmentBookingRepository;
 import com.project.DASBackend.repository.ServiceRepository;
 import com.project.DASBackend.service.AssessmentBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,7 +56,7 @@ public class AssessmentBookingServiceImpl implements AssessmentBookingService {
 
     @Override
     public List<AssessmentBookingDto> getAllAssessmentBookings() {
-        List<AssessmentBooking> assessmentBookings = assessmentBookingRepository.findAll();
+        List<AssessmentBooking> assessmentBookings = assessmentBookingRepository.findAll(Sort.by(Sort.Direction.DESC, "dateCreated"));
         return assessmentBookings.stream().map(AssessmentBookingMapper::toDto).collect(Collectors.toList());
     }
 
@@ -138,7 +139,7 @@ public class AssessmentBookingServiceImpl implements AssessmentBookingService {
     public List<AssessmentBookingDto> findByAccountIdOrdered(Integer accountId) {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + accountId));
-        List<AssessmentBooking> assessmentBookings = assessmentBookingRepository.findByAccountIdOrdered(account.getAccountId());
+        List<AssessmentBooking> assessmentBookings = assessmentBookingRepository.findAllByAccountIdOrdered(account.getAccountId());
         return assessmentBookings.stream().map(AssessmentBookingMapper::toDto).collect(Collectors.toList());
     }
 

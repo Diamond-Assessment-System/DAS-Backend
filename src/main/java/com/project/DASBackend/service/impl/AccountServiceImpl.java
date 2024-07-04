@@ -73,4 +73,13 @@ public class AccountServiceImpl implements AccountService {
         account = accountRepository.save(account);
         return AccountMapper.toDto(account);
     }
+
+    @Override
+    public AccountDto changeRole(Integer accountId, Integer role) {
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + accountId));
+        account.setRole(role);
+        account = accountRepository.save(account);
+        return AccountMapper.toDto(account);
+    }
 }

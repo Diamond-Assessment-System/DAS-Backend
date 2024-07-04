@@ -12,7 +12,7 @@ import java.util.List;
 public interface AssessmentBookingRepository extends JpaRepository<AssessmentBooking, Integer> {
 
     @Query("SELECT ab FROM AssessmentBooking ab WHERE ab.account = :accountId ORDER BY ab.status ASC, ab.dateReceived DESC")
-    List<AssessmentBooking> findByAccountIdOrdered(@Param("accountId") Integer accountId);
+    List<AssessmentBooking> findAllByAccountIdOrdered(@Param("accountId") Integer accountId);
 
     @Query("SELECT ab FROM AssessmentBooking ab ORDER BY ab.status ASC, ab.dateReceived DESC")
     List<AssessmentBooking> findAllOrdered();

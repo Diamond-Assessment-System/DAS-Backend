@@ -11,6 +11,7 @@ import com.project.DASBackend.repository.AssessmentPaperRepository;
 import com.project.DASBackend.repository.BookingSampleRepository;
 import com.project.DASBackend.service.AssessmentPaperService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,7 +53,7 @@ public class AssessmentPaperServiceImpl implements AssessmentPaperService {
 
     @Override
     public List<AssessmentPaperDto> getAllAssessmentPapers() {
-        List<AssessmentPaper> assessmentPapers = assessmentPaperRepository.findAll();
+        List<AssessmentPaper> assessmentPapers = assessmentPaperRepository.findAll(Sort.by(Sort.Direction.DESC, "dateCreated"));
         return assessmentPapers.stream().map(AssessmentPaperMapper::toDto).collect(Collectors.toList());
     }
 

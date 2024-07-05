@@ -47,6 +47,7 @@ public class ServiceServiceImpl implements ServiceService {
         service.setServiceName(serviceDto.getServiceName());
         service.setServiceDescription(serviceDto.getServiceDescription());
         service.setServiceStatus(serviceDto.getServiceStatus());
+        service.setServiceType(serviceDto.getServiceType());
         service.setServicePrice(serviceDto.getServicePrice());
         service.setServiceTime(serviceDto.getServiceTime());
         service = serviceRepository.save(service);

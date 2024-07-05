@@ -27,7 +27,7 @@ public class Services {
     @Column(name = "Service_status", nullable = false)
     private Integer serviceStatus;
 
-    @Column(name = "Service_type", nullable = true)
+    @Column(name = "Service_type", nullable = false)
     private Integer serviceType;
 
     @Column(name = "Service_price", nullable = false)

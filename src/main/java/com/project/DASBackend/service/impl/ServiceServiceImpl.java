@@ -35,7 +35,7 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public List<ServiceDto> getAllServices() {
-        Sort sort = Sort.by(Sort.Order.asc("type"), Sort.Order.asc("time"));
+        Sort sort = Sort.by(Sort.Order.asc("serviceType"), Sort.Order.asc("serviceTime"));
         List<Services> services = serviceRepository.findAll(sort);
         return services.stream().map(ServiceMapper::toDto).collect(Collectors.toList());
     }

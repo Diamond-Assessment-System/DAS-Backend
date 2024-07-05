@@ -7,6 +7,7 @@ import com.project.DASBackend.mapper.ServiceMapper;
 import com.project.DASBackend.repository.ServiceRepository;
 import com.project.DASBackend.service.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,7 +35,8 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public List<ServiceDto> getAllServices() {
-        List<Services> services = serviceRepository.findAll();
+        Sort sort = Sort.by(Sort.Order.asc("type"), Sort.Order.asc("time"));
+        List<Services> services = serviceRepository.findAll(sort);
         return services.stream().map(ServiceMapper::toDto).collect(Collectors.toList());
     }
 

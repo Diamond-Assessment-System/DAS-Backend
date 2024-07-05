@@ -23,6 +23,8 @@ public class ServiceDto {
     @NotNull(message = "Service status cannot be null")
     private Integer serviceStatus;
 
+    private Integer serviceType;
+
     @NotNull(message = "Service price cannot be null")
     private Float servicePrice;
 

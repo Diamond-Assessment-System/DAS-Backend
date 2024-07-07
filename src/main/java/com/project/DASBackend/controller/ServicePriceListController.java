@@ -37,9 +37,16 @@ public class ServicePriceListController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<ServicePriceListDto> updateServicePriceList(@Valid @RequestBody ServicePriceListDto servicePriceListDto,
-                                                                      @PathVariable("id") Integer servicePriceId) {
+    public ResponseEntity<ServicePriceListDto> updateServicePriceList(@PathVariable("id") Integer servicePriceId,
+                                                                      @Valid @RequestBody ServicePriceListDto servicePriceListDto) {
         return ResponseEntity.ok(servicePriceListService.updateServicePriceList(servicePriceId, servicePriceListDto));
+    }
+
+    @PatchMapping("{id}")
+    public ResponseEntity<ServicePriceListDto> updateServicePriceListPrice(@PathVariable("id") Integer servicePriceId,
+                                                                           @RequestParam("initPrice") Float initPrice,
+                                                                           @RequestParam("priceUnit") Float priceUnit) {
+        return ResponseEntity.ok(servicePriceListService.updateServicePriceListPrice(servicePriceId, initPrice, priceUnit));
     }
 
     @DeleteMapping("{id}")

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,6 +20,8 @@ public class ServicePriceListServiceImpl implements ServicePriceListService {
 
     @Autowired
     private ServicePriceListRepository servicePriceListRepository;
+
+    private ServicePriceListMapper servicePriceListMapper;
 
     @Override
     public ServicePriceListDto createServicePriceList(ServicePriceListDto servicePriceListDto) {
@@ -60,6 +63,18 @@ public class ServicePriceListServiceImpl implements ServicePriceListService {
             throw new ResourceNotFoundException("Service Price List not found with id: " + servicePriceId);
         }
         servicePriceListRepository.deleteById(servicePriceId);
+    }
+
+    public ServicePriceListDto updateServicePriceListPrice(Integer servicePriceId, Float initPrice, Float priceUnit) {
+        Optional<ServicePriceList> servicePriceListOptional = servicePriceListRepository.findById(servicePriceId);
+        if (servicePriceListOptional.isPresent()) {
+            ServicePriceList servicePriceList = servicePriceListOptional.get();
+            servicePriceList.setInitPrice(initPrice);
+            servicePriceList.setPriceUnit(priceUnit);
+            servicePriceList = servicePriceListRepository.save(servicePriceList);
+            return servicePriceListMapper.toDto(servicePriceList);
+        }
+        return null; // or throw an exception
     }
 
 }

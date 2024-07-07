@@ -14,4 +14,6 @@ public interface ServicePriceListService {
     ServicePriceListDto updateServicePriceList(Integer servicePriceId, ServicePriceListDto servicePriceListDto);
 
     void deleteServicePriceList(Integer servicePriceId);
+
+    public ServicePriceListDto updateServicePriceListPrice(Integer servicePriceId, Float initPrice, Float priceUnit);
 }

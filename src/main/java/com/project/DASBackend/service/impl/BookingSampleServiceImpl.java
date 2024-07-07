@@ -157,6 +157,6 @@ public class BookingSampleServiceImpl implements BookingSampleService {
 
     @Override
     public long countBookingSamplesByBookingIdWithStatus4(Integer bookingId) {
-        return bookingSampleRepository.countByAssessmentBooking_BookingIdAndStatusIn(bookingId, 4);
+        return bookingSampleRepository.countByAssessmentBooking_BookingIdAndStatus(bookingId, 4);
     }
 }

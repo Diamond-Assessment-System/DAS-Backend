@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -20,7 +21,8 @@ public class AssessmentBookingDto {
     private Float totalPrice;
 
 //    @NotNull(message = "Sample return date cannot be null")
-    private LocalDate sampleReturnDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd - HH:mm:ss")
+    private LocalDateTime sampleReturnDate;
 
 //    @NotNull(message = "Status cannot be null")
     private Integer status;
@@ -35,10 +37,12 @@ public class AssessmentBookingDto {
     private String phone;
 
 //    @NotNull(message = "Date created cannot be null")
-    private LocalDate dateCreated;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd - HH:mm:ss")
+    private LocalDateTime dateCreated;
 
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private LocalDate dateReceived;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd - HH:mm:ss")
+    private LocalDateTime dateReceived;
 
     private String feedback;
 

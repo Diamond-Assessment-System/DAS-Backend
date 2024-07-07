@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -25,7 +26,7 @@ public class AssessmentBooking {
     private Float totalPrice;
 
     @Column(name = "Sample_Return_Date")
-    private LocalDate sampleReturnDate;
+    private LocalDateTime sampleReturnDate;
 
     @Column(name = "status", nullable = false)
     private Integer status;
@@ -40,10 +41,10 @@ public class AssessmentBooking {
     private String phone;
 
     @Column(name = "Date_created", nullable = false)
-    private LocalDate dateCreated;
+    private LocalDateTime dateCreated;
 
     @Column(name = "Date_received")
-    private LocalDate dateReceived;
+    private LocalDateTime dateReceived;
 
     @Column(name = "Feedback")
     private String feedback;

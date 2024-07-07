@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -52,7 +53,7 @@ public class AssessmentPaper {
     private String comments;
 
     @Column(name = "Date_Created", nullable = false)
-    private LocalDate dateCreated;
+    private LocalDateTime dateCreated;
 
     @Column(name = "Paper_Image", nullable = false, columnDefinition = "LONGBLOB")
     private String paperImage;

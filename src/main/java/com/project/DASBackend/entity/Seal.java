@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -31,7 +32,7 @@ public class Seal {
     private Float size;
 
     @Column(name = "DateCreated", nullable = false)
-    private LocalDate dateCreated;
+    private LocalDateTime dateCreated;
 
     @Column(name = "Color", nullable = false)
     private String color;

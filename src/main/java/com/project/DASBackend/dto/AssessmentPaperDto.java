@@ -1,10 +1,12 @@
 package com.project.DASBackend.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -45,8 +47,9 @@ public class AssessmentPaperDto {
 
     private String comments;
 
-    @NotNull(message = "Date created cannot be null")
-    private LocalDate dateCreated;
+    //@NotNull(message = "Date created cannot be null")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd - HH:mm:ss")
+    private LocalDateTime dateCreated;
 
     @NotNull(message = "There muse be a paper image url/base64")
     private String paperImage;

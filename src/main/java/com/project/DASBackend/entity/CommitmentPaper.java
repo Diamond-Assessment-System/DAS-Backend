@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -25,10 +26,10 @@ public class CommitmentPaper {
     private String description;
 
     @Column(name = "Date_Created", nullable = false)
-    private LocalDate dateCreated;
+    private LocalDateTime dateCreated;
 
     @Column(name = "Approval_Date", nullable = false)
-    private LocalDate approvalDate;
+    private LocalDateTime approvalDate;
 
     @Column(name = "CommitmentType", nullable = false)
     private String commitmentType;

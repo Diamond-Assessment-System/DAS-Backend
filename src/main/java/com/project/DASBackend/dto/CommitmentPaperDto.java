@@ -1,10 +1,12 @@
 package com.project.DASBackend.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -20,10 +22,12 @@ public class CommitmentPaperDto {
     private String description;
 
     @NotNull(message = "Date created cannot be null")
-    private LocalDate dateCreated;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd - HH:mm:ss")
+    private LocalDateTime dateCreated;
 
     @NotNull(message = "Approval date cannot be null")
-    private LocalDate approvalDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd - HH:mm:ss")
+    private LocalDateTime approvalDate;
 
     @NotBlank(message = "Commitment type cannot be blank")
     private String commitmentType;

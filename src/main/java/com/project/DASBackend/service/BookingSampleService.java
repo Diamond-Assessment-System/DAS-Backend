@@ -27,6 +27,6 @@ public interface BookingSampleService {
 
     long countAllBookingSamplesByBookingId(Integer bookingId);
 
-    long countBookingSamplesByBookingIdWithStatus2or3(Integer bookingId);
+    long countBookingSamplesByBookingIdWithStatus1or2(Integer bookingId);
 
 }

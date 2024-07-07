@@ -150,7 +150,7 @@ public class BookingSampleServiceImpl implements BookingSampleService {
         return bookingSampleRepository.countByAssessmentBooking_BookingId(bookingId);
     }
 
-    public long countBookingSamplesByBookingIdWithStatus2or3(Integer bookingId) {
-        return bookingSampleRepository.countByAssessmentBooking_BookingIdAndStatusIn(bookingId, Arrays.asList(2, 3));
+    public long countBookingSamplesByBookingIdWithStatus1or2(Integer bookingId) {
+        return bookingSampleRepository.countByAssessmentBooking_BookingIdAndStatusIn(bookingId, Arrays.asList(1, 2));
     }
 }

@@ -86,7 +86,7 @@ public class BookingSampleController {
     }
 
     @GetMapping("/count-by-status")
-    public long countBookingSamplesByBookingIdWithStatus2or3(@RequestParam Integer bookingId) {
-        return bookingSampleService.countBookingSamplesByBookingIdWithStatus2or3(bookingId);
+    public long countBookingSamplesByBookingIdWithStatus1or2(@RequestParam Integer bookingId) {
+        return bookingSampleService.countBookingSamplesByBookingIdWithStatus1or2(bookingId);
     }
 }

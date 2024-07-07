@@ -14,6 +14,7 @@ public class ServiceMapper {
                 .serviceDescription(service.getServiceDescription())
                 .serviceStatus(service.getServiceStatus())
                 .servicePrice(service.getServicePrice())
+                .serviceType(service.getServiceType())
                 .serviceTime(service.getServiceTime())
                 .build();
     }
@@ -27,6 +28,7 @@ public class ServiceMapper {
         service.setServiceName(serviceDto.getServiceName());
         service.setServiceDescription(serviceDto.getServiceDescription());
         service.setServiceStatus(serviceDto.getServiceStatus());
+        service.setServiceType(serviceDto.getServiceType());
         service.setServicePrice(serviceDto.getServicePrice());
         service.setServiceTime(serviceDto.getServiceTime());
         return service;

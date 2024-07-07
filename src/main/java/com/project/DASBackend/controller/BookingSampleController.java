@@ -89,4 +89,9 @@ public class BookingSampleController {
     public long countBookingSamplesByBookingIdWithStatus1or2(@RequestParam Integer bookingId) {
         return bookingSampleService.countBookingSamplesByBookingIdWithStatus1or2(bookingId);
     }
+    @GetMapping("/count-sealed")
+    public  long countBookingSamplesByBookingIdWithStatus4(@RequestParam Integer bookingId) {
+        return bookingSampleService.countBookingSamplesByBookingIdWithStatus4(bookingId);
+    }
+
 }

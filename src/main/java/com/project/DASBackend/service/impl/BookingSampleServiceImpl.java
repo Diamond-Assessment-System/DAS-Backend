@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 @Service
 public class BookingSampleServiceImpl implements BookingSampleService {
 
+
     @Autowired
     private BookingSampleRepository bookingSampleRepository;
     @Autowired
@@ -152,5 +153,10 @@ public class BookingSampleServiceImpl implements BookingSampleService {
 
     public long countBookingSamplesByBookingIdWithStatus1or2(Integer bookingId) {
         return bookingSampleRepository.countByAssessmentBooking_BookingIdAndStatusIn(bookingId, Arrays.asList(1, 2));
+    }
+
+    @Override
+    public long countBookingSamplesByBookingIdWithStatus4(Integer bookingId) {
+        return bookingSampleRepository.countByAssessmentBooking_BookingIdAndStatusIn(bookingId, Arrays.asList((4)));
     }
 }

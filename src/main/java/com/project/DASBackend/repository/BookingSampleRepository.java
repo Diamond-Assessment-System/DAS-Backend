@@ -11,4 +11,8 @@ public interface BookingSampleRepository extends JpaRepository<BookingSample, In
     List<BookingSample> findAllByAssessmentBooking_BookingId(Integer bookingId);
 
     List<BookingSample> findAllByAccount_AccountIdOrderByStatusAsc(Integer accountId);
+
+    long countByAssessmentBooking_BookingId(Integer bookingId);
+
+    long countByAssessmentBooking_BookingIdAndStatusIn(Integer bookingId, List<Integer> statuses);
 }

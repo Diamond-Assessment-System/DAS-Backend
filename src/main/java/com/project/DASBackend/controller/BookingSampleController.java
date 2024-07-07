@@ -79,4 +79,14 @@ public class BookingSampleController {
         List<BookingSampleDto> bookingSampleDtos = bookingSampleService.getBookingSamplesByAssessmentAccountId(assessmentAccountId);
         return ResponseEntity.ok(bookingSampleDtos);
     }
+
+    @GetMapping("/count")
+    public long countAllBookingSamplesByBookingId(@RequestParam Integer bookingId) {
+        return bookingSampleService.countAllBookingSamplesByBookingId(bookingId);
+    }
+
+    @GetMapping("/count-by-status")
+    public long countBookingSamplesByBookingIdWithStatus2or3(@RequestParam Integer bookingId) {
+        return bookingSampleService.countBookingSamplesByBookingIdWithStatus2or3(bookingId);
+    }
 }

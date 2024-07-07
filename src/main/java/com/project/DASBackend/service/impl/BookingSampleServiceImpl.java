@@ -15,6 +15,8 @@ import com.project.DASBackend.service.BookingSampleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -90,7 +92,10 @@ public class BookingSampleServiceImpl implements BookingSampleService {
     @Override
     public List<BookingSampleDto> getBookingSamplesByBookingId(Integer bookingId) {
         List<BookingSample> bookingSamples = bookingSampleRepository.findAllByAssessmentBooking_BookingId(bookingId);
-        return bookingSamples.stream().map(BookingSampleMapper::toDto).collect(Collectors.toList());
+        return bookingSamples.stream()
+                .sorted(Comparator.comparing(BookingSample::getStatus)) // Sorting by status in ascending order
+                .map(BookingSampleMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -139,5 +144,13 @@ public class BookingSampleServiceImpl implements BookingSampleService {
     public List<BookingSampleDto> getBookingSamplesByAssessmentAccountId(Integer assessmentAccountId) {
         List<BookingSample> bookingSamples = bookingSampleRepository.findAllByAccount_AccountIdOrderByStatusAsc(assessmentAccountId);
         return bookingSamples.stream().map(BookingSampleMapper::toDto).collect(Collectors.toList());
+    }
+
+    public long countAllBookingSamplesByBookingId(Integer bookingId) {
+        return bookingSampleRepository.countByAssessmentBooking_BookingId(bookingId);
+    }
+
+    public long countBookingSamplesByBookingIdWithStatus2or3(Integer bookingId) {
+        return bookingSampleRepository.countByAssessmentBooking_BookingIdAndStatusIn(bookingId, Arrays.asList(2, 3));
     }
 }

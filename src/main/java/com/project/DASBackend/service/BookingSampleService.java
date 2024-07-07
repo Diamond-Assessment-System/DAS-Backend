@@ -25,4 +25,8 @@ public interface BookingSampleService {
 
     List<BookingSampleDto> getBookingSamplesByAssessmentAccountId(Integer assessmentAccountId);
 
+    long countAllBookingSamplesByBookingId(Integer bookingId);
+
+    long countBookingSamplesByBookingIdWithStatus2or3(Integer bookingId);
+
 }

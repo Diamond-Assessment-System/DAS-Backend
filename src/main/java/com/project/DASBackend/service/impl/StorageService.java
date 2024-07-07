@@ -28,18 +28,47 @@ public class StorageService {
     @Autowired
     private AmazonS3 s3Client;
 
-    public String uploadFile(MultipartFile file) throws AmazonServiceException, SdkClientException, IOException {
+    //    public String uploadFile(MultipartFile file, Integer assessmentPaperId) throws AmazonServiceException, SdkClientException, IOException {
+//        File fileObj = convertMultiPartFileToFile(file);
+//
+//        // Tạo tên file upload
+//        String fileName = "AssessmentPaper_" + assessmentPaperId + "_" + file.getOriginalFilename() + ".png";
+//
+//        // Đưa file lên AWS S3
+//        s3Client.putObject(new PutObjectRequest(bucketName, fileName, fileObj));
+//
+//        // Xóa file tạm sau khi upload
+//        fileObj.delete();
+//
+//        return fileName; // Trả về tên file đã upload
+//    }
+
+    public String uploadFile(MultipartFile file, Integer assessmentPaperId) throws AmazonServiceException, SdkClientException, IOException {
         File fileObj = convertMultiPartFileToFile(file);
-        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        s3Client.putObject(new PutObjectRequest(bucketName, fileName, fileObj));
-        fileObj.delete();
-        return "File uploaded : " + fileName;
 
-//        ObjectMetadata metaDak = new ObjectMetadata();
-//        s3Client.putObject(bucketName, file.getName(), file.getInputStream(), metaDak);
-//        return "File uploaded Successfully: ";
+        // Tạo tên file upload với phần mở rộng .png
+        String originalFileName = file.getOriginalFilename();
+        String fileName = "AssessmentPaper_" + assessmentPaperId + "_" + originalFileName;
+        // Kiểm tra nếu tên file không có phần mở rộng, thêm .png
+        if (!originalFileName.toLowerCase().endsWith(".png")) {
+            fileName += ".png";
+        }
+        try {
+            s3Client.putObject(new PutObjectRequest(bucketName, fileName, fileObj));
+        } catch (AmazonServiceException e) {
+            log.error("Amazon service error: {}", e.getMessage());
+            throw e;
+        } catch (SdkClientException e) {
+            log.error("SDK client error: {}", e.getMessage());
+            throw e;
+        } finally {
+            if (fileObj.exists() && !fileObj.delete()) {
+                log.warn("Failed to delete temporary file: {}", fileObj.getAbsolutePath());
+            }
+        }
+
+        return fileName;
     }
-
 
     public byte[] downloadFile(String fileName) {
         S3Object s3Object = s3Client.getObject(bucketName, fileName);
@@ -65,13 +94,24 @@ public class StorageService {
     }
 
 
+    //    private File convertMultiPartFileToFile(MultipartFile file) {
+//        File convertedFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
+//        try (FileOutputStream fos = new FileOutputStream(convertedFile)) {
+//            fos.write(file.getBytes());
+//        } catch (IOException e) {
+//            log.error("Error converting multipartFile to file", e);
+//        }
+//        return convertedFile;
+//    }
     private File convertMultiPartFileToFile(MultipartFile file) {
         File convertedFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
         try (FileOutputStream fos = new FileOutputStream(convertedFile)) {
             fos.write(file.getBytes());
         } catch (IOException e) {
             log.error("Error converting multipartFile to file", e);
+            throw new RuntimeException("Error converting multipartFile to file", e);
         }
         return convertedFile;
     }
+
 }

@@ -15,9 +15,15 @@ public class StorageController {
     @Autowired
     private StorageService service;
 
-    @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam(value = "file") MultipartFile file) throws Exception {
-        return new ResponseEntity<>(service.uploadFile(file), HttpStatus.OK);
+    //    @PostMapping("/upload")
+////    public ResponseEntity<String> uploadFile(@RequestParam(value = "file") MultipartFile file) throws Exception {
+////        return new ResponseEntity<>(service.uploadFile(file), HttpStatus.OK);
+////    }
+        @PostMapping("/upload")
+    public ResponseEntity<String> uploadFile(
+            @RequestParam(value = "file") MultipartFile file,
+            @RequestParam(value = "assessmentPaperId") Integer assessmentPaperId) throws Exception {
+        return new ResponseEntity<>(service.uploadFile(file, assessmentPaperId), HttpStatus.OK);
     }
 
     @GetMapping("/download/{fileName}")

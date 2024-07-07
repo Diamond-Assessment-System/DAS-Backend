@@ -7,6 +7,10 @@ import java.util.List;
 public interface AccountService {
     AccountDto createAccount(AccountDto accountDto);
 
+    AccountDto phoneregister(AccountDto accountDto);
+
+    AccountDto phonelogin(String phone, String password);
+
     AccountDto getAccountById(Integer accountId);
 
     List<AccountDto> getAllAccounts();

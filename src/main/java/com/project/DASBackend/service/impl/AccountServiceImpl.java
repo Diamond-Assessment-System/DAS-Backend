@@ -26,6 +26,20 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public AccountDto phoneregister(AccountDto accountDto) {
+        Account account = AccountMapper.toEntity(accountDto);
+        account = accountRepository.save(account);
+        return AccountMapper.toDto(account);
+    }
+
+    @Override
+    public AccountDto phonelogin(String phone, String password) {
+        Account account = accountRepository.findByPhoneAndPassword(phone, password)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found with phone: " + phone));
+        return AccountMapper.toDto(account);
+    }
+
+    @Override
     public AccountDto getAccountById(Integer accountId) {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + accountId));

@@ -24,6 +24,16 @@ public class AccountController {
         return new ResponseEntity<>(accountService.createAccount(accountDto), HttpStatus.CREATED);
     }
 
+    @PostMapping("/phoneregister")
+    public ResponseEntity<AccountDto> phoneRegister(@RequestBody AccountDto accountDto){
+        return new ResponseEntity<>(accountService.phoneregister(accountDto), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/phonelogin")
+    public ResponseEntity<AccountDto> phoneLogin(@RequestBody String phone, @RequestBody String password){
+        return new ResponseEntity<>(accountService.phonelogin(phone, password), HttpStatus.CREATED);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<AccountDto> getAccountById(@PathVariable("id") Integer accountId){
         AccountDto accountDto = accountService.getAccountById(accountId);

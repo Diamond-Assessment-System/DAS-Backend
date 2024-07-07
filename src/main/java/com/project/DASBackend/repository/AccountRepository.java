@@ -12,4 +12,6 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     Account findByUid(String uid);
 
     List<Account> findByRole(int role);
+
+    Optional<Account> findByPhoneAndPassword(String phone, String password);
 }

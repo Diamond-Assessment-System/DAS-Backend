@@ -22,40 +22,40 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto createAccount(AccountDto accountDto) {
         Account account = AccountMapper.toEntity(accountDto);
         account = accountRepository.save(account);
-        return AccountMapper.toDto(account);
+        return hidePassword(AccountMapper.toDto(account));
     }
 
     @Override
     public AccountDto phoneregister(AccountDto accountDto) {
         Account account = AccountMapper.toEntity(accountDto);
         account = accountRepository.save(account);
-        return AccountMapper.toDto(account);
+        return hidePassword(AccountMapper.toDto(account));
     }
 
     @Override
     public AccountDto phonelogin(String phone, String password) {
         Account account = accountRepository.findByPhoneAndPassword(phone, password)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with phone: " + phone));
-        return AccountMapper.toDto(account);
+        return hidePassword(AccountMapper.toDto(account));
     }
 
     @Override
     public AccountDto getAccountById(Integer accountId) {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + accountId));
-        return AccountMapper.toDto(account);
+        return hidePassword(AccountMapper.toDto(account));
     }
 
     @Override
     public List<AccountDto> getAllAccounts() {
         List<Account> accounts = accountRepository.findAll();
-        return accounts.stream().map(AccountMapper::toDto).collect(Collectors.toList());
+        return accounts.stream().map(account -> hidePassword(AccountMapper.toDto(account))).collect(Collectors.toList());
     }
 
     @Override
     public List<AccountDto> getAccountsByRole(Integer role) {
         List<Account> accounts = accountRepository.findByRole(role);
-        return accounts.stream().map(AccountMapper::toDto).collect(Collectors.toList());
+        return accounts.stream().map(account -> hidePassword(AccountMapper.toDto(account))).collect(Collectors.toList());
     }
 
     @Override
@@ -68,7 +68,7 @@ public class AccountServiceImpl implements AccountService {
         account.setAccountStatus(accountDto.getAccountStatus());
         account.setRole(accountDto.getRole());
         account = accountRepository.save(account);
-        return AccountMapper.toDto(account);
+        return hidePassword(AccountMapper.toDto(account));
     }
 
     @Override
@@ -85,7 +85,7 @@ public class AccountServiceImpl implements AccountService {
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + accountId));
         account.setAccountStatus(status);
         account = accountRepository.save(account);
-        return AccountMapper.toDto(account);
+        return hidePassword(AccountMapper.toDto(account));
     }
 
     @Override
@@ -94,6 +94,13 @@ public class AccountServiceImpl implements AccountService {
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + accountId));
         account.setRole(role);
         account = accountRepository.save(account);
-        return AccountMapper.toDto(account);
+        return hidePassword(AccountMapper.toDto(account));
+    }
+
+    private AccountDto hidePassword(AccountDto accountDto) {
+        if (accountDto != null) {
+            accountDto.setPassword("NULL");
+        }
+        return accountDto;
     }
 }

@@ -13,5 +13,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     List<Account> findByRole(int role);
 
-    Optional<Account> findByPhoneAndPassword(String phone, String password);
+    //    Optional<Account> findByPhoneAndPassword(String phone, String password);
+    Optional<Account> findByPhone(String phone);
+
 }

@@ -28,21 +28,6 @@ public class StorageService {
     @Autowired
     private AmazonS3 s3Client;
 
-    //    public String uploadFile(MultipartFile file, Integer assessmentPaperId) throws AmazonServiceException, SdkClientException, IOException {
-//        File fileObj = convertMultiPartFileToFile(file);
-//
-//        // Tạo tên file upload
-//        String fileName = "AssessmentPaper_" + assessmentPaperId + "_" + file.getOriginalFilename() + ".png";
-//
-//        // Đưa file lên AWS S3
-//        s3Client.putObject(new PutObjectRequest(bucketName, fileName, fileObj));
-//
-//        // Xóa file tạm sau khi upload
-//        fileObj.delete();
-//
-//        return fileName; // Trả về tên file đã upload
-//    }
-
     public String uploadFile(MultipartFile file, Integer assessmentPaperId) throws AmazonServiceException, SdkClientException, IOException {
         File fileObj = convertMultiPartFileToFile(file);
 
@@ -93,16 +78,6 @@ public class StorageService {
         return fileName + " removed ...";
     }
 
-
-    //    private File convertMultiPartFileToFile(MultipartFile file) {
-//        File convertedFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
-//        try (FileOutputStream fos = new FileOutputStream(convertedFile)) {
-//            fos.write(file.getBytes());
-//        } catch (IOException e) {
-//            log.error("Error converting multipartFile to file", e);
-//        }
-//        return convertedFile;
-//    }
     private File convertMultiPartFileToFile(MultipartFile file) {
         File convertedFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
         try (FileOutputStream fos = new FileOutputStream(convertedFile)) {

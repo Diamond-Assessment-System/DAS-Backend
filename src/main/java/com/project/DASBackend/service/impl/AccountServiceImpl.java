@@ -7,7 +7,11 @@ import com.project.DASBackend.mapper.AccountMapper;
 import com.project.DASBackend.repository.AccountRepository;
 import com.project.DASBackend.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.UUID;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +22,9 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public AccountDto createAccount(AccountDto accountDto) {
         Account account = AccountMapper.toEntity(accountDto);
@@ -25,16 +32,29 @@ public class AccountServiceImpl implements AccountService {
         return hidePassword(AccountMapper.toDto(account));
     }
 
+    public String generateRandomUUID() {
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
+    }
     @Override
     public AccountDto phoneregister(AccountDto accountDto) {
         Account account = AccountMapper.toEntity(accountDto);
+        account.setEmail(accountDto.getPhone());
+        account.setRole(1);
+        account.setAccountStatus(1);
+        account.setUid(generateRandomUUID());
+
+        // Hash the password before saving the account
+        String hashedPassword = passwordEncoder.encode(accountDto.getPassword());
+        account.setPassword(hashedPassword);
+
         account = accountRepository.save(account);
         return hidePassword(AccountMapper.toDto(account));
     }
 
     @Override
     public AccountDto phonelogin(String phone, String password) {
-        Account account = accountRepository.findByPhoneAndPassword(phone, password)
+        Account account = accountRepository.findByPhone(phone)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with phone: " + phone));
         return hidePassword(AccountMapper.toDto(account));
     }

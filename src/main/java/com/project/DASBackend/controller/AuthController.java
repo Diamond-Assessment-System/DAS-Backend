@@ -58,6 +58,9 @@ public class AuthController {
                             .build();
                     accountRepository.save(account);
                 }
+                if (account.getAccountStatus() == 2) {
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Account is not active");
+                }
 
                 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
                 String sessionId = authentication.getDetails().toString();

@@ -19,6 +19,8 @@ public interface AssessmentBookingService {
 
     AssessmentBookingDto changeStatus(Integer bookingId, Integer status);
 
+    AssessmentBookingDto feedback(Integer bookingId, String feedback);
+
     AssessmentBookingDto assignStaff(Integer bookingId, Integer consultingAccountId);
 
     List<AssessmentBookingDto> findByAccountIdOrdered(Integer accountId);

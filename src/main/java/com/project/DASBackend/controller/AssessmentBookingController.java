@@ -60,6 +60,12 @@ public class AssessmentBookingController {
         AssessmentBookingDto updatedBooking = assessmentBookingService.changeStatus(bookingId, status);
         return ResponseEntity.ok(updatedBooking);
     }
+    
+    @PutMapping("{id}/feedback")
+    public ResponseEntity<AssessmentBookingDto> feedback(@PathVariable("id") Integer bookingId, @RequestBody String feedback) {
+        AssessmentBookingDto updatedBooking = assessmentBookingService.feedback(bookingId, feedback);
+        return ResponseEntity.ok(updatedBooking);
+    }
 
     @PatchMapping("{bookingId}/assign/{staffId}")
     public ResponseEntity<AssessmentBookingDto> assignAssessmentBooking(@PathVariable("bookingId") Integer bookingId, @PathVariable("staffId") Integer staffId) {

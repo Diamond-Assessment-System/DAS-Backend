@@ -106,7 +106,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", e.getMessage()));
         }
     }
-    
+
 
 //    private String generateIdTokenForAccount(Account account) {
 //        return Jwts.builder()

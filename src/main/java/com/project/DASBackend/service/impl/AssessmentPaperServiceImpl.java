@@ -86,6 +86,4 @@ public class AssessmentPaperServiceImpl implements AssessmentPaperService {
         }
         assessmentPaperRepository.deleteById(diamondId);
     }
-
-
 }

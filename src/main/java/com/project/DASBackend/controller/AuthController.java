@@ -79,6 +79,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid authorization header.");
         }
     }
+    
 
     @PostMapping("/registerPhone")
     public ResponseEntity<?> registerWithPhoneNumber(@RequestBody AccountDto accountDto) {

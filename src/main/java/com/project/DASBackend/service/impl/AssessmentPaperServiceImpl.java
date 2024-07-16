@@ -10,7 +10,6 @@ import com.project.DASBackend.mapper.AssessmentPaperMapper;
 import com.project.DASBackend.repository.AccountRepository;
 import com.project.DASBackend.repository.AssessmentPaperRepository;
 import com.project.DASBackend.repository.BookingSampleRepository;
-import com.project.DASBackend.resource.Base64MultipartFile;
 import com.project.DASBackend.service.AssessmentPaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -33,8 +32,6 @@ public class AssessmentPaperServiceImpl implements AssessmentPaperService {
     @Autowired
     private BookingSampleRepository bookingSampleRepository;
 
-    @Autowired
-    private StorageService storageService;
 
     @Override
     public AssessmentPaperDto createAssessmentPaper(AssessmentPaperDto assessmentPaperDto) {
@@ -90,21 +87,5 @@ public class AssessmentPaperServiceImpl implements AssessmentPaperService {
         assessmentPaperRepository.deleteById(diamondId);
     }
 
-    public static MultipartFile convertBase64ToMultipartFile(String base64) {
-        // Tách chuỗi base64 thành các phần
-        String[] base64Parts = base64.split(",");
-        // Kiểm tra nếu base64Parts có ít nhất 2 phần
-        if (base64Parts.length != 2) {
-            throw new IllegalArgumentException("Invalid base64 string");
-        }
-        try {
-            // Giải mã dữ liệu base64
-            byte[] data = Base64.getDecoder().decode(base64Parts[1]);
-            // Tạo một MultipartFile mới
-            return new Base64MultipartFile(data, base64Parts[0]);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Failed to convert base64 string to MultipartFile", e);
-        }
-    }
 
 }

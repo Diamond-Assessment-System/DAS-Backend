@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import com.project.DASBackend.dto.AccountDto;
 import com.project.DASBackend.entity.Account;
+import com.project.DASBackend.exception.ResourceNotFoundException;
 import com.project.DASBackend.repository.AccountRepository;
 import com.project.DASBackend.service.AccountService;
 import io.jsonwebtoken.Jwts;
@@ -17,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import software.amazon.awssdk.services.amplify.model.UnauthorizedException;
 
 import java.util.Date;
 import java.util.Map;
@@ -79,28 +81,29 @@ public class AuthController {
     }
 
     @PostMapping("/registerPhone")
+    public ResponseEntity<?> registerWithPhoneNumber(@RequestBody AccountDto accountDto) {
+        accountService.phoneregister(accountDto);
+        return ResponseEntity.ok("Account created successfully");
+    }
+    @GetMapping("/loginPhone")
     public ResponseEntity<?> loginWithPhoneNumber(@RequestBody Map<String, String> loginRequest) {
         String phone = loginRequest.get("phone");
         String password = loginRequest.get("password");
 
-        Optional<Account> optionalAccount = accountRepository.findByPhone(phone);
-        if (optionalAccount.isPresent()) {
-            Account account = optionalAccount.get();
-            if (passwordEncoder.matches(password, account.getPassword())) {
-                String sessionId = UUID.randomUUID().toString();
+        try {
+            AccountDto accountDto = accountService.phonelogin(phone, password);
+            String sessionId = UUID.randomUUID().toString();
 
-                // Return session ID and account details as JSON object
-                return ResponseEntity.ok(Map.of(
-                        "sessionId", sessionId,
-                        "account", account
-                ));
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid phone number or password"));
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid phone number or password"));
+            // Return session ID and account details as JSON object
+            return ResponseEntity.ok(Map.of(
+                    "sessionId", sessionId,
+                    "account", accountDto
+            ));
+        } catch (ResourceNotFoundException | UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", e.getMessage()));
         }
     }
+
 //    private String generateIdTokenForAccount(Account account) {
 //        return Jwts.builder()
 //                .setSubject(account.getUid())

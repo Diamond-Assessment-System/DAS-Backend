@@ -39,7 +39,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDto phoneregister(AccountDto accountDto) {
         Account account = AccountMapper.toEntity(accountDto);
-        account.setEmail(accountDto.getPhone());
+        account.setPhone(accountDto.getPhone());
         account.setRole(1);
         account.setAccountStatus(1);
         account.setUid(generateRandomUUID());
@@ -56,7 +56,12 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto phonelogin(String phone, String password) {
         Account account = accountRepository.findByPhone(phone)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with phone: " + phone));
-        return hidePassword(AccountMapper.toDto(account));
+
+        if (passwordEncoder.matches(password, account.getPassword())) {
+            return hidePassword(AccountMapper.toDto(account));
+        } else {
+            throw new IllegalArgumentException("Invalid phone number or password");
+        }
     }
 
     @Override

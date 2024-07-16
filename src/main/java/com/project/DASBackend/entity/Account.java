@@ -18,13 +18,13 @@ public class Account {
     @Column(name = "Account_Id")
     private Integer accountId;
 
-    @Column(name = "Email")
+    @Column(name = "Email", unique = true)
     private String email;
 
     @Column(name = "DisplayName", nullable = false)
     private String displayName;
 
-    @Column(name = "UID")
+    @Column(name = "UID", unique = true)
     private String uid;
 
     @Column(name = "Account_status", nullable = false)
@@ -36,6 +36,6 @@ public class Account {
     @Column(name = "Password")
     private String password;
 
-    @Column(name = "Phone")
+    @Column(name = "Phone", unique = true)
     private String phone;
 }

@@ -102,6 +102,8 @@ public class AuthController {
             ));
         } catch (ResourceNotFoundException | UnauthorizedException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", e.getMessage()));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", e.getMessage()));
         }
     }
 

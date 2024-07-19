@@ -44,7 +44,6 @@ public class AccountServiceImpl implements AccountService {
         account.setAccountStatus(1);
         account.setUid(generateRandomUUID());
 
-        // Hash the password before saving the account
         String hashedPassword = passwordEncoder.encode(accountDto.getPassword());
         account.setPassword(hashedPassword);
 

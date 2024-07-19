@@ -52,6 +52,9 @@ public class AssessmentBooking {
     @Column(name = "Quantities", nullable = false)
     private Integer quantities;
 
+    @Column(name = "Cancel_reason")
+    private String cancelReason;
+
     @ManyToOne
     @JoinColumn(name = "Account_Id", nullable = false)
     private Account account;

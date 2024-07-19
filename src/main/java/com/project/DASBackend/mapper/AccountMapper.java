@@ -17,6 +17,7 @@ public class AccountMapper {
                 .role(account.getRole())
                 .password(account.getPassword())
                 .phone(account.getPhone())
+                .blockReason(account.getBlockReason())
                 .build();
     }
 
@@ -33,6 +34,7 @@ public class AccountMapper {
         account.setRole(accountDto.getRole());
         account.setPassword(accountDto.getPassword());
         account.setPhone(accountDto.getPhone());
+        account.setBlockReason(accountDto.getBlockReason());
         return account;
     }
 }

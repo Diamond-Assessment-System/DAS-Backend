@@ -38,4 +38,7 @@ public class Account {
 
     @Column(name = "Phone", unique = true)
     private String phone;
+
+    @Column(name = "Block_reason")
+    private String blockReason;
 }

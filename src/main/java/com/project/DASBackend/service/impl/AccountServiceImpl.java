@@ -104,10 +104,16 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountDto changeStatus(Integer accountId, Integer status) {
+    public AccountDto changeStatus(Integer accountId, Integer status, String blockReason) {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + accountId));
         account.setAccountStatus(status);
+        if(status == 2){
+            account.setBlockReason(blockReason);
+        }
+        else{
+            account.setBlockReason(null);
+        }
         account = accountRepository.save(account);
         return hidePassword(AccountMapper.toDto(account));
     }

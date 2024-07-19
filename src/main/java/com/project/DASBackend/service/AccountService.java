@@ -21,7 +21,7 @@ public interface AccountService {
 
     void deleteAccount(Integer accountId);
 
-    AccountDto changeStatus(Integer accountId, Integer status);
+    AccountDto changeStatus(Integer accountId, Integer status, String blockReason);
 
     AccountDto changeRole(Integer accountId, Integer role);
 

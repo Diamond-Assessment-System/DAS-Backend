@@ -66,8 +66,9 @@ public class AccountController {
 
     @PutMapping("{id}/status/{status}")
     public ResponseEntity<AccountDto> changeStatus(@PathVariable("id") Integer accountId,
-                                                   @PathVariable("status") Integer status) {
-        AccountDto accountDto = accountService.changeStatus(accountId, status);
+                                                   @PathVariable("status") Integer status,
+                                                   @RequestBody String blockReason) {
+        AccountDto accountDto = accountService.changeStatus(accountId, status, blockReason);
         return ResponseEntity.ok(accountDto);
     }
 

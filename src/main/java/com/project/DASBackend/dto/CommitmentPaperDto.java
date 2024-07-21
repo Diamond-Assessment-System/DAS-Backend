@@ -18,18 +18,15 @@ public class CommitmentPaperDto {
 
     private Integer commitmentId;
 
-    @NotBlank(message = "Description cannot be blank")
+    @NotNull(message = "Description cannot be null")
     private String description;
 
-    @NotNull(message = "Date created cannot be null")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd - HH:mm:ss")
     private LocalDateTime dateCreated;
 
-    @NotNull(message = "Approval date cannot be null")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd - HH:mm:ss")
     private LocalDateTime approvalDate;
 
-    @NotBlank(message = "Commitment type cannot be blank")
     private String commitmentType;
 
     @NotBlank(message = "Title cannot be blank")

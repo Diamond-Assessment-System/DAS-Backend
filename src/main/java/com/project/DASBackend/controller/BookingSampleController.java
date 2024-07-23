@@ -57,7 +57,7 @@ public class BookingSampleController {
     }
 
     @PutMapping("{id}/status/{status}")
-    public ResponseEntity<BookingSampleDto> changeStatus(@PathVariable("id") Integer sampleId, @PathVariable("status") Integer status) {
+    public ResponseEntity<BookingSampleDto> changeStatus(@PathVariable("id") Integer sampleId, @PathVariable("status") Integer status, @RequestBody String blockReason) {
         BookingSampleDto updatedSample = bookingSampleService.changeStatus(sampleId, status);
         return ResponseEntity.ok(updatedSample);
     }

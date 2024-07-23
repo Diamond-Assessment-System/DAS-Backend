@@ -130,6 +130,21 @@ public class BookingSampleServiceImpl implements BookingSampleService {
     }
 
     @Override
+    public BookingSampleDto changeStatus(Integer sampleId, Integer status, String cancelReason) {
+        BookingSample bookingSample = bookingSampleRepository.findById(sampleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Booking Sample not found with id: " + sampleId));
+        bookingSample.setStatus(status);
+        if(status == 4){
+            bookingSample.setCancelReason(cancelReason);
+        }
+        else{
+            bookingSample.setCancelReason(null);
+        }
+        bookingSample = bookingSampleRepository.save(bookingSample);
+        return BookingSampleMapper.toDto(bookingSample);
+    }
+
+    @Override
     public BookingSampleDto assignStaff(Integer sampleId, Integer assessmentAccountId) {
         BookingSample bookingSample = bookingSampleRepository.findById(sampleId)
                 .orElseThrow(() -> new ResourceNotFoundException("Booking Sample not found with id: " + sampleId));

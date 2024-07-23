@@ -21,6 +21,8 @@ public interface BookingSampleService {
 
     BookingSampleDto changeStatus(Integer sampleId, Integer status);
 
+    BookingSampleDto changeStatus(Integer sampleId, Integer status, String cancelReason);
+
     BookingSampleDto assignStaff(Integer sampleId, Integer assessmentAccountId);
 
     List<BookingSampleDto> getBookingSamplesByAssessmentAccountId(Integer assessmentAccountId);

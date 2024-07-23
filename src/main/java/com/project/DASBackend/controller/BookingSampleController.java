@@ -64,7 +64,7 @@ public class BookingSampleController {
 
     @PutMapping("{id}/cancel")
     public ResponseEntity<BookingSampleDto> cancelBookingSample(@PathVariable("id") Integer sampleId, @RequestBody String cancelReason) {
-        BookingSampleDto updatedSample = bookingSampleService.changeStatus(sampleId, 4);
+        BookingSampleDto updatedSample = bookingSampleService.changeStatus(sampleId, 4, cancelReason);
         return ResponseEntity.ok(updatedSample);
     }
 

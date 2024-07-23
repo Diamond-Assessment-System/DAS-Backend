@@ -28,6 +28,8 @@ public class BookingSampleDto {
 
     private Integer accountId;
 
+    private String cancelReason;
+
 //    private Integer servicePriceId;
 
 }

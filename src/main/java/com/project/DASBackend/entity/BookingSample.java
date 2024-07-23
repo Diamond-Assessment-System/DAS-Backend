@@ -33,6 +33,9 @@ public class BookingSample {
     @Column(name = "Price", nullable = false)
     private Float price;
 
+    @Column(name = "CancelReason")
+    private String cancelReason;
+
     @ManyToOne
     @JoinColumn(name = "Booking_Id", nullable = false)
     private AssessmentBooking assessmentBooking;

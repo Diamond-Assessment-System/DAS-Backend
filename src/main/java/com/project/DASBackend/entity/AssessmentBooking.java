@@ -52,6 +52,9 @@ public class AssessmentBooking {
     @Column(name = "Quantities", nullable = false)
     private Integer quantities;
 
+    @Column(name = "Note")
+    private String note;
+
     @Column(name = "Cancel_reason")
     private String cancelReason;
 

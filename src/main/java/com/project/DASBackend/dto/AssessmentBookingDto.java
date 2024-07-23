@@ -45,7 +45,11 @@ public class AssessmentBookingDto {
 
     private Integer serviceId;
 
-    private Integer consultingAccountId;
+    private String note;
 
     private String cancelReason;
+
+    private Integer consultingAccountId;
+
+
 }

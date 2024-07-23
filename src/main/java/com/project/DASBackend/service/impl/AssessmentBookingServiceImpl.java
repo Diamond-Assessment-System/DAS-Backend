@@ -98,6 +98,7 @@ public class AssessmentBookingServiceImpl implements AssessmentBookingService {
         assessmentBooking.setSampleReturnDate(assessmentBookingDto.getSampleReturnDate());
         assessmentBooking.setStatus(assessmentBookingDto.getStatus());
         assessmentBooking.setPaymentStatus(assessmentBookingDto.getPaymentStatus());
+        assessmentBooking.setNote(assessmentBookingDto.getNote());
         assessmentBooking.setDateReceived(assessmentBookingDto.getDateReceived());
         Account consultingAccount = accountRepository.findById(assessmentBookingDto.getConsultingAccountId())
                 .orElseThrow(() -> new ResourceNotFoundException("Consulting account not found with id: " + assessmentBookingDto.getConsultingAccountId()));

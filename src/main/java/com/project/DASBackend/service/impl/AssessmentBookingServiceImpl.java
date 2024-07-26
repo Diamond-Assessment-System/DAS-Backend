@@ -70,6 +70,7 @@ public class AssessmentBookingServiceImpl implements AssessmentBookingService {
         assessmentBooking.setPaymentStatus(assessmentBookingDto.getPaymentStatus());
         assessmentBooking.setPaymentType(assessmentBookingDto.getPaymentType());
         assessmentBooking.setPhone(assessmentBookingDto.getPhone());
+        assessmentBooking.setNote(assessmentBookingDto.getNote());
         assessmentBooking.setDateCreated(assessmentBookingDto.getDateCreated());
         assessmentBooking.setFeedback(assessmentBookingDto.getFeedback());
         assessmentBooking.setQuantities(assessmentBookingDto.getQuantities());

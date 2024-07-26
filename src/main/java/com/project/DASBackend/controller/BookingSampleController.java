@@ -1,7 +1,13 @@
 package com.project.DASBackend.controller;
 
+import com.project.DASBackend.dto.AssessmentBookingDto;
 import com.project.DASBackend.dto.BookingSampleDto;
+import com.project.DASBackend.dto.ServiceDto;
+import com.project.DASBackend.entity.Services;
+import com.project.DASBackend.repository.AssessmentBookingRepository;
+import com.project.DASBackend.service.AssessmentBookingService;
 import com.project.DASBackend.service.BookingSampleService;
+import com.project.DASBackend.service.ServiceService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @RestController
@@ -18,6 +25,10 @@ public class BookingSampleController {
 
     @Autowired
     private BookingSampleService bookingSampleService;
+    @Autowired
+    private AssessmentBookingService assessmentBookingService;
+    @Autowired
+    private ServiceService serviceService;
 
     @PostMapping("/sample")
     public ResponseEntity<BookingSampleDto> createBookingSample(@RequestBody BookingSampleDto bookingSampleDto) {
@@ -36,6 +47,20 @@ public class BookingSampleController {
     public ResponseEntity<BookingSampleDto> getBookingSampleById(@PathVariable("id") Integer sampleId) {
         BookingSampleDto bookingSampleDto = bookingSampleService.getBookingSampleById(sampleId);
         return ResponseEntity.ok(bookingSampleDto);
+    }
+
+    @PutMapping("{id}/assign/{staffId}")
+    public ResponseEntity<BookingSampleDto> resetPrice(@PathVariable("id") Integer sampleId) {
+        BookingSampleDto updatedSample = bookingSampleService.getBookingSampleById(sampleId);
+        if (updatedSample.getStatus() == 3){
+            List<ServiceDto> services = serviceService.getAllServices();
+            AssessmentBookingDto assessmentBookingDto = assessmentBookingService.findBySampleId(sampleId);
+            services.stream()
+                    .filter(s -> Objects.equals(s.getServiceId(), assessmentBookingDto.getServiceId()))
+                    .findFirst()
+                    .ifPresent(service -> updatedSample.setPrice(service.getServicePrice()));
+        }
+        return ResponseEntity.ok(updatedSample);
     }
 
     @GetMapping

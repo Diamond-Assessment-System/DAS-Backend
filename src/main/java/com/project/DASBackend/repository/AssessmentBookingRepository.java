@@ -16,4 +16,6 @@ public interface AssessmentBookingRepository extends JpaRepository<AssessmentBoo
 
     @Query("SELECT ab FROM AssessmentBooking ab ORDER BY ab.status ASC, ab.dateReceived DESC")
     List<AssessmentBooking> findAllOrdered();
+
+    AssessmentBooking findBySampleId(int sampleId);
 }

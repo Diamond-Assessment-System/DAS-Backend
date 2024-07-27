@@ -47,7 +47,7 @@ public class BookingSampleController {
         return ResponseEntity.ok(bookingSampleDto);
     }
 
-    @PutMapping("{id}/assign/{staffId}")
+    @PutMapping("{id}/reset-price")
     public ResponseEntity<BookingSampleDto> resetPrice(@PathVariable("id") Integer sampleId) {
         BookingSampleDto updatedSample = bookingSampleService.getBookingSampleById(sampleId);
         if (updatedSample.getStatus() == 3){

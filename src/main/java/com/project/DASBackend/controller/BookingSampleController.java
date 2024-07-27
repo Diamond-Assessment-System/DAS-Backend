@@ -54,7 +54,7 @@ public class BookingSampleController {
         BookingSampleDto updatedSample = bookingSampleService.getBookingSampleById(sampleId);
         if (updatedSample.getStatus() == 3){
             List<ServiceDto> services = serviceService.getAllServices();
-            AssessmentBookingDto assessmentBookingDto = assessmentBookingService.findBySampleId(sampleId);
+            AssessmentBookingDto assessmentBookingDto = assessmentBookingService.getAssessmentBookingById(updatedSample.getBookingId());
             services.stream()
                     .filter(s -> Objects.equals(s.getServiceId(), assessmentBookingDto.getServiceId()))
                     .findFirst()

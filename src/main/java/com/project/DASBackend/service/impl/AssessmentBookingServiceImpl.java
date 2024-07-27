@@ -160,12 +160,4 @@ public class AssessmentBookingServiceImpl implements AssessmentBookingService {
         return assessmentBookings.stream().map(AssessmentBookingMapper::toDto).collect(Collectors.toList());
     }
 
-    @Override
-    public AssessmentBookingDto findBySampleId(Integer sampleId) {
-        AssessmentBooking assessmentBooking = assessmentBookingRepository.findBySampleId(sampleId);
-        if (assessmentBooking == null) {
-            throw new ResourceNotFoundException("Assessment Booking not found with sampleId: " + sampleId);
-        }
-        return AssessmentBookingMapper.toDto(assessmentBooking);
-    }
 }

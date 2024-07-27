@@ -1,13 +1,7 @@
 package com.project.DASBackend.controller;
 
-import com.project.DASBackend.dto.AssessmentBookingDto;
 import com.project.DASBackend.dto.BookingSampleDto;
-import com.project.DASBackend.dto.ServiceDto;
-import com.project.DASBackend.entity.Services;
-import com.project.DASBackend.repository.AssessmentBookingRepository;
-import com.project.DASBackend.service.AssessmentBookingService;
 import com.project.DASBackend.service.BookingSampleService;
-import com.project.DASBackend.service.ServiceService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @AllArgsConstructor
 @RestController
@@ -25,10 +18,6 @@ public class BookingSampleController {
 
     @Autowired
     private BookingSampleService bookingSampleService;
-    @Autowired
-    private AssessmentBookingService assessmentBookingService;
-    @Autowired
-    private ServiceService serviceService;
 
     @PostMapping("/sample")
     public ResponseEntity<BookingSampleDto> createBookingSample(@RequestBody BookingSampleDto bookingSampleDto) {
@@ -62,7 +51,7 @@ public class BookingSampleController {
         }
         return ResponseEntity.ok(updatedSample);
     }
-
+  
     @GetMapping
     public ResponseEntity<List<BookingSampleDto>> getAllBookingSamples() {
         List<BookingSampleDto> bookingSampleDtos = bookingSampleService.getAllBookingSamples();

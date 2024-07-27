@@ -159,5 +159,4 @@ public class AssessmentBookingServiceImpl implements AssessmentBookingService {
         List<AssessmentBooking> assessmentBookings = assessmentBookingRepository.findAllOrdered();
         return assessmentBookings.stream().map(AssessmentBookingMapper::toDto).collect(Collectors.toList());
     }
-
 }

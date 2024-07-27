@@ -26,5 +26,4 @@ public interface AssessmentBookingService {
     List<AssessmentBookingDto> findByAccountIdOrdered(Integer accountId);
 
     List<AssessmentBookingDto> findAllOrdered();
-
 }

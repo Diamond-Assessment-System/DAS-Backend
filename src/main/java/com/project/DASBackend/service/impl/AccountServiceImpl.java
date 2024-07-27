@@ -86,12 +86,11 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto updateAccount(Integer accountId, AccountDto accountDto) {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + accountId));
-        //account.setUid(accountDto.getUid());
+        account.setUid(accountDto.getUid());
         account.setEmail(accountDto.getEmail());
         account.setDisplayName(accountDto.getDisplayName());
-        account.setPhone(accountDto.getPhone());
-        //account.setAccountStatus(accountDto.getAccountStatus());
-        //account.setRole(accountDto.getRole());
+        account.setAccountStatus(accountDto.getAccountStatus());
+        account.setRole(accountDto.getRole());
         account = accountRepository.save(account);
         return hidePassword(AccountMapper.toDto(account));
     }

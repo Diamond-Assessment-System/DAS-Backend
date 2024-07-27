@@ -38,6 +38,20 @@ public class BookingSampleController {
         return ResponseEntity.ok(bookingSampleDto);
     }
 
+    @PutMapping("{id}/assign/{staffId}")
+    public ResponseEntity<BookingSampleDto> resetPrice(@PathVariable("id") Integer sampleId) {
+        BookingSampleDto updatedSample = bookingSampleService.getBookingSampleById(sampleId);
+        if (updatedSample.getStatus() == 3){
+            List<ServiceDto> services = serviceService.getAllServices();
+            AssessmentBookingDto assessmentBookingDto = assessmentBookingService.getAssessmentBookingById(updatedSample.getBookingId());
+            services.stream()
+                    .filter(s -> Objects.equals(s.getServiceId(), assessmentBookingDto.getServiceId()))
+                    .findFirst()
+                    .ifPresent(service -> updatedSample.setPrice(service.getServicePrice()));
+        }
+        return ResponseEntity.ok(updatedSample);
+    }
+  
     @GetMapping
     public ResponseEntity<List<BookingSampleDto>> getAllBookingSamples() {
         List<BookingSampleDto> bookingSampleDtos = bookingSampleService.getAllBookingSamples();

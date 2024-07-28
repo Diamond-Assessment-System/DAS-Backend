@@ -13,6 +13,8 @@ import javax.crypto.spec.SecretKeySpec;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -47,8 +49,11 @@ public class PaymentController {
         String vnp_ReturnUrl = "https://dasfrontend.vercel.app/payment-success";
         String vnp_IpAddr = paymentRequest.getIpAddress();
         String vnp_TxnRef = String.valueOf(System.currentTimeMillis());
-        String vnp_CreateDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-        String vnp_ExpireDate = LocalDateTime.now().plusMinutes(30).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+
+        ZoneId zoneId = ZoneId.of("Asia/Ho_Chi_Minh");
+
+        String vnp_CreateDate = ZonedDateTime.now(zoneId).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        String vnp_ExpireDate = ZonedDateTime.now(zoneId).plusMinutes(30).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 
         Map<String, String> vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version", vnp_Version);

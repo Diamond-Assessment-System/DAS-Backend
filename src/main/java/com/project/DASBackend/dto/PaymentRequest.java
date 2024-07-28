@@ -1,20 +1,17 @@
 package com.project.DASBackend.dto;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class PaymentRequest {
     private int amount;
-
-    public PaymentRequest() {
-    }
-
-    public PaymentRequest(int amount) {
-        this.amount = amount;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
+    private String description;
+    private String ipAddress;
 }

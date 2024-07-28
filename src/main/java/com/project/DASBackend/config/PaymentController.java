@@ -12,6 +12,8 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @RestController
@@ -32,13 +34,16 @@ public class PaymentController {
         // Tạo URL thanh toán VNPay
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
-        String vnp_OrderInfo = "Thanh toan don hang";
-        String vnp_OrderType = "other";
+        String vnp_OrderInfo = paymentRequest.getDescription();
+        String vnp_OrderType = "250000";
+        String vnp_BankCode = null;
         String vnp_Amount = String.valueOf(paymentRequest.getAmount() * 100);
         String vnp_Locale = "vn";
-        String vnp_ReturnUrl = "http://localhost:3000/payment-success";
-        String vnp_IpAddr = "127.0.0.1";
+        String vnp_ReturnUrl = "https://dasfrontend.vercel.app/payment-success";
+        String vnp_IpAddr = paymentRequest.getIpAddress();
         String vnp_TxnRef = String.valueOf(System.currentTimeMillis());
+        String vnp_CreateDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        String vnp_ExpireDate = LocalDateTime.now().plusMinutes(15).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 
         Map<String, String> vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version", vnp_Version);
@@ -52,6 +57,12 @@ public class PaymentController {
         vnp_Params.put("vnp_Locale", vnp_Locale);
         vnp_Params.put("vnp_ReturnUrl", vnp_ReturnUrl);
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
+        vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
+        vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
+
+        if (vnp_BankCode != null && !vnp_BankCode.isEmpty()) {
+            vnp_Params.put("vnp_BankCode", vnp_BankCode);
+        }
 
         List<String> fieldNames = new ArrayList<>(vnp_Params.keySet());
         Collections.sort(fieldNames);
@@ -76,7 +87,10 @@ public class PaymentController {
                 }
             }
         }
-        if (!query.isEmpty()) {
+        if (hashData.length() > 0) {
+            hashData.setLength(hashData.length() - 1);
+        }
+        if (query.length() > 0) {
             query.setLength(query.length() - 1);
         }
         String queryUrl = query.toString();
@@ -90,9 +104,9 @@ public class PaymentController {
     private String HmacSHA512(String key, String data) {
         try {
             Mac hmac512 = Mac.getInstance("HmacSHA512");
-            SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(), "HmacSHA512");
+            SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "HmacSHA512");
             hmac512.init(secretKeySpec);
-            byte[] bytes = hmac512.doFinal(data.getBytes());
+            byte[] bytes = hmac512.doFinal(data.getBytes(StandardCharsets.UTF_8));
             StringBuilder hash = new StringBuilder();
             for (byte aByte : bytes) {
                 String hex = Integer.toHexString(0xff & aByte);

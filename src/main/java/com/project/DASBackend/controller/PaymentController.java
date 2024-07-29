@@ -42,6 +42,7 @@ public class PaymentController {
         String vnp_Amount = String.valueOf(paymentRequest.getAmount() * 100);
         String vnp_Locale = "vn";
         String vnp_ReturnUrl = "https://dasfrontend.vercel.app/payment-success";
+//        String vnp_ReturnUrl = "http://localhost:5173/manager/payment-success";
         String vnp_IpAddr = paymentRequest.getIpAddress();
         String vnp_TxnRef = String.valueOf(System.currentTimeMillis());
 

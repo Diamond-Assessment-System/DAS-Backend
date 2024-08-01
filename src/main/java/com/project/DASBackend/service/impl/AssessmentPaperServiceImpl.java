@@ -86,4 +86,10 @@ public class AssessmentPaperServiceImpl implements AssessmentPaperService {
         }
         assessmentPaperRepository.deleteById(diamondId);
     }
+
+    @Override
+    public AssessmentPaperDto getAssessmentPaperBySampleId(Integer sampleId) {
+        AssessmentPaper assessmentPaper = assessmentPaperRepository.findByBookingSample_SampleId(sampleId);
+        return AssessmentPaperMapper.toDto(assessmentPaper);
+    }
 }

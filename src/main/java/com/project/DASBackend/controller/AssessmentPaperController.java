@@ -36,6 +36,12 @@ public class AssessmentPaperController {
         return ResponseEntity.ok(assessmentPaperDtos);
     }
 
+    @GetMapping("{id}/sample")
+    public ResponseEntity<AssessmentPaperDto> getAssessmentPaperBySampleId(@PathVariable("id") Integer sampleId) {
+        AssessmentPaperDto assessmentPaperDto = assessmentPaperService.getAssessmentPaperBySampleId(sampleId);
+        return ResponseEntity.ok(assessmentPaperDto);
+    }
+
     @PutMapping("{id}")
     public ResponseEntity<AssessmentPaperDto> updateAssessmentPaper(@Valid @RequestBody AssessmentPaperDto assessmentPaperDto,
                                                                     @PathVariable("id") Integer diamondId) {

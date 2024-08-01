@@ -14,4 +14,6 @@ public interface AssessmentPaperService {
     AssessmentPaperDto updateAssessmentPaper(Integer diamondId, AssessmentPaperDto assessmentPaperDto);
 
     void deleteAssessmentPaper(Integer diamondId);
+
+    AssessmentPaperDto getAssessmentPaperBySampleId(Integer sampleId);
 }

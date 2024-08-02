@@ -82,6 +82,14 @@ public class BookingSampleController {
     @PutMapping("{id}/status/{status}")
     public ResponseEntity<BookingSampleDto> changeStatus(@PathVariable("id") Integer sampleId, @PathVariable("status") Integer status) {
         BookingSampleDto updatedSample = bookingSampleService.changeStatus(sampleId, status);
+        if (updatedSample.getStatus() == 4){
+            List<ServiceDto> services = serviceService.getAllServices();
+            AssessmentBookingDto assessmentBookingDto = assessmentBookingService.getAssessmentBookingById(updatedSample.getBookingId());
+            services.stream()
+                    .filter(s -> Objects.equals(s.getServiceId(), assessmentBookingDto.getServiceId()))
+                    .findFirst()
+                    .ifPresent(service -> updatedSample.setPrice(service.getServicePrice()));
+        }
         return ResponseEntity.ok(updatedSample);
     }
 

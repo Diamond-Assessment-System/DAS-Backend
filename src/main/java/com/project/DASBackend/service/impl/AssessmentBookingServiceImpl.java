@@ -106,6 +106,8 @@ public class AssessmentBookingServiceImpl implements AssessmentBookingService {
         assessmentBooking.setConsultingAccount(consultingAccount);
         assessmentBooking = assessmentBookingRepository.save(assessmentBooking);
         return AssessmentBookingMapper.toDto(assessmentBooking);
+
+        //Useless test for Sonarqube
     }
 
 

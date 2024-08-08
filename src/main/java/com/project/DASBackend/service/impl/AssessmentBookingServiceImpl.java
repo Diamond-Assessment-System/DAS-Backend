@@ -108,6 +108,7 @@ public class AssessmentBookingServiceImpl implements AssessmentBookingService {
         return AssessmentBookingMapper.toDto(assessmentBooking);
     }
 
+    
     @Override
     public void deleteAssessmentBooking(Integer bookingId) {
         if (!assessmentBookingRepository.existsById(bookingId)) {

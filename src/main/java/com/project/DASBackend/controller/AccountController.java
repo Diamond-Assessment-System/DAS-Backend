@@ -13,7 +13,7 @@ import java.util.List;
 //@CrossOrigin("*")
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/accounts")
+@RequestMapping("api/accounts/")
 public class AccountController {
 
     @Autowired

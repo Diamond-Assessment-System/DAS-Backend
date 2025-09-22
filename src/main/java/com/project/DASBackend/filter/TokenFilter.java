@@ -73,14 +73,14 @@ public class TokenFilter extends OncePerRequestFilter {
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        logger.info("Firebase token authenticated for UID: {}", uid);
+        logger.info("Firebase token authenticated for UID: {}");
     }
 
     private void authenticateJwtToken(String token, HttpServletRequest request) {
         String uid = null;
         try {
             uid = jwtTokenUtil.getUidFromToken(token);
-            logger.info("JWT Token for UID: {}", uid);
+            logger.info("JWT Token for UID: {}");
         } catch (IllegalArgumentException e) {
             logger.error("Unable to get JWT Token");
         } catch (ExpiredJwtException e) {
@@ -94,7 +94,7 @@ public class TokenFilter extends OncePerRequestFilter {
                         userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                logger.info("JWT token authenticated for UID: {}", uid);
+                logger.info("JWT token authenticated for UID: {}");
             }
         }
     }
